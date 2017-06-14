@@ -4,11 +4,11 @@ describe('top-training2 App', () => {
   let page: TopTraining2Page;
 
   beforeEach(() => {
-    page = new TopTraining2Page();
+	page = new TopTraining2Page();
   });
 
   it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!!');
+	page.navigateTo();
+	expect(page.getParagraphText()).toEqual('Welcome to app!!');
   });
 });
