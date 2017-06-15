@@ -3,6 +3,8 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
+import { ShowAuthedDirective } from './directives/show-authed.directive';
+
 @NgModule({
 	imports: [
 		CommonModule,
@@ -10,12 +12,14 @@ import { CommonModule } from '@angular/common';
 		RouterModule
 	],
 	declarations: [
-
+		ShowAuthedDirective
 	],
 	exports: [
 		CommonModule,
 		HttpModule,
-		RouterModule
+		RouterModule,
+
+		ShowAuthedDirective
 	]
 })
 export class SharedModule {}

@@ -12,7 +12,7 @@ export class JwtService {
 		window.localStorage[this.tokenName] = token;
 	}
 
-	public destroyToken() {
+	public destroyToken(): void {
 		window.localStorage.removeItem(this.tokenName);
 	}
 

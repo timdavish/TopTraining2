@@ -5,10 +5,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import { JwtService } from './jwt.service';
-// import { environment } from './../../../environments/environment';
-const environment = {
-	api_url: ''
-};
+import { environment } from './../../../environments/environment';
 
 @Injectable()
 export class ApiService {
@@ -54,7 +51,7 @@ export class ApiService {
 		return new Headers(headersConfig);
 	}
 
-	private formatErrors(error: any) {
+	private formatErrors(error: any): Observable<any> {
 		return Observable.throw(error.json());
 	}
 }

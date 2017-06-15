@@ -24,7 +24,7 @@ export class UserService {
 
 	// Verify JWT in localstorage with server & load user's info.
 	// This runs once on application startup.
-	public populate() {
+	public populate(): void {
 		// If JWT detected, attempt to get & store user's info
 		if (this.jwtService.getToken()) {
 			this.apiService.get('/user')
@@ -42,7 +42,7 @@ export class UserService {
 		}
 	}
 
-	public setAuth(user: User) {
+	public setAuth(user: User): void {
 		// Save JWT sent from server in localstorage
 		this.jwtService.saveToken(user.token);
 		// Set current user data into observable
@@ -51,7 +51,7 @@ export class UserService {
 		this.isAuthenticatedSubject.next(true);
 	}
 
-	public purgeAuth() {
+	public purgeAuth(): void {
 		// Remove JWT from localstorage
 		this.jwtService.destroyToken();
 		// Set current user to an empty object

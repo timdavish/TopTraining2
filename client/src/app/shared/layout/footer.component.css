@@ -1,11 +1,11 @@
 footer {
-	position: fixed;
-	bottom: 0px;
+	/*position: absolute;*/
+	bottom: 0;
 	width:100%;
     padding: 40px 25px;
-	background: linear-gradient(#485563, #29323c);
-    /*background-color: #f8f8f8;*/
-    /*background-color: #24292e;*/
+	/*background: linear-gradient(#485563, #29323c);*/
+    /*background: #f8f8f8;*/
+    background: #24292e;
     color: #ffffff;
 }
 .footer-group {

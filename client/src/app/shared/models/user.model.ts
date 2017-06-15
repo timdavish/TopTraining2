@@ -1,11 +1,20 @@
 export class User {
+	// General properties
+	usertype: string;
 	token: string;
 	contact: Contact;
 	accounts: Accounts;
 	data: Data;
+
+	// Admin properties
+	actions?: [Action];
+
+	// Client properties
+
+	// Trainer properties
 }
 
-export class Admin extends User {
+export class TestAdmin extends User {
 	actions: [Action]
 }
 

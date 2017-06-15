@@ -1,0 +1,74 @@
+<div class="banner-background">
+	<div class="row">
+		<div class="banner col-xs-offset-1 col-xs-10">
+
+			<div class="banner-message">
+				<h1 class="">TopTraining</h1>
+				<br />
+				<h3>Reach the top of your game with top training resources for athletes.</h3>
+				<hr class="banner-divider">
+
+				<!-- Switch -->
+				<div [ngSwitch]="bannerView">
+
+					<!-- Default view -->
+					<form *ngSwitchDefault
+					    class="list-inline fix-form">
+
+					    <!-- Find a Trainer button -->
+					    <input class="form-control input-lg input-search btn-primary header-button header-button-text"
+					    	(click)="bannerView = 'search'"
+							value="Find a Trainer"
+					    	type="button" />
+					    <!-- /Find a Trainer button -->
+
+					    <!-- Trainer Sign Up button -->
+					    <input class="form-control input-lg input-search btn-primary header-button header-button-text"
+							routerLink="/register"
+							value="Apply to Train"
+							type="button" />
+					    <!-- /Trainer Sign Up button -->
+
+					</form>
+					<!-- /Default view -->
+
+					<!-- Find a Trainer View -->
+					<form *ngSwitchCase="'search'"
+					    class="list-inline fix-form">
+
+					    <!-- Back button -->
+					    <input class="form-control input-lg input-search btn-primary header-button-sm header-button-text"
+					            (click)="bannerView = ''"
+					            type="submit" value="Back" />
+					    <!-- /Back button -->
+
+					    <!-- Sport -->
+					    <!-- <li><input class="form-control input-lg input-search"
+					            ng-model="vm.searchParams.sport"
+					            uib-typeahead="sport for sport in vm.sports | filter:$viewValue | limitTo:5"
+					            typeahead-min-length="0"
+					            type="text" placeholder="Sport" /></li> -->
+					    <!-- /Sport -->
+
+					    <!-- Location -->
+					    <!-- <li><input class="form-control input-lg input-search" id="results"
+					            ng-model="vm.searchParams.location"
+					            google-auto-complete
+					            type="text" placeholder="Location" /></li> -->
+					    <!-- /Location -->
+
+					    <!-- Search -->
+					    <!-- <li><input class="form-control input-lg input-search btn-primary header-button-sm header-button-text"
+					            type="submit" value="Search" /></li> -->
+					    <!-- /Search -->
+
+					</form>
+					<!-- /Find a Trainer View -->
+
+				</div>
+				<!-- /Switch -->
+			</div>
+
+		</div>
+	</div>
+</div>
