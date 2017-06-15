@@ -1,35 +1,96 @@
-<nav class="navbar navbar-default navbar-fixed-top topnav">
-    <div class="container topnav">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+<nav class="navbar navbar-default">
+    <div class="container">
+		<a class="navbar-brand" routerLink="/">TopTraining</a>
+
+		<div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand topnav" href="/#/home">TopTraining</a>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="navbar-collapse-1">
-            <ul class="nav navbar-nav navbar-right">
-                <!-- Logged in -->
-				<!-- <li ng-show="vm.isLoggedIn() && vm.currentUser().usertype === 'Admin'"><a href="/#/admin/dashboard">Dashboard</a></li>
-                <li ng-show="vm.isLoggedIn()"><a>Welcome, {{ vm.currentUser().contact.firstname }}</a></li>
-				<li ng-show="vm.isLoggedIn() && vm.currentUser().usertype === 'Trainer'"><a href="/#/profile/trainer">Profile</a></li>
-				<li ng-show="vm.isLoggedIn() && vm.currentUser().usertype === 'Client'"><a href="/#/profile/client">Profile</a></li>
-                <li ng-show="vm.isLoggedIn()"><a href="" ng-click="vm.logOut()">Log Out</a></li> -->
-                <!-- /Logged in -->
+		<div class="collapse navbar-collapse" id="navbar-collapse">
+			<!-- Logged out users -->
+			<ul *showAuthed="false"
+				class="nav navbar-nav navbar-right">
 
-                <!-- Logged out -->
-                <!-- <li ng-hide="vm.isLoggedIn()"><a href="/#/signup-trainer">Apply to Train</a></li>
-                <li ng-hide="vm.isLoggedIn()"><a href="/#/login">Log In</a></li>
-                <li ng-hide="vm.isLoggedIn()"><a href="/#/signup-client">Sign Up</a></li> -->
-                <!-- /Logged out -->
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
+				<li class="nav-item">
+					<a class="nav-link"
+						routerLink="/">
+						Home
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link"
+						routerLink="/register">
+						Apply to Train
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link"
+						routerLink="/login">
+						Log In
+					</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link"
+						routerLink="/register">
+						Sign Up
+					</a>
+				</li>
+
+			</ul>
+			<!-- /Logged out users -->
+
+			<!-- Logged in users -->
+			<ul *showAuthed="true"
+				class="nav navbar-nav navbar-right">
+
+				<!-- Admin users -->
+				<li *ngIf="currentUser.usertype === 'admin'"
+					class="nav-item">
+					<a class="nav-link"
+						routerLink="/admin/dashboard">
+						Dashboard
+					</a>
+				</li>
+				<!-- /Admin users -->
+
+				<!-- Client users -->
+				<li *ngIf="currentUser.usertype === 'client'"
+					class="nav-item">
+					<a class="nav-link"
+						routerLink="/client/profile">
+						Profile
+					</a>
+				</li>
+				<!-- /Client users -->
+
+				<!-- Trainer users -->
+				<li *ngIf="currentUser.usertype === 'trainer'"
+					class="nav-item">
+					<a class="nav-link"
+						routerLink="/trainer/profile">
+						Profile
+					</a>
+				</li>
+				<!-- /Trainer users -->
+
+				<li class="nav-item">
+					<a class="nav-link"
+						(click)="logout()">
+						Log Out
+					</a>
+				</li>
+
+			</ul>
+			<!-- /Logged in users -->
+		</div>
+
     </div>
-    <!-- /.container -->
 </nav>
