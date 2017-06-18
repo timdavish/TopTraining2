@@ -1,3 +1,4 @@
+export * from './data';
 export * from './directives';
 export * from './errors';
 export * from './layout';
