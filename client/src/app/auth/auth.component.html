@@ -12,19 +12,19 @@
 
 				<form [formGroup]="authForm" (ngSubmit)="submitForm()">
 					<fieldset [disabled]="isSubmitting">
-						<fieldset class="form-group">
+						<fieldset class="form-group"
+							*ngIf="authType == 'register'">
 							<input class="form-control form-control-lg"
 								formControlName="firstname"
 								placeholder="First name"
-								type="text"
-								*ngIf="authType == 'register'" />
+								type="text" />
 						</fieldset>
-						<fieldset class="form-group">
+						<fieldset class="form-group"
+							*ngIf="authType == 'register'" >
 							<input class="form-control form-control-lg"
 								formControlName="lastname"
 								placeholder="Last name"
-								type="text"
-								*ngIf="authType == 'register'" />
+								type="text" />
 						</fieldset>
 						<fieldset class="form-group">
 							<input class="form-control form-control-lg"
@@ -38,12 +38,12 @@
 								placeholder="Password"
 								type="password" />
 						</fieldset>
-						<fieldset class="form-group">
+						<fieldset class="form-group"
+							*ngIf="authType == 'register'" >
 							<input class="form-control form-control-lg"
 								formControlName="password_verify"
 								placeholder="Re-enter password"
-								type="text"
-								*ngIf="authType == 'register'" />
+								type="password" />
 						</fieldset>
 						<button class="btn btn-lg btn-primary pull-xs-right"
 							[disabled]="!authForm.valid"

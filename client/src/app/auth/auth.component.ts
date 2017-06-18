@@ -36,7 +36,7 @@ export class AuthComponent implements OnInit {
 			// Get and set whether we're on login or register
 			this.authType = data[data.length - 1].path;
 			// Set title for the page accordingly
-			this.title = (this.authType === 'login') ? 'Log In' : 'Sign Up';
+			this.title = (this.authType === 'login') ? LOGIN_TITLE : REGISTER_TITLE;
 			// Add extra form controls if this is the register page
 			this.addFormControls();
 		});
