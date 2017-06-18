@@ -7,11 +7,11 @@ import 'rxjs/add/operator/map';
 
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
-import { User } from '../models';
+import { User, Admin, Client, Trainer } from '../models';
 
 @Injectable()
 export class UserService {
-	private currentUserSubject = new BehaviorSubject<User>(new User());
+	private currentUserSubject = new BehaviorSubject<User|Admin|Client|Trainer>(new User());
 	public currentUser = this.currentUserSubject.asObservable().distinctUntilChanged();
 
 	private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
@@ -42,7 +42,7 @@ export class UserService {
 		}
 	}
 
-	public setAuth(user: User): void {
+	public setAuth(user: User|Admin|Client|Trainer): void {
 		// Save JWT sent from server in localstorage
 		this.jwtService.saveToken(user.token);
 		// Set current user data into observable
@@ -60,7 +60,7 @@ export class UserService {
 		this.isAuthenticatedSubject.next(false);
 	}
 
-	public attemptAuth(type: string, credentials: any): Observable<User> {
+	public attemptAuth(type: string, credentials: any): Observable<User|Admin|Client|Trainer> {
 		const route = (type === 'login') ? '/login' : '';
 		return this.apiService.post('/users' + route, { user: credentials })
 			.map(data => {
@@ -69,11 +69,11 @@ export class UserService {
 			});
 	}
 
-	public getCurrentUser(): User {
+	public getCurrentUser(): User|Admin|Client|Trainer {
 		return this.currentUserSubject.value;
 	}
 
-	public update(user): Observable<User> {
+	public update(user: any): Observable<User|Admin|Client|Trainer> {
 		return this.apiService
 			.put('/user', { user })
 			.map(data => {
