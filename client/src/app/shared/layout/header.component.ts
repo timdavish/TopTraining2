@@ -10,12 +10,12 @@ import { User } from '../models';
 	styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+	currentUser: User;
+
 	constructor(
 		private router: Router,
 		private userService: UserService
 	) {}
-
-	currentUser: User;
 
 	ngOnInit(): void {
 		this.userService.currentUser.subscribe(
