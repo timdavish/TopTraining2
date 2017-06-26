@@ -1,16 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/takeUntil';
 
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
 import { User, Admin, Client, Trainer } from '../models';
 
 @Injectable()
-export class UserService {
+export class UserService implements OnDestroy {
+	private ngUnsubscribe: Subject<void> = new Subject<void>();
+
 	private currentUserSubject = new BehaviorSubject<User|Admin|Client|Trainer>(new User());
 	public currentUser = this.currentUserSubject.asObservable().distinctUntilChanged();
 
@@ -22,12 +26,19 @@ export class UserService {
 		private jwtService: JwtService
 	) {}
 
+	ngOnDestroy(): void {
+		// Clean up subscriptions
+		this.ngUnsubscribe.next();
+		this.ngUnsubscribe.complete();
+	}
+
 	// Verify JWT in localstorage with server & load user's info.
 	// This runs once on application startup.
 	public populate(): void {
 		// If JWT detected, attempt to get & store user's info
 		if (this.jwtService.getToken()) {
 			this.apiService.get('/user')
+				.takeUntil(this.ngUnsubscribe)
 				.subscribe(
 					data => {
 						this.setAuth(data.user);

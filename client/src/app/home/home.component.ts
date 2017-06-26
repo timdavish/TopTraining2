@@ -7,9 +7,9 @@ import { Router } from '@angular/router';
 	styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+	buttonView: string = '';
+
 	constructor(
 		private router: Router
 	) {}
-
-	buttonView: string = '';
 }
