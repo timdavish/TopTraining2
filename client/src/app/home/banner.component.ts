@@ -7,9 +7,9 @@ import { CommonModule } from '@angular/common';
 	styleUrls: ['./banner.component.css']
 })
 export class BannerComponent implements OnInit {
-	constructor() {}
-
 	bannerView: string = '';
+
+	constructor() {}
 
 	ngOnInit(): void {}
 }

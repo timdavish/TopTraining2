@@ -23,10 +23,10 @@ export class AuthComponent implements OnDestroy, OnInit {
 	authForm: FormGroup;
 
 	constructor(
+		private fb: FormBuilder,
 		private route: ActivatedRoute,
 		private router: Router,
-		private userService: UserService,
-		private fb: FormBuilder
+		private userService: UserService
 	) {}
 
 	ngOnInit(): void {
