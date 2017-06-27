@@ -60,6 +60,7 @@ TrainerSchema.index({"profiles.locations.geometry": "2dsphere"});
 TrainerSchema.methods.toAuthJSON = function() {
 	return {
 		token: this.generateJWT(),
+		usertype: this.usertype,
 		contact: this.contact,
 		approved: this.approved,
 		profiles: this.profiles,

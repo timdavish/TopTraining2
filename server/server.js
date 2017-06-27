@@ -10,6 +10,7 @@ const cors = require('cors');
 const passport = require('passport');
 const errorhandler = require('errorhandler');
 const mongoose = require('mongoose');
+mongoose.Promise = global.Promise; // Adjust mongoose promise
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -82,6 +83,11 @@ if (isProduction) {
 }
 
 // Start server
+// const httpPort = 3000;
+// const httpServer = http.createServer(app);
+// httpServer.listen(process.env.PORT || 3000, function() {
+// 	console.log('Listening on port ' + httpServer.address().port);
+// });
 let server = app.listen(process.env.PORT || 3000, function() {
 	console.log('Listening on port ' + server.address().port);
 });

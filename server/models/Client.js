@@ -6,11 +6,6 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const User = mongoose.model('User');
 
 // Schema
-const options = {
-	discriminatorKey: 'usertype',
-	timestamps: true
-};
-
 const ClientSchema = new Schema({
 	zipcode: { type: Number },
 	activeSessions: [{
@@ -23,12 +18,13 @@ const ClientSchema = new Schema({
 		expireDate: { type: Date }
 	}],
 	savedTrainers: [{ type: ObjectId, ref: 'User' }]
-}, options);
+});
 
 // JSONify client data for auth
 ClientSchema.methods.toAuthJSON = function() {
 	return {
 		token: this.generateJWT(),
+		usertype: this.usertype,
 		contact: this.contact,
 		zipcode: this.zipcode,
 		activeSessions: this.activeSessions,

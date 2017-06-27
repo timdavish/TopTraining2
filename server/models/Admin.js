@@ -22,6 +22,7 @@ const AdminSchema = new Schema({
 AdminSchema.methods.toAuthJSON = function() {
 	return {
 		token: this.generateJWT(),
+		usertype: this.usertype,
 		contact: this.contact,
 		actions: this.actions
 	};
