@@ -31,5 +31,29 @@ ClientSchema.methods.toAuthJSON = function() {
 	};
 };
 
+// JSONify client data for profile viewed by user
+ClientSchema.methods.toProfileJSON = function() {
+	return {
+		contact: this.contact,
+		zipcode: this.zipcode,
+		activeSessions: this.activeSessions,
+		savedTrainers: this.savedTrainers
+	};
+};
+
+// Save a trainer
+ClientSchema.methods.saveTrainer = function(id) {
+	if (this.savedTrainers.indexOf(id) === -1) {
+		this.savedTrainers.push(id);
+	}
+	return this.save();
+}
+
+// Unsave a trainer
+ClientSchema.methods.unsaveTrainer = function(id) {
+	this.savedTrainers.remove(id);
+	return this.save();
+}
+
 // Set mongoose model
 User.discriminator('client', ClientSchema);
