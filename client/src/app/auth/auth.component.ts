@@ -70,7 +70,12 @@ export class AuthComponent implements OnDestroy, OnInit {
 		this.isSubmitting = true;
 		this.errors = new Errors();
 
-		const credentials = this.authForm.value;
+		let credentials = this.authForm.value;
+
+		if (this.authType === 'register') {
+			credentials.usertype = 'client';
+		}
+
 		this.userService.attemptAuth(this.authType, credentials)
 			.takeUntil(this.ngUnsubscribe)
 			.subscribe(
