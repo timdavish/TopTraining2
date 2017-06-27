@@ -37,7 +37,7 @@ export class UserService implements OnDestroy {
 	public populate(): void {
 		// If JWT detected, attempt to get & store user's info
 		if (this.jwtService.getToken()) {
-			this.apiService.get('/user')
+			this.apiService.get('/users')
 				.takeUntil(this.ngUnsubscribe)
 				.subscribe(
 					data => {
@@ -46,7 +46,7 @@ export class UserService implements OnDestroy {
 					err => {
 						this.purgeAuth();
 					}
-				)
+				);
 		// Else, remove any potential remnants of previous auth states
 		} else {
 			this.purgeAuth();

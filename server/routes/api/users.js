@@ -17,11 +17,13 @@ const Sport = mongoose.model('Sport');
 router.post('/', function(req, res, next) {
 	let user;
 	let userData = req.body.user;
+	console.log(req.body);
 
 	// Create the correct type of user
 	if (userData.usertype === 'admin') {
 		user = new Admin();
 	} else if (userData.usertype === 'client') {
+		console.log('creating a client');
 		user = new Client();
 	} else if (userData.usertype === 'trainer') {
 		user = new Trainer();
@@ -51,7 +53,10 @@ router.post('/', function(req, res, next) {
 		user.setPassword(userData.password);
 	}
 
+	console.log(user);
+
 	user.save().then(function() {
+		console.log('user saved!');
 		return res.json({ user: user.toAuthJSON() });
 	}).catch(next);
 });
@@ -107,7 +112,7 @@ router.post('/login', function(req, res, next) {
 		// Success
 		user.token = user.generateJWT();
 		return res.json({ user: user.toAuthJSON() });
-	});
+	})(req, res, next);
 });
 
 module.exports = router;
