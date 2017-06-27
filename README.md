@@ -2,18 +2,20 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.1.
 
-## Development server
+## Development
 
-- This isn't the case rn (check https://stackoverflow.com/questions/42895585/hooking-up-express-js-with-angular-cli-in-dev-environment)
-- Terminal 1: `nodemon server.js --watch server`
-- Terminal 2: `ng serve --proxy-config proxy.config.json`
+- Terminal 1: `ng serve`
+- Terminal 2: `nodemon server.js --watch server`
 - Navigate to `http://localhost:4200/`.
 
 The app will automatically reload if you change any of the source files.
 
+- [Possible future consideration]( https://stackoverflow.com/questions/42895585/hooking-up-express-js-with-angular-cli-in-dev-environment)).
+
 ## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
+- Run `ng generate component component-name` to generate a new component.
+- You can also use `ng generate directive|pipe|service|class|module`.
 
 ## Build
 
