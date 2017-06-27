@@ -68,3 +68,5 @@ router.get('/client/:userId', auth.required, function(req, res, next) {
 		return res.sendStatus(401);
 	}
 });
+
+modules.exports = router;

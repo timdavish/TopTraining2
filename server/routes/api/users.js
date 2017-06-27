@@ -109,3 +109,5 @@ router.post('/login', function(req, res, next) {
 		return res.json({ user: user.toAuthJSON() });
 	});
 });
+
+modules.exports = router;
