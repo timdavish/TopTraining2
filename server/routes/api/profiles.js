@@ -67,4 +67,4 @@ router.get('/client/:userId', auth.required, function(req, res, next) {
 	}
 });
 
-modules.exports = router;
+module.exports = router;

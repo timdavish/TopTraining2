@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken'); // Used for generating tokens
 const secret = require('../config').secret;
 
 // Schema
-const UserSchemaOptions = {
+const options = {
 	discriminatorKey: 'usertype',
 	timestamps: true
 };
@@ -28,7 +28,7 @@ const UserSchema = new Schema({
         },
         facebook: {}
     }
-}, UserSchemaOptions);
+}, options);
 
 UserSchema.plugin(uniqueValidator, { message: 'is already taken' });
 

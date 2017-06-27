@@ -21,7 +21,7 @@ router.get('/trainers', auth.optional, function(req, res, next) {
     Trainer.aggregate([
         { $geoNear: { // calculates and sorts by distance
             query: {
-                usertype: 'trainer', // trainers only
+                usertype: 'Trainer', // trainers only
 				approved: true, // Approved only
                 'profiles.sport': searchParams.sport // trainers who train this sport only
             },
@@ -66,4 +66,4 @@ router.get('/trainers', auth.optional, function(req, res, next) {
 	}
 });
 
-modules.exports = router;
+module.exports = router;

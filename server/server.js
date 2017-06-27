@@ -1,20 +1,28 @@
 
 // Dependencies
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var methods = require('methods');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var cors = require('cors');
-var passport = require('passport');
-var errorhandler = require('errorhandler');
-var mongoose = require('mongoose');
+const express = require('express');
+const http = require('http');
+const path = require('path');
+const methods = require('methods');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const cors = require('cors');
+const passport = require('passport');
+const errorhandler = require('errorhandler');
+const mongoose = require('mongoose');
 
-var isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production';
+
+require('./models/Sport');
+require('./models/User');
+require('./models/Admin');
+require('./models/Client');
+require('./models/Trainer');
+
+require('./config/passport');
 
 // Create global app object
-var app = express();
+let app = express();
 
 app.use(cors());
 
@@ -41,16 +49,11 @@ if (isProduction) {
 	mongoose.set('debug', true);
 }
 
-// require('./config/passport');
-// require('./models/User');
-// require('./models/Article');
-// require('./models/Comment');
-
 app.use(require('./routes'));
 
 // Catch 404 and forward to a error handler
 app.use(function(req, res, next) {
-	var err = new Error('Not Found');
+	let err = new Error('Not Found');
 	err.status = 404;
 	next(err);
 });
@@ -79,6 +82,6 @@ if (isProduction) {
 }
 
 // Start server
-var server = app.listen(process.env.PORT || 3000, function() {
+let server = app.listen(process.env.PORT || 3000, function() {
 	console.log('Listening on port ' + server.address().port);
 });

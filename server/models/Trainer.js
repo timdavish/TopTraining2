@@ -6,6 +6,11 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const User = mongoose.model('User');
 
 // Schema
+const options = {
+	discriminatorKey: 'usertype',
+	timestamps: true
+};
+
 const TrainerSchema = new Schema({
 	approved: { type: Boolean, required: [true, "can't be blank"], default: false },
 	profiles: [{
@@ -46,7 +51,7 @@ const TrainerSchema = new Schema({
 			content: { type: String }
 		}]
 	}
-});
+}, options);
 
 // Index our searchable locations
 TrainerSchema.index({"profiles.locations.geometry": "2dsphere"});
@@ -78,4 +83,4 @@ TrainerSchema.methods.flipApproved = function() {
 };
 
 // Set mongoose model
-User.discriminator('trainer', TrainerSchema);
+User.discriminator('Trainer', TrainerSchema);

@@ -6,12 +6,17 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const User = mongoose.model('User');
 
 // Schema
+const options = {
+	discriminatorKey: 'usertype',
+	timestamps: true
+};
+
 const AdminSchema = new Schema({
 	actions: [{
 		date: { type: Date, required: [true, "can't be blank"], default: Date.now },
 	    message: { type: String, required: [true, "can't be blank"], default: '' }
 	}]
-});
+}, options);
 
 // JSONify admin data for auth
 AdminSchema.methods.toAuthJSON = function() {
@@ -28,4 +33,4 @@ AdminSchema.methods.logAction = function(action) {
 };
 
 // Set mongoose model
-User.discriminator('admin', AdminSchema);
+User.discriminator('Admin', AdminSchema);

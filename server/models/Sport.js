@@ -12,14 +12,14 @@ const SportSchema = new Schema({
 	trainers: [{ type: ObjectId, ref: 'User' }]
 }, SportSchemaOptions);
 
-SportSchema.methods.addTrainer(id) {
+SportSchema.methods.addTrainer = function(id) {
 	if (this.trainers.indexOf(id) === -1) {
 		this.trainers.push(id);
 	}
 	return this.save();
 };
 
-SportSchema.methods.removeTrainer(id) {
+SportSchema.methods.removeTrainer = function(id) {
 	this.trainers.remove(id);
 	return this.save();
 };

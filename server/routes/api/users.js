@@ -110,4 +110,4 @@ router.post('/login', function(req, res, next) {
 	});
 });
 
-modules.exports = router;
+module.exports = router;
