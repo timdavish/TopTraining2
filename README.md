@@ -4,13 +4,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development
 
-- Terminal 1: `ng serve`
-- Terminal 2: `nodemon server.js --watch server`
+- Terminal 1: `cd client/`, then run `ng serve` to build & serve the app.
+- Terminal 2: `cd server/`, then run `nodemon` to run the server.
 - Navigate to `http://localhost:4200/`.
 
-The app will automatically reload if you change any of the source files.
+Both the app and server will automatically reload if any changes occur.
 
-- [Possible future consideration]( https://stackoverflow.com/questions/42895585/hooking-up-express-js-with-angular-cli-in-dev-environment)).
+[Possible future consideration]( https://stackoverflow.com/questions/42895585/hooking-up-express-js-with-angular-cli-in-dev-environment).
 
 ## Code scaffolding
 
