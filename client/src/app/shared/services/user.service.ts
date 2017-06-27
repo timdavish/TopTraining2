@@ -85,11 +85,14 @@ export class UserService implements OnDestroy {
 	}
 
 	public update(user: any): Observable<User|Admin|Client|Trainer> {
-		return this.apiService
-			.put('/user', { user })
+		return this.apiService.put('/user', { user: user })
 			.map(data => {
 				this.currentUserSubject.next(data.user);
 				return data.user;
 			});
+	}
+
+	public delete(user: any): Observable<User|Admin|Client|Trainer> {
+		return this.apiService.delete('/user/' + user.id);
 	}
 }
