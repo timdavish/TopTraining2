@@ -7,8 +7,6 @@ const auth = require('../auth');
 // Database interaction
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
-const Client = mongoose.model('Client');
-const Trainer = mongoose.model('Trainer');
 
 // Preload user profile object
 router.param('userId', function(req, res, next, id) {
@@ -28,7 +26,7 @@ router.get('/trainer/:userId', auth.optional, function(req, res, next) {
 				if (!user) { return res.json({ profile: req.profile.toProfileJSONFor(false) }); }
 
 				return res.json({ profile: req.profile.toProfileJSONFor(user) });
-			}).catch(next);
+			});
 		} else {
 			return res.json({ profile: req.profile.toProfileJSONFor(false) });
 		}

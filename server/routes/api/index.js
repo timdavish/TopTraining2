@@ -2,6 +2,7 @@ var router = require('express').Router();
 
 router.use('/mail', require('./mail'));
 router.use('/profiles', require('./profiles'));
+router.use('/search', require('./search'));
 router.use('/users', require('./users'));
 
 router.use(function(err, req, res, next) {
