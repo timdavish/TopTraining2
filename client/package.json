@@ -1,7 +1,20 @@
 {
   "name": "toptraining2",
-  "version": "0.0.0",
-  "license": "MIT",
+  "version": "1.0.0",
+  "description": "An app that connects trainers to trainees.",
+  "license": "GNU",
+  "authors": [
+    "Tim Davis"
+  ],
+  "homepage": "https://www.TopTraining.pro",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timdavish/TopTraining.git"
+  },
+  "bugs": {
+    "url": "https://github.com/timdavish/TopTraining/issues"
+  },
+  "private": true,
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,7 +24,6 @@
     "e2e": "ng e2e",
     "stop": "taskkill /im node.exe /F"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "^4.0.0",
     "@angular/common": "^4.0.0",

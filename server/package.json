@@ -1,19 +1,26 @@
 {
-  "name": "conduit-node",
+  "name": "toptraining2",
   "version": "1.0.0",
-  "description": "conduit on node",
+  "description": "TopTraining on node",
+  "license": "GNU",
+  "authors": [
+    "Tim Davis"
+  ],
+  "homepage": "https://www.TopTraining.pro",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timdavish/TopTraining.git"
+  },
+  "bugs": {
+    "url": "https://github.com/timdavish/TopTraining/issues"
+  },
   "main": "server.js",
   "scripts": {
     "start": "node ./bin/start",
-	"stop": "taskkill /im node.exe /F",
+    "stop": "taskkill /im node.exe /F",
     "dev": "nodemon ./server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gothinkster/productionready-node-api.git"
-  },
-  "license": "ISC",
+},
   "dependencies": {
     "body-parser": "1.15.0",
     "cors": "2.7.1",
@@ -28,6 +35,7 @@
     "mongoose": "4.4.10",
     "mongoose-unique-validator": "1.0.2",
     "morgan": "1.7.0",
+    "nodemailer": "^4.0.1",
     "passport": "0.3.2",
     "passport-local": "1.0.0",
     "request": "2.69.0",
