@@ -81,8 +81,8 @@ export class AuthComponent implements OnDestroy, OnInit {
 	}
 
 	public submitForm(): void {
-		this.isSubmitting = true;
 		this.errors = new Errors();
+		this.isSubmitting = true;
 
 		let credentials = this.authForm.value;
 
@@ -99,7 +99,9 @@ export class AuthComponent implements OnDestroy, OnInit {
 			.takeUntil(this.ngUnsubscribe)
 			.subscribe(
 				data => {
-					this.router.navigateByUrl('/')
+					let route = '/';
+					if (this.authType === 'trainer_app') `${route}editor/trainer_app`;
+					this.router.navigateByUrl(route)
 				},
 				err => {
 					this.errors = err;

@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { BannerComponent } from './banner.component';
 import { HomeComponent } from './home.component';
 
+import { SharedModule } from '../shared';
+
 const homeRouting: ModuleWithProviders = RouterModule.forChild([
 	{
 		path: '',
@@ -15,8 +17,8 @@ const homeRouting: ModuleWithProviders = RouterModule.forChild([
 @NgModule({
 	imports: [
 		CommonModule,
-
-		homeRouting
+		homeRouting,
+		SharedModule
 	],
 	declarations: [
 		BannerComponent,

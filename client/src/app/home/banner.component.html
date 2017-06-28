@@ -33,8 +33,9 @@
 					<!-- /Default view -->
 
 					<!-- Find a Trainer View -->
-					<form *ngSwitchCase="'search'"
-					    class="list-inline fix-form">
+					<form [formGroup]="searchForm" (ngSubmit)="submitForm()"
+						*ngSwitchCase="'search'" class="list-inline fix-form">
+						<fieldset [disabled]="isSubmitting">
 
 					    <!-- Back button -->
 					    <input class="form-control input-lg input-search btn-primary header-button-sm header-button-text"
@@ -50,6 +51,15 @@
 					            type="text" placeholder="Sport" /></li> -->
 					    <!-- /Sport -->
 
+						<fieldset class="form-group">
+							<input class="form-control form-control-lg"
+								[(ngModel)]="address"
+								(setAddress)="getAddress($event)"
+								locationAutocomplete
+								formControlName="location"
+								placeholder="Location"
+								type="text" />
+						</fieldset>
 					    <!-- Location -->
 					    <!-- <li><input class="form-control input-lg input-search" id="results"
 					            ng-model="vm.searchParams.location"
@@ -61,7 +71,7 @@
 					    <!-- <li><input class="form-control input-lg input-search btn-primary header-button-sm header-button-text"
 					            type="submit" value="Search" /></li> -->
 					    <!-- /Search -->
-
+						</fieldset>
 					</form>
 					<!-- /Find a Trainer View -->
 

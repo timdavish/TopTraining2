@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 
 import { AuthModule } from './auth/auth.module';
+import { EditorModule } from './editor/editor.module';
 import { HomeModule } from './home/home.module';
 import {
 	SharedModule,
@@ -28,6 +29,7 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
 	],
 	imports: [
 		AuthModule,
+		EditorModule,
 		BrowserModule,
 		HomeModule,
 		SharedModule,
