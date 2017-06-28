@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { ListErrorsComponent } from './errors/list-errors.component';
 
+import { LocationAutocompleteDirective } from './directives/location-autocomplete.directive';
 import { ShowAuthedDirective } from './directives/show-authed.directive';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { ShowAuthedDirective } from './directives/show-authed.directive';
 	declarations: [
 		ListErrorsComponent,
 
+		LocationAutocompleteDirective,
 		ShowAuthedDirective
 	],
 	exports: [
@@ -30,6 +32,7 @@ import { ShowAuthedDirective } from './directives/show-authed.directive';
 
 		ListErrorsComponent,
 
+		LocationAutocompleteDirective,
 		ShowAuthedDirective
 	]
 })
