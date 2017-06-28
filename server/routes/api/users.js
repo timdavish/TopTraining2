@@ -21,28 +21,16 @@ router.post('/', function(req, res, next) {
 
 	// Create the correct type of user
 	if (userData.usertype === 'admin') {
+		console.log('creating an admin');
 		user = new Admin();
 	} else if (userData.usertype === 'client') {
 		console.log('creating a client');
 		user = new Client();
+		user.zipcode = userData.zipcode;
 	} else if (userData.usertype === 'trainer') {
+		console.log('creating a trainer');
 		user = new Trainer();
-		user.profiles.push(userData.sportData);
-
-		Sport.findOne({ sport: userData.sportData.sport }).then(function(sport) {
-			sport.trainers.push(user);
-			sport.save();
-		}).catch(next);
-
-		// Sport.update(
-		// 	{ 'sport': userData.sportData.sport },
-		// 	{ '$push': {
-		// 		"trainers": user
-		// 	}},
-		// 	function(err) {
-		// 		if (err) { return next(err); }
-		// 	}
-		// );
+		user.contact.phone = userData.phone;
 	}
 
 	// Add general data

@@ -16,10 +16,10 @@ const options = {
 
 const UserSchema = new Schema({
     contact: {
-        email: { type: String, required: [true, "can't be blank"], unique: true, lowercase: true, match: [/^[a-zA-Z0-9]+$/, 'is invalid'], index: true },
-        phone: { type: Number },
-        firstname: { type: String },
-        lastname: { type: String }
+        email: { type: String, required: [true, "can't be blank"], unique: true, lowercase: true, match: [/\S+@\S+\.\S+/, 'is invalid'], index: true },
+        phone: { type: String, match: [/^\(?\d{3}\)?-?\d{3}-?\d{4}$/, 'is invalid'] },
+        firstname: { type: String, required: [true, "can't be blank"] },
+        lastname: { type: String, required: [true, "can't be blank"] }
     },
     accounts: {
         local: {

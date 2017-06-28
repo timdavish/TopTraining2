@@ -12,7 +12,8 @@ const options = {
 };
 
 const TrainerSchema = new Schema({
-	approved: { type: Boolean, required: [true, "can't be blank"], default: false },
+	completed_app: { type: Boolean, required: true, default: false },
+	approved: { type: Boolean, required: true, default: false },
 	profiles: [{
 		sport: { type: String, required: [true, "can't be blank"], lowercase: true },
 		locations: [{
