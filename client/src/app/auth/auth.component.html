@@ -2,25 +2,26 @@
 	<div class="container page">
 		<div class="row">
 
-			<div class="col-md-6 offset-md-3 col-xs-12">
-				<h1 class="text-xs-center">{{ title }}</h1>
-				<p class="text-xs-center">
-					<a [routerLink]="['/login']" *ngIf="authType === 'register'">Have an account?</a>
+			<div class="col-sm-6 col-sm-offset-3 col-xs-12">
+				<h1 class="text-center">{{ title }}</h1>
+				<p class="text-center">
+					<a [routerLink]="['/login']" *ngIf="authType === 'register' || authType === 'trainer_app'">Have an account?</a>
 					<a [routerLink]="['/register']" *ngIf="authType === 'login'">Need an account?</a>
 				</p>
 				<list-errors [errors]="errors"></list-errors>
 
 				<form [formGroup]="authForm" (ngSubmit)="submitForm()">
 					<fieldset [disabled]="isSubmitting">
+
 						<fieldset class="form-group"
-							*ngIf="authType === 'register'">
+							*ngIf="authType === 'register' || authType === 'trainer_app'">
 							<input class="form-control form-control-lg"
 								formControlName="firstname"
 								placeholder="First name"
 								type="text" />
 						</fieldset>
 						<fieldset class="form-group"
-							*ngIf="authType === 'register'">
+							*ngIf="authType === 'register' || authType === 'trainer_app'">
 							<input class="form-control form-control-lg"
 								formControlName="lastname"
 								placeholder="Last name"
@@ -32,6 +33,22 @@
 								placeholder="Email"
 								type="text" />
 						</fieldset>
+						<fieldset class="form-group"
+							*ngIf="authType === 'register'">
+							<input class="form-control form-control-lg"
+								formControlName="zipcode"
+								placeholder="Zipcode"
+								type="number" />
+						</fieldset>
+						<fieldset class="form-group"
+							*ngIf="authType === 'trainer_app'">
+							<input class="form-control form-control-lg"
+								formControlName="phone"
+								placeholder="Phone"
+								type="tel"
+								pattern="^\d{3}-?\d{3}-?\d{4}$"
+								title="Phone number (e.g. 123-456-7890)" />
+						</fieldset>
 						<fieldset class="form-group">
 							<input class="form-control form-control-lg"
 								formControlName="password"
@@ -39,16 +56,18 @@
 								type="password" />
 						</fieldset>
 						<fieldset class="form-group"
-							*ngIf="authType === 'register'">
+							*ngIf="authType === 'register' || authType === 'trainer_app'">
 							<input class="form-control form-control-lg"
 								formControlName="password_verify"
 								placeholder="Re-enter password"
 								type="password" />
 						</fieldset>
-						<button class="btn btn-lg btn-primary pull-xs-right"
+
+						<button class="btn btn-lg btn-primary pull-right"
 							type="submit">
-							{{ title }}
+							{{ buttonText }}
 						</button>
+
 					</fieldset>
 				</form>
 			</div>

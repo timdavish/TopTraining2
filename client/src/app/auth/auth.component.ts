@@ -8,6 +8,7 @@ import { Errors, UserService } from '../shared';
 
 const LOGIN_TITLE = 'Log In';
 const REGISTER_TITLE = 'Sign Up';
+const TRAINER_APP_TITLE = 'Trainer Application';
 
 @Component({
 	selector: 'auth-page',
@@ -16,9 +17,10 @@ const REGISTER_TITLE = 'Sign Up';
 export class AuthComponent implements OnDestroy, OnInit {
 	private ngUnsubscribe: Subject<void> = new Subject<void>();
 
+	errors: Errors = new Errors();
 	authType: string = '';
 	title: string = '';
-	errors: Errors = new Errors();
+	buttonText: string = '';
 	isSubmitting: boolean = false;
 	authForm: FormGroup;
 
@@ -37,7 +39,9 @@ export class AuthComponent implements OnDestroy, OnInit {
 					// Get and set whether we're on login or register
 					this.authType = data[data.length - 1].path;
 					// Set title for the page accordingly
-					this.title = (this.authType === 'login') ? LOGIN_TITLE : REGISTER_TITLE;
+					this.title = (this.authType === 'login') ? LOGIN_TITLE : (this.authType === 'register' ? REGISTER_TITLE : TRAINER_APP_TITLE);
+					// Set button text for the page accordingly
+					this.buttonText = (this.authType === 'login') ? LOGIN_TITLE : (this.authType === 'register' ? REGISTER_TITLE : 'Continue');
 					// Add extra form controls if this is the register page
 					this.createFormGroup();
 				},
@@ -58,11 +62,21 @@ export class AuthComponent implements OnDestroy, OnInit {
 			'password': ['', Validators.required]
 		});
 
-		if (this.authType === 'register') {
-			// Add firstname, lastname, confirm password, zipcode? controls
+		if (this.authType === 'register' || this.authType === 'trainer_app') {
+			// Add firstname, lastname, confirm password, controls
 			this.authForm.addControl('firstname', new FormControl('', Validators.required));
 			this.authForm.addControl('lastname', new FormControl('', Validators.required));
 			this.authForm.addControl('password_verify', new FormControl('', Validators.required));
+		}
+
+		if (this.authType === 'register') {
+			// Add zipcode control
+			this.authForm.addControl('zipcode', new FormControl());
+		}
+
+		if (this.authType === 'trainer_app') {
+			// Add phone control
+			this.authForm.addControl('phone', new FormControl('', Validators.required));
 		}
 	}
 
@@ -72,9 +86,14 @@ export class AuthComponent implements OnDestroy, OnInit {
 
 		let credentials = this.authForm.value;
 
+		// If registering, set usertype
 		if (this.authType === 'register') {
 			credentials.usertype = 'client';
+		} else if (this.authType === 'trainer_app') {
+			credentials.usertype = 'trainer';
 		}
+
+		console.log(credentials);
 
 		this.userService.attemptAuth(this.authType, credentials)
 			.takeUntil(this.ngUnsubscribe)

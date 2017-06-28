@@ -2,7 +2,6 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AuthComponent } from './auth.component';
-import { TrainerAppComponent } from './trainer-app.component';
 
 import { NoAuthGuard } from './no-auth-guard.service';
 import { SharedModule } from '../shared';
@@ -20,7 +19,7 @@ const authRouting: ModuleWithProviders = RouterModule.forChild([
 	},
 	{
 		path: 'trainer_app',
-		component: TrainerAppComponent,
+		component: AuthComponent,
 		canActivate: [NoAuthGuard]
 	}
 ]);
@@ -31,8 +30,7 @@ const authRouting: ModuleWithProviders = RouterModule.forChild([
 		SharedModule
 	],
 	declarations: [
-		AuthComponent,
-		TrainerAppComponent
+		AuthComponent
 	],
 	providers: [
 		NoAuthGuard
