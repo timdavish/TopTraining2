@@ -1,27 +1,22 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Output } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { Directive, ElementRef, EventEmitter, OnInit, Output } from '@angular/core';
 
 declare let google: any;
 
 @Directive({
-	selector: '[locationAutocomplete]',
-	providers: [NgModel],
-	host: { '(input)': 'onInputChange()' }
+	selector: '[locationAutocomplete]'
 })
-export class LocationAutocompleteDirective implements AfterViewInit {
+export class LocationAutocompleteDirective implements OnInit {
+	private readonly options: any = { componentRestrictions: { country: 'US' } };
+
 	private autocomplete: any;
 	private input: any;
-	private options: any = { componentRestrictions: { country: 'US' } };
-	modelValue: any;
 
 	constructor(
-		private elementRef: ElementRef,
-		private model: NgModel
+		private elementRef: ElementRef
 	) {}
 
-	ngAfterViewInit(): void {
+	ngOnInit(): void {
 		this.input = this.elementRef.nativeElement;
-		this.modelValue = this.model;
 
 		this.autocomplete = new google.maps.places.Autocomplete(this.input, this.options);
 
@@ -36,6 +31,4 @@ export class LocationAutocompleteDirective implements AfterViewInit {
 	invokeEvent(place: Object) {
 		this.setAddress.emit(place);
 	}
-
-	onInputChange() {}
 }

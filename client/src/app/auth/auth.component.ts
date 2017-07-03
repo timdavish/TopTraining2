@@ -11,6 +11,12 @@ import { Errors, UserService } from '../shared';
 	templateUrl: './auth.component.html'
 })
 export class AuthComponent implements OnDestroy, OnInit {
+	private readonly titles = {
+		login: 'Log In',
+		register: 'Sign Up',
+		trainer_app: 'Trainer Application'
+	};
+
 	authForm: FormGroup;
 	authType: string = '';
 	buttonText: string = '';
@@ -19,11 +25,6 @@ export class AuthComponent implements OnDestroy, OnInit {
 	title: string = '';
 
 	private ngUnsubscribe: Subject<void> = new Subject<void>();
-	private readonly titles = {
-		login: 'Log In',
-		register: 'Sign Up',
-		trainer_app: 'Trainer Application'
-	};
 
 	constructor(
 		private fb: FormBuilder,

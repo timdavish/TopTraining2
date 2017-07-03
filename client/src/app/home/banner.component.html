@@ -53,9 +53,9 @@
 
 						<fieldset class="form-group">
 							<input class="form-control form-control-lg"
+								locationAutocomplete
 								[(ngModel)]="address"
 								(setAddress)="getAddress($event)"
-								locationAutocomplete
 								formControlName="location"
 								placeholder="Location"
 								type="text" />

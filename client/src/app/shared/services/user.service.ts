@@ -9,17 +9,17 @@ import 'rxjs/add/operator/takeUntil';
 
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
-import { User, Admin, Client, Trainer } from '../models';
+import { User } from '../models';
 
 @Injectable()
 export class UserService implements OnDestroy {
-	private ngUnsubscribe: Subject<void> = new Subject<void>();
+	private readonly currentUserSubject = new BehaviorSubject<User>(new User());
+	private readonly isAuthenticatedSubject = new ReplaySubject<boolean>(1);
 
-	private currentUserSubject = new BehaviorSubject<User|Admin|Client|Trainer>(new User());
 	public currentUser = this.currentUserSubject.asObservable().distinctUntilChanged();
-
-	private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
 	public isAuthenticated = this.isAuthenticatedSubject.asObservable();
+
+	private ngUnsubscribe: Subject<void> = new Subject<void>();
 
 	constructor(
 		private apiService: ApiService,
@@ -53,7 +53,7 @@ export class UserService implements OnDestroy {
 		}
 	}
 
-	public setAuth(user: User|Admin|Client|Trainer): void {
+	public setAuth(user: User): void {
 		// Save JWT sent from server in localstorage
 		this.jwtService.saveToken(user.token);
 		// Set current user data into observable
@@ -71,7 +71,7 @@ export class UserService implements OnDestroy {
 		this.isAuthenticatedSubject.next(false);
 	}
 
-	public attemptAuth(type: string, credentials: any): Observable<User|Admin|Client|Trainer> {
+	public attemptAuth(type: string, credentials: any): Observable<User> {
 		const route = (type === 'login') ? '/login' : '';
 		return this.apiService.post('/users' + route, { user: credentials })
 			.map(data => {
@@ -80,11 +80,11 @@ export class UserService implements OnDestroy {
 			});
 	}
 
-	public getCurrentUser(): User|Admin|Client|Trainer {
+	public getCurrentUser(): User {
 		return this.currentUserSubject.value;
 	}
 
-	public update(user: any): Observable<User|Admin|Client|Trainer> {
+	public update(user: any): Observable<User> {
 		return this.apiService.put('/user', { user: user })
 			.map(data => {
 				this.currentUserSubject.next(data.user);
@@ -92,7 +92,7 @@ export class UserService implements OnDestroy {
 			});
 	}
 
-	public delete(user: any): Observable<User|Admin|Client|Trainer> {
+	public delete(user: any): Observable<User> {
 		return this.apiService.delete('/user/' + user.id);
 	}
 }

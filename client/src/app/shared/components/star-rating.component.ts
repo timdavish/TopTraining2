@@ -5,12 +5,13 @@ import { Component, Input } from '@angular/core';
 	templateUrl: './star-rating.component.html'
 })
 export class StarRatingComponent {
-	private stars: Array<string> = [];
 	private readonly star = {
-		full: 'fa-star',
-		half: 'fa-star-half-o',
-		empty: 'fa-star-o'
+		full: 'fa fa-star',
+		half: 'fa fa-star-half-o',
+		empty: 'fa fa-star-o'
 	};
+
+	private stars: Array<string> = [];
 
 	@Input() rating: number;
 

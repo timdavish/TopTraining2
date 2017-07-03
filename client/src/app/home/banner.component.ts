@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Errors, SharedModule, UserService } from '../shared';
+import { Errors, SharedModule } from '../shared';
 
 @Component({
 	selector: 'home-banner',
@@ -9,15 +9,14 @@ import { Errors, SharedModule, UserService } from '../shared';
 	styleUrls: ['./banner.component.css']
 })
 export class BannerComponent implements OnInit {
-	errors: Errors = new Errors();
+	address: Object;
 	bannerView: string = '';
+	errors: Errors = new Errors();
 	isSubmitting: boolean = false;
 	searchForm: FormGroup;
-	address: Object;
 
 	constructor(
-		private fb: FormBuilder,
-		private userService: UserService
+		private fb: FormBuilder
 	) {}
 
 	ngOnInit(): void {
@@ -27,12 +26,6 @@ export class BannerComponent implements OnInit {
 		});
 	}
 
-	public submitForm(): void {
-		this.isSubmitting = true;
-		this.errors = new Errors();
-
-	}
-
 	public getAddress(place: Object): void {
         this.address = place['formatted_address'];
         var location = place['geometry']['location'];
@@ -40,4 +33,10 @@ export class BannerComponent implements OnInit {
         var lng = location.lng();
         console.log("Address Object", place);
     }
+
+	public submitForm(): void {
+		this.isSubmitting = true;
+		this.errors = new Errors();
+
+	}
 }

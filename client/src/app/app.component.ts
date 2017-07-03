@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
 		private userService: UserService
 	) {}
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this.userService.populate();
 	}
 }

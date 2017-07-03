@@ -6,9 +6,9 @@ import { UserService } from '../services/user.service';
 
 @Directive({ selector: '[showAuthed]' })
 export class ShowAuthedDirective implements OnDestroy, OnInit {
-	private ngUnsubscribe: Subject<void> = new Subject<void>();
-
 	condition: boolean;
+
+	private ngUnsubscribe: Subject<void> = new Subject<void>();
 
 	constructor(
 		private templateRef: TemplateRef<any>,

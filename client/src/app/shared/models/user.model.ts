@@ -16,23 +16,16 @@ export class User {
 		createdAt: string,
 		activeAt: string
 	};
-}
 
-export class Admin extends User {
 	// Admin properties
-	actions: [{
+	actions?: [{
 		admin: User,
 		createdAt: string,
 		message: string
 	}];
-}
 
-export class Client extends User {
 	// Client properties
 
-}
-
-export class Trainer extends User {
 	// Trainer properties
 	approved: boolean;
 	profiles: [{

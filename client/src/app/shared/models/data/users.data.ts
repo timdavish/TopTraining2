@@ -1,6 +1,6 @@
-import { User, Admin, Client, Trainer } from '../';
+import { User } from '../';
 
-const trainer: Trainer = {
+const trainer: User = {
 	usertype: 'Trainer',
 	token: 'token',
 	contact: {

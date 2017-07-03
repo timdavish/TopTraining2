@@ -12,9 +12,9 @@ import { User } from '../models';
 	styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnDestroy, OnInit {
-	private ngUnsubscribe: Subject<void> = new Subject<void>();
-
 	currentUser: User;
+
+	private ngUnsubscribe: Subject<void> = new Subject<void>();
 
 	constructor(
 		private router: Router,
