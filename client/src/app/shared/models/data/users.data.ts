@@ -1,4 +1,4 @@
-import { User, Admin, Client, Trainer } from '../models';
+import { User, Admin, Client, Trainer } from '../';
 
 const trainer: Trainer = {
 	usertype: 'Trainer',

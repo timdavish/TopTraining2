@@ -4,7 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
-import { ListErrorsComponent } from './errors/list-errors.component';
+import { ListErrorsComponent } from './components/list-errors.component';
+import { StarRatingComponent } from './components/star-rating.component';
 
 import { LocationAutocompleteDirective } from './directives/location-autocomplete.directive';
 import { ShowAuthedDirective } from './directives/show-authed.directive';
@@ -19,6 +20,7 @@ import { ShowAuthedDirective } from './directives/show-authed.directive';
 	],
 	declarations: [
 		ListErrorsComponent,
+		StarRatingComponent,
 
 		LocationAutocompleteDirective,
 		ShowAuthedDirective
@@ -31,6 +33,7 @@ import { ShowAuthedDirective } from './directives/show-authed.directive';
 		RouterModule,
 
 		ListErrorsComponent,
+		StarRatingComponent,
 
 		LocationAutocompleteDirective,
 		ShowAuthedDirective
