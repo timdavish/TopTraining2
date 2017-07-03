@@ -6,23 +6,24 @@ import 'rxjs/add/operator/takeUntil';
 
 import { Errors, UserService } from '../shared';
 
-const LOGIN_TITLE = 'Log In';
-const REGISTER_TITLE = 'Sign Up';
-const TRAINER_APP_TITLE = 'Trainer Application';
-
 @Component({
 	selector: 'auth-page',
 	templateUrl: './auth.component.html'
 })
 export class AuthComponent implements OnDestroy, OnInit {
-	private ngUnsubscribe: Subject<void> = new Subject<void>();
-
-	errors: Errors = new Errors();
-	authType: string = '';
-	title: string = '';
-	buttonText: string = '';
-	isSubmitting: boolean = false;
 	authForm: FormGroup;
+	authType: string = '';
+	buttonText: string = '';
+	errors: Errors = new Errors();
+	isSubmitting: boolean = false;
+	title: string = '';
+
+	private ngUnsubscribe: Subject<void> = new Subject<void>();
+	private readonly titles = {
+		login: 'Log In',
+		register: 'Sign Up',
+		trainer_app: 'Trainer Application'
+	};
 
 	constructor(
 		private fb: FormBuilder,
@@ -36,13 +37,15 @@ export class AuthComponent implements OnDestroy, OnInit {
 			.takeUntil(this.ngUnsubscribe)
 			.subscribe(
 				data => {
-					// Get and set whether we're on login or register
+					// Get and set whether we're on login, register or trainer_app page
 					this.authType = data[data.length - 1].path;
 					// Set title for the page accordingly
-					this.title = (this.authType === 'login') ? LOGIN_TITLE : (this.authType === 'register' ? REGISTER_TITLE : TRAINER_APP_TITLE);
+					this.title = (this.authType === 'login') ? this.titles.login :
+						(this.authType === 'register' ? this.titles.register : this.titles.trainer_app);
 					// Set button text for the page accordingly
-					this.buttonText = (this.authType === 'login') ? LOGIN_TITLE : (this.authType === 'register' ? REGISTER_TITLE : 'Continue');
-					// Add extra form controls if this is the register page
+					this.buttonText = (this.authType === 'login') ? this.titles.login :
+						(this.authType === 'register' ? this.titles.register : 'Continue');
+					// Build the form group
 					this.createFormGroup();
 				},
 				err => {}
@@ -53,6 +56,33 @@ export class AuthComponent implements OnDestroy, OnInit {
 		// Clean up subscriptions
 		this.ngUnsubscribe.next();
 		this.ngUnsubscribe.complete();
+	}
+
+	public submitForm(): void {
+		this.errors = new Errors();
+		this.isSubmitting = true;
+
+		let credentials = this.authForm.value;
+
+		// If registering, set usertype
+		if (this.authType === 'register') {
+			credentials.usertype = 'client';
+		} else if (this.authType === 'trainer_app') {
+			credentials.usertype = 'trainer';
+		}
+
+		this.userService.attemptAuth(this.authType, credentials)
+			.takeUntil(this.ngUnsubscribe)
+			.subscribe(
+				data => {
+					const route = this.authType === 'trainer_app' ? '/editor/trainer_app' : '/';
+					this.router.navigateByUrl(route)
+				},
+				err => {
+					this.errors = err;
+					this.isSubmitting = false;
+				}
+			);
 	}
 
 	private createFormGroup(): void {
@@ -76,37 +106,7 @@ export class AuthComponent implements OnDestroy, OnInit {
 
 		if (this.authType === 'trainer_app') {
 			// Add phone control
-			this.authForm.addControl('phone', new FormControl('', Validators.required));
+			this.authForm.addControl('phone', new FormControl());
 		}
-	}
-
-	public submitForm(): void {
-		this.errors = new Errors();
-		this.isSubmitting = true;
-
-		let credentials = this.authForm.value;
-
-		// If registering, set usertype
-		if (this.authType === 'register') {
-			credentials.usertype = 'client';
-		} else if (this.authType === 'trainer_app') {
-			credentials.usertype = 'trainer';
-		}
-
-		console.log(credentials);
-
-		this.userService.attemptAuth(this.authType, credentials)
-			.takeUntil(this.ngUnsubscribe)
-			.subscribe(
-				data => {
-					let route = '/';
-					if (this.authType === 'trainer_app') `${route}editor/trainer_app`;
-					this.router.navigateByUrl(route)
-				},
-				err => {
-					this.errors = err;
-					this.isSubmitting = false;
-				}
-			);
 	}
 }
