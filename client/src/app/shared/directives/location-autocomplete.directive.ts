@@ -3,7 +3,7 @@ import { Directive, ElementRef, EventEmitter, OnInit, Output } from '@angular/co
 declare let google: any;
 
 @Directive({
-	selector: '[locationAutocomplete]'
+	selector: 'input[locationAutocomplete]'
 })
 export class LocationAutocompleteDirective implements OnInit {
 	private readonly options: any = { componentRestrictions: { country: 'US' } };

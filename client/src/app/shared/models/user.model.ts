@@ -38,9 +38,9 @@ export class User {
 			school: string
 		},
 		services: {
-			ages: [string],
-			positions: [string],
-			specialties: [string]
+			ages: Array<string>,
+			positions: Array<string>,
+			specialties: Array<string>
 		}
 	}];
 	rating;

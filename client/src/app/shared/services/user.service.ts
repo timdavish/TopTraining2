@@ -1,8 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/takeUntil';
@@ -93,6 +93,6 @@ export class UserService implements OnDestroy {
 	}
 
 	public delete(user: any): Observable<User> {
-		return this.apiService.delete('/user/' + user.id);
+		return this.apiService.delete('/users/' + user.id);
 	}
 }

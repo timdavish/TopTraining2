@@ -15,5 +15,4 @@ export class JwtService {
 	public destroyToken(): void {
 		window.localStorage.removeItem(this.tokenName);
 	}
-
 }
