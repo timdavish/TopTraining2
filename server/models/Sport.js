@@ -12,6 +12,14 @@ const SportSchema = new Schema({
 	trainers: [{ type: ObjectId, ref: 'User' }]
 }, SportSchemaOptions);
 
+// JSONify sport data
+SportSchema.methods.toJSON = function() {
+	return {
+		sport: this.sport,
+		trainers: this.trainers
+	};
+};
+
 SportSchema.methods.addTrainer = function(id) {
 	if (this.trainers.indexOf(id) === -1) {
 		this.trainers.push(id);

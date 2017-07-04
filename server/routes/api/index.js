@@ -6,6 +6,7 @@ const router = express.Router();
 router.use('/mail', require('./mail'));
 router.use('/profiles', require('./profiles'));
 router.use('/search', require('./search'));
+router.use('/sports', require('./sports'));
 router.use('/users', require('./users'));
 
 router.use(function(err, req, res, next) {
