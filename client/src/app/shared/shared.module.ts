@@ -10,6 +10,8 @@ import { StarRatingComponent } from './components/star-rating.component';
 import { LocationAutocompleteDirective } from './directives/location-autocomplete.directive';
 import { ShowAuthedDirective } from './directives/show-authed.directive';
 
+import { UppercaseFirstPipe } from './pipes/uppercase-first.pipe';
+
 @NgModule({
 	imports: [
 		CommonModule,
@@ -23,7 +25,9 @@ import { ShowAuthedDirective } from './directives/show-authed.directive';
 		StarRatingComponent,
 
 		LocationAutocompleteDirective,
-		ShowAuthedDirective
+		ShowAuthedDirective,
+
+		UppercaseFirstPipe
 	],
 	exports: [
 		CommonModule,
@@ -36,7 +40,9 @@ import { ShowAuthedDirective } from './directives/show-authed.directive';
 		StarRatingComponent,
 
 		LocationAutocompleteDirective,
-		ShowAuthedDirective
+		ShowAuthedDirective,
+
+		UppercaseFirstPipe
 	]
 })
 export class SharedModule {}
