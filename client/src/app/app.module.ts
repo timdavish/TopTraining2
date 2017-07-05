@@ -16,6 +16,7 @@ import {
 	ApiService,
 	AuthGuard,
 	JwtService,
+	LocationService,
 	SportService,
 	UserService
 } from './shared';
@@ -41,6 +42,7 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
 		ApiService,
 		AuthGuard,
 		JwtService,
+		LocationService,
 		SportService,
 		UserService
 	],

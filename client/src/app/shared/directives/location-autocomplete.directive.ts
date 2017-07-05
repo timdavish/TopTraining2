@@ -1,6 +1,6 @@
 import { Directive, ElementRef, EventEmitter, OnInit, Output } from '@angular/core';
 
-declare let google: any;
+declare const google: any;
 
 @Directive({
 	selector: 'input[locationAutocomplete]'
