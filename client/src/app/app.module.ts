@@ -15,6 +15,7 @@ import {
 
 	ApiService,
 	AuthGuard,
+	DeactivateGuard,
 	JwtService,
 	LocationService,
 	SportService,
@@ -41,6 +42,7 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
 	providers: [
 		ApiService,
 		AuthGuard,
+		DeactivateGuard,
 		JwtService,
 		LocationService,
 		SportService,
