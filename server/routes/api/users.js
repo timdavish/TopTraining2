@@ -98,6 +98,15 @@ router.put('/', auth.required, function(req, res, next) {
 	}).catch(next);
 });
 
+// Delete a user
+router.delete('/:id', auth.required, function(req, res, next) {
+	User.findOneAndRemove(req.params.id).then(function(user) {
+		if (!user) { return res.sendStatus(401); }
+
+		return res.json('User has been deleted.');
+	}).catch(next);
+});
+
 // Log in a user
 router.post('/login', function(req, res, next) {
 	if (!req.body.user.email) {
