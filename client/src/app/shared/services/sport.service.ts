@@ -43,14 +43,14 @@ export class SportService implements OnDestroy {
 		this.sportsSubject.next(sports);
 	}
 
-	public getSports(): Array<Sport> {
-		return this.sportsSubject.value;
+	public getSports(): Observable<Array<Sport>> {
+		return this.sports;
 	}
 
 	public create(sport: any): Observable<Sport> {
 		return this.apiService.post('/sports', { sport: sport })
 			.map(data => {
-				let sports = this.getSports();
+				let sports = this.sportsSubject.value;
 				sports.push(data.sport);
 
 				this.setSports(sports);
