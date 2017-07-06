@@ -8,7 +8,7 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const SportSchemaOptions = { timestamps: true };
 
 const SportSchema = new Schema({
-    sport: { type: String, required: [true, "can't be blank"], unique: true },
+    sport: { type: String, required: [true, "can't be blank"], unique: true, lowercase: true },
 	trainers: [{ type: ObjectId, ref: 'User' }]
 }, SportSchemaOptions);
 

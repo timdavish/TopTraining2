@@ -7,7 +7,6 @@ const User = mongoose.model('User');
 
 // Schema
 const ClientSchema = new Schema({
-	zipcode: { type: Number },
 	activeSessions: [{
 		trainer: { type: ObjectId, ref: 'User' },
 		sport: { type: String },
@@ -23,6 +22,7 @@ const ClientSchema = new Schema({
 // JSONify client data for auth
 ClientSchema.methods.toAuthJSON = function() {
 	return {
+		id: this._id,
 		token: this.generateJWT(),
 		usertype: this.usertype,
 		contact: this.contact,

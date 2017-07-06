@@ -21,6 +21,7 @@ const AdminSchema = new Schema({
 // JSONify admin data for auth
 AdminSchema.methods.toAuthJSON = function() {
 	return {
+		id: this._id,
 		token: this.generateJWT(),
 		usertype: this.usertype,
 		contact: this.contact,

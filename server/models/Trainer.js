@@ -13,9 +13,10 @@ const options = {
 
 const TrainerSchema = new Schema({
 	completed_app: { type: Boolean, required: true, default: false },
-	approved: { type: Boolean, required: true, default: false },
 	profiles: [{
 		sport: { type: String, required: [true, "can't be blank"], lowercase: true },
+		approved: { type: Boolean, required: true, default: false },
+		image: { type: String }
 		locations: [{
 			priority: { type: Number, required: [true, "can't be blank"], default: 1 },
 			formatted_address: { type: String, required: [true, "can't be blank"] },
@@ -60,6 +61,7 @@ TrainerSchema.index({"profiles.locations.geometry": "2dsphere"});
 // JSONify trainer data for auth
 TrainerSchema.methods.toAuthJSON = function() {
 	return {
+		id: this._id,
 		token: this.generateJWT(),
 		usertype: this.usertype,
 		contact: this.contact,

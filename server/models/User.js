@@ -19,7 +19,20 @@ const UserSchema = new Schema({
         email: { type: String, required: [true, "can't be blank"], unique: true, lowercase: true, match: [/\S+@\S+\.\S+/, 'is invalid'], index: true },
         phone: { type: String, match: [/^\(?\d{3}\)?-?\d{3}-?\d{4}$/, 'is invalid'] },
         firstname: { type: String, required: [true, "can't be blank"] },
-        lastname: { type: String, required: [true, "can't be blank"] }
+        lastname: { type: String, required: [true, "can't be blank"] },
+		gender: String,
+		dob: {
+			year: { type: Number },
+			month: { type: Number },
+			day: { type: Number }
+		},
+		address: {
+			street_one: { type: String },
+			street_two: { type: String },
+			city: { type: String },
+			state: { type: String },
+			zipcode: { type: Number }
+		}
     },
     accounts: {
         local: {
