@@ -1,0 +1,186 @@
+<div class="settings-page">
+	<div class="container page">
+		<div class="row">
+
+			<div class="col-sm-6 col-sm-offset-3 col-xs-12">
+				<h1 class="text-center">Trainer Application</h1>
+				<p class="text-center">
+					Not a trainer? <a (click)="cancelForm()">Cancel this application.</a>
+				</p>
+				<list-errors [errors]="errors"></list-errors>
+
+				<form [formGroup]="appForm" (ngSubmit)="submitForm()">
+					<fieldset [disabled]="isSubmitting">
+
+						<!-- Contact Info -->
+						<fieldset class="form-group">
+							<label for="sport">What Sport Do You Want To Train? *</label>
+							<select class="form-control form-control-lg"
+								formControlName="profile.sport"
+								name="sport">
+								<option disabled hidden [value]="undefined">Choose a sport</option>
+								<option *ngFor="let sport of sports"
+									[ngValue]="sport.sport"
+									[disabled]="hasSport(sport.sport)">
+									{{ sport.sport | titlecase }}
+								</option>
+							</select>
+
+							<span>Don't see the sport you'd like to train here? <a href>Learn why</a>.</span>
+						</fieldset>
+
+						<fieldset class="form-group">
+							<label for="phone">Phone number *</label>
+							<input class="form-control form-control-lg"
+								formControlName="contact.phone"
+								name="phone"
+								placeholder="Phone"
+								type="tel"
+								pattern="^\d{3}-?\d{3}-?\d{4}$"
+								title="Phone number (e.g. 123-456-7890)" />
+						</fieldset>
+
+						<!-- DOB -->
+						<fieldset class="form-group">
+							<label for="dob">Date of Birth *</label>
+							<select class="form-control form-control-lg"
+								formControlName="contact.dob.year"
+								name="dob[year]">
+								<option disabled hidden [value]="undefined">Year</option>
+								<option *ngFor="let year of dates.years"
+									[ngValue]="year">
+									{{ year }}
+								</option>
+							</select>
+
+							<select class="form-control form-control-lg"
+								formControlName="contact.dob.month"
+								name="dob[month]">
+								<option disabled hidden [value]="undefined">Year</option>
+								<option *ngFor="let month of dates.months"
+									[ngValue]="month.value">
+									{{ month.month }}
+								</option>
+							</select>
+
+							<select class="form-control form-control-lg"
+								formControlName="contact.dob.day"
+								name="dob[day]">
+								<option disabled hidden [value]="undefined">Year</option>
+								<option *ngFor="let day of dates.days"
+									[ngValue]="day">
+									{{ day }}
+								</option>
+							</select>
+						</fieldset>
+						<!-- /DOB -->
+
+						<fieldset class="form-group">
+							<label for="gender">Gender *</label>
+							<select class="form-control form-control-lg"
+								formControlName="contact.gender"
+								name="gender">
+								<option [value]="male">Male</option>
+								<option [value]="female">Female</option>
+							</select>
+						</fieldset>
+
+						<!-- Address -->
+						<h2>Mailing Address</h2>
+						<p>We use your mailing address from time to time to send you TopTraining swag.</p>
+
+						<fieldset class="form-group">
+							<label for="street_one">Street</label>
+							<input class="form-control form-control-lg"
+								formControlName="contact.address.street_one"
+								name="street_one"
+								placeholder="206 Bell St"
+								type="text" />
+						</fieldset>
+
+						<fieldset class="form-group">
+							<label for="street_two">Apt or Unit #</label>
+							<input class="form-control form-control-lg"
+								formControlName="contact.address.street_two"
+								name="street_two"
+								placeholder=""
+								type="text" />
+						</fieldset>
+
+						<fieldset class="form-group">
+							<label for="city">City</label>
+							<input class="form-control form-control-lg"
+								formControlName="contact.address.city"
+								name="city"
+								placeholder="Seattle"
+								type="text" />
+						</fieldset>
+
+						<fieldset class="form-group">
+							<label for="state">State</label>
+							<input class="form-control form-control-lg"
+								formControlName="contact.address.state"
+								name="state"
+								placeholder="Seattle"
+								type="text" />
+						</fieldset>
+
+						<fieldset class="form-group">
+							<label for="zipcode">Zip Code</label>
+							<input class="form-control form-control-lg"
+								formControlName="contact.address.zipcode"
+								name="zipcode"
+								placeholder="12321"
+								type="number"
+								pattern="^\d{5}$"
+								title="Zip code (e.g. 12321)" />
+						</fieldset>
+						<!-- /Address -->
+						<!-- /Contact Info -->
+
+						<!-- Trainer Profile -->
+						<h2>Trainer Profile</h2>
+						<p>
+							This information will appear on your TopTraining public profile. If you are approved, this will be how clients find and book your services.
+						</p>
+						<fieldset class="form-group">
+							<label for="summary">Summary *</label>
+							<textarea class="form-control form-control-lg"
+								formControlName="profile.summary"
+								name="summary"
+								rows="5"
+								placeholder="A passionate coach with a true love for baseball. Specializing in hitting, fielding, fundamental drills, and mental focus.">
+							</textarea>
+						</fieldset>
+
+						<fieldset class="form-group">
+							<label for="experience">Experience *</label>
+							<input class="form-control form-control-lg"
+								formControlName="profile.credentials.experience"
+								name="experience"
+								placeholder="# of years of experience"
+								type="number" />
+						</fieldset>
+
+						<fieldset class="form-group">
+							<label for="school">School *</label>
+							<input class="form-control form-control-lg"
+								formControlName="profile.credentials.school"
+								name="school"
+								placeholder="College / University"
+								type="text" />
+						</fieldset>
+						<!-- /Trainer Profile -->
+
+						<button class="btn btn-lg btn-primary pull-right"
+							type="submit">
+							Continue
+						</button>
+
+					</fieldset>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>

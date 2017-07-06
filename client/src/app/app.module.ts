@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 
 import { AuthModule } from './auth/auth.module';
-import { EditorModule } from './editor/editor.module';
+import { ApplyModule } from './apply/apply.module';
 import { HomeModule } from './home/home.module';
 import {
 	SharedModule,
@@ -19,6 +19,7 @@ import {
 	JwtService,
 	LocationService,
 	SportService,
+	TrainerGuard,
 	UserService
 } from './shared';
 
@@ -32,7 +33,7 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
 	],
 	imports: [
 		AuthModule,
-		EditorModule,
+		ApplyModule,
 		BrowserModule,
 		HomeModule,
 		SharedModule,
@@ -46,6 +47,7 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
 		JwtService,
 		LocationService,
 		SportService,
+		TrainerGuard,
 		UserService
 	],
 	bootstrap: [AppComponent]
