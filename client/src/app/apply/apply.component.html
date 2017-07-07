@@ -1,2 +1,16 @@
+<div class="apply-page">
+	<div class="container page">
 
-<router-outlet></router-outlet>
+		<h1 class="rail text-center">TopTraining Trainer Application</h1>
+		<p class="text-right">
+			Not a trainer? <a (click)="cancelForm()">Cancel this application.</a>
+		</p>
+
+		<div class="row application">
+			<div class="col-sm-10 col-sm-offset-1 col-xs-12">
+				<router-outlet></router-outlet>
+			</div>
+		</div>
+
+	</div>
+</div>
