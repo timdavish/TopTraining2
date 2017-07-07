@@ -2,14 +2,21 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AuthGuard, DeactivateGuard, SharedModule, TrainerGuard } from '../shared';
+import { ApplyComponent } from './apply.component';
 import { ApplyBackgroundComponent } from './apply-background.component';
 
 const applyRouting: ModuleWithProviders = RouterModule.forChild([
 	{
-		path: 'trainer_app/edit',
-		component: ApplyBackgroundComponent,
+		path: 'trainer_app/apply',
+		component: ApplyComponent,
 		canActivate: [AuthGuard, TrainerGuard],
-		canDeactivate: [DeactivateGuard]
+		canDeactivate: [DeactivateGuard],
+		children: [
+			{
+				path: 'background',
+				component: ApplyBackgroundComponent
+			}
+		]
 	}
 ]);
 
@@ -19,6 +26,7 @@ const applyRouting: ModuleWithProviders = RouterModule.forChild([
 		SharedModule
 	],
 	declarations: [
+		ApplyComponent,
 		ApplyBackgroundComponent
 	]
 })
