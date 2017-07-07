@@ -15,19 +15,15 @@
 					<form *ngSwitchDefault
 					    class="list-inline fix-form">
 
-					    <!-- Find a Trainer button -->
-					    <input class="form-control input-lg input-search btn-primary header-button header-button-text"
-					    	(click)="bannerView = 'search'"
-							value="Find a Trainer"
-					    	type="button" />
-					    <!-- /Find a Trainer button -->
+						<button class="btn btn-lg btn-primary banner-button"
+							(click)="bannerView = 'search'">
+							Find a Trainer
+						</button>
 
-					    <!-- Trainer Sign Up button -->
-					    <input class="form-control input-lg input-search btn-primary header-button header-button-text"
-							routerLink="/trainer_app"
-							value="Apply to Train"
-							type="button" />
-					    <!-- /Trainer Sign Up button -->
+						<button class="btn btn-lg btn-primary banner-button"
+							routerLink="/trainer_app">
+							Apply To Train
+						</button>
 
 					</form>
 					<!-- /Default view -->
@@ -37,11 +33,10 @@
 						*ngSwitchCase="'search'" class="list-inline fix-form">
 						<fieldset [disabled]="isSubmitting">
 
-					    <!-- Back button -->
-					    <input class="form-control input-lg input-search btn-primary header-button-sm header-button-text"
-					            (click)="bannerView = ''"
-					            type="submit" value="Back" />
-					    <!-- /Back button -->
+						<button class="btn btn-lg btn-primary"
+							(click)="bannerView = ''">
+							Back
+						</button>
 
 					    <!-- Sport -->
 					    <!-- <li><input class="form-control input-lg input-search"
@@ -53,6 +48,13 @@
 
 						<fieldset class="form-group">
 							<input class="form-control form-control-lg"
+								formControlName="sport"
+								placeholder="Sport"
+								type="text" />
+						</fieldset>
+
+						<fieldset class="form-group">
+							<input class="form-control form-control-lg"
 								locationAutocomplete
 								[(ngModel)]="address"
 								(setAddress)="getAddress($event)"
@@ -60,17 +62,12 @@
 								placeholder="Location"
 								type="text" />
 						</fieldset>
-					    <!-- Location -->
-					    <!-- <li><input class="form-control input-lg input-search" id="results"
-					            ng-model="vm.searchParams.location"
-					            google-auto-complete
-					            type="text" placeholder="Location" /></li> -->
-					    <!-- /Location -->
 
-					    <!-- Search -->
-					    <!-- <li><input class="form-control input-lg input-search btn-primary header-button-sm header-button-text"
-					            type="submit" value="Search" /></li> -->
-					    <!-- /Search -->
+						<button class="btn btn-lg btn-primary"
+							type="submit">
+							Search
+						</button>
+
 						</fieldset>
 					</form>
 					<!-- /Find a Trainer View -->

@@ -1,10 +1,10 @@
 export interface AgeGroup {
 	name: string;
-	checked: boolean;
+	selected: boolean;
 }
 
 export const AgeGroups: [AgeGroup] = [
-	{ name: 'Adults', checked: false },
-	{ name: 'Kids', checked: false },
-	{ name: 'Teenagers', checked: false}
+	{ name: 'Adults', selected: false },
+	{ name: 'Kids', selected: false },
+	{ name: 'Teenagers', selected: false}
 ];

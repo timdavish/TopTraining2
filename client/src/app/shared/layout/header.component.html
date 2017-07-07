@@ -51,6 +51,13 @@
 			<ul *showAuthed="true"
 				class="nav navbar-nav navbar-right">
 
+				<li class="nav-item">
+					<a class="nav-link"
+						routerLink="/">
+						Home
+					</a>
+				</li>
+
 				<!-- Admin users -->
 				<li *ngIf="currentUser.usertype === 'admin'"
 					class="nav-item">
