@@ -76,7 +76,7 @@ export class AuthComponent implements OnDestroy, OnInit {
 			.takeUntil(this.ngUnsubscribe)
 			.subscribe(
 				data => {
-					const route = this.authType === 'trainer_app' ? '/editor/trainer_app' : '/';
+					const route = this.authType === 'trainer_app' ? '/trainer_app/apply/background' : '/';
 					this.router.navigateByUrl(route)
 				},
 				err => {

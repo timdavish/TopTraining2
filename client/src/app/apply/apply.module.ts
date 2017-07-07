@@ -13,7 +13,20 @@ const applyRouting: ModuleWithProviders = RouterModule.forChild([
 		canDeactivate: [DeactivateGuard],
 		children: [
 			{
+				path: '',
+				pathMatch: 'full',
+				redirectTo: 'background'
+			},
+			{
 				path: 'background',
+				component: ApplyBackgroundComponent
+			},
+			{
+				path: 'packages',
+				component: ApplyBackgroundComponent
+			},
+			{
+				path: 'availability',
 				component: ApplyBackgroundComponent
 			}
 		]

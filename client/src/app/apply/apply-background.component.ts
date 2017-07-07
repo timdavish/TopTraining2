@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
@@ -16,11 +16,12 @@ export class ApplyBackgroundComponent implements OnDestroy, OnInit {
 	private readonly ages = AgeGroups;
 	private readonly dates = Dates;
 	private readonly next = 'packages';
+	private readonly profileItemName = 'TTTprofile';
 
 	appForm: FormGroup;
 	errors: Errors = new Errors();
 	isSubmitting: boolean = false;
-	profile: TrainerProfile = new TrainerProfile();
+	profile: TrainerProfile;
 	sports: Array<Sport> = [];
 	user: User = new User();
 
@@ -45,8 +46,15 @@ export class ApplyBackgroundComponent implements OnDestroy, OnInit {
 				},
 				err => {}
 			);
+		// Get our profile from localStorage or create a new one
+		this.profile = new TrainerProfile();
 		// Build the form group
 		this.createFormGroup();
+		// Fill the form (if necessary)
+		this.appForm.patchValue(this.profile);
+
+		console.log('Profile:', this.profile);
+		// console.log('Form:', this.appForm);
 	}
 
 	ngOnDestroy(): void {
@@ -55,36 +63,38 @@ export class ApplyBackgroundComponent implements OnDestroy, OnInit {
 		this.ngUnsubscribe.complete();
 	}
 
-	public submitForm(): void {
-		this.errors = new Errors();
-		this.isSubmitting = true;
-		this.user.profiles.push(this.profile);
-
-		this.userService.update(this.user)
-			.takeUntil(this.ngUnsubscribe)
-			.subscribe(
-				updatedUser => {
-					this.router.navigateByUrl('/trainer_app/apply/' + this.next);
-				},
-				err => {
-					// Remove the profile from the user's profiles but keep the profile data
-					this.user.profiles.filter((p) => { return p.sport === this.profile.sport; });
-					this.errors = err;
-					this.isSubmitting = false;
-				}
-			);
+	get getAges() {
+	    return this.appForm.get('ages');
 	}
 
-	public cancelForm(): void {
-		this.userService.delete(this.user)
-			.takeUntil(this.ngUnsubscribe)
-			.subscribe(
-				data => {
-					this.userService.purgeAuth();
-					this.router.navigateByUrl('/register');
-				},
-				err => {}
-			)
+	public submitForm(): void {
+		console.log(this.ages);
+		// this.errors = new Errors();
+		// this.isSubmitting = true;
+
+		// Update the model
+		this.updateProfile(this.appForm.value);
+
+		// this.user.profiles.push(this.profile);
+
+		// localStorage.setItem(this.profileItemName, JSON.stringify(this.profile));
+		// console.log('StorageAfterSubmit:', JSON.parse(localStorage.getItem(this.profileItemName)));
+		// this.router.navigateByUrl('/trainer_app/apply/' + this.next);
+
+		// this.userService.update(this.user)
+		// 	.takeUntil(this.ngUnsubscribe)
+		// 	.subscribe(
+		// 		updatedUser => {
+		// 			localStorage.setItem(this.profileItemName, JSON.stringify(this.profile));
+		// 			this.router.navigateByUrl('/trainer_app/apply/' + this.next);
+		// 		},
+		// 		err => {
+		// 			// Remove the profile from the user's profiles but keep the profile data
+		// 			// this.user.profiles.filter((p) => { return p.sport === this.profile.sport; });
+		// 			this.errors = err;
+		// 			this.isSubmitting = false;
+		// 		}
+		// 	);
 	}
 
 	// Prevents the trainer from being able to apply to train a sport twice
@@ -95,27 +105,41 @@ export class ApplyBackgroundComponent implements OnDestroy, OnInit {
 	private createFormGroup(): void {
 		// Use FormBuilder to create our form group
 		this.appForm = this.fb.group({
-			'profile.sport': ['', Validators.required],
-			'contact.phone': [this.user.contact.phone, Validators.required],
-			'contact.dob.year': ['', Validators.required],
-			'contact.dob.month': ['', Validators.required],
-			'contact.dob.day': ['', Validators.required],
-			'contact.gender': ['', Validators.required],
+			'sport': [this.profile.sport, Validators.required],
+			'phone': [this.user.contact.phone, Validators.required],
+			'dob_year': ['', Validators.required],
+			'dob_month': ['', Validators.required],
+			'dob_day': ['', Validators.required],
+			'gender': ['', Validators.required],
 
-			'contact.address.street_one': '',
-			'contact.address.street_two': '',
-			'contact.address.city': '',
-			'contact.address.state': '',
-			'contact.address.zipcode': '',
+			'address_street_one': '',
+			'address_street_two': '',
+			'address_city': '',
+			'address_state': '',
+			'address_zipcode': '',
 
 
-			'profile.summary': ['', Validators.required],
-			'profile.credentials.experience': ['', Validators.required],
-			'profile.credentials.school': ['', Validators.required],
+			'summary': [this.profile.summary, Validators.required],
+			'experience': ['', Validators.required],
+			'school': ['', Validators.required],
 
-			'profile.services.ages': [this.ages, Validators.required],
-			'profile.services.positions': ['', Validators.required],
-			'profile.services.specialties': ['', Validators.required],
+			'ages': [this.buildAges(), Validators.required],
+			'positions': ['', Validators.required],
+			'specialties': ['', Validators.required],
 		});
+
+		// this.appForm.valueChanges
+		// 	.takeUntil(this.ngUnsubscribe)
+		// 	.subscribe(value => this.updateProfile(value));
+	}
+
+	private buildAges(): FormArray {
+		const arr = this.ages.map(age => { return this.fb.control(age.selected); });
+		return this.fb.array(arr)
+	}
+
+	private updateProfile(values: Object): void {
+		console.log('Changing profile values', values);
+		(<any>Object).assign(this.profile, values);
 	}
 }

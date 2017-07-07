@@ -1,235 +1,222 @@
-<div class="settings-page">
-	<div class="container page">
-		<div class="row">
+<h2>Trainer Application</h2>
+<p>First we need some basic information about you.</p>
+<list-errors [errors]="errors"></list-errors>
 
-			<div class="col-sm-6 col-sm-offset-3 col-xs-12">
-				<h1 class="text-center">Trainer Application</h1>
-				<p class="text-center">
-					Not a trainer? <a (click)="cancelForm()">Cancel this application.</a>
-				</p>
-				<list-errors [errors]="errors"></list-errors>
+<form [formGroup]="appForm" (ngSubmit)="submitForm()">
+	<fieldset [disabled]="isSubmitting">
 
-				<form [formGroup]="appForm" (ngSubmit)="submitForm()">
-					<fieldset [disabled]="isSubmitting">
+		<!-- Contact Info -->
+		<fieldset class="form-group">
+			<label for="sport">What Sport Do You Want To Train?</label>
+			<select class="form-control form-control-lg"
+				formControlName="sport"
+				name="sport">
+				<option disabled="true" [selected]="true" value="">Select a sport</option>
+				<option *ngFor="let sport of sports"
+					[ngValue]="sport.sport"
+					[disabled]="hasSport(sport.sport)">
+					{{ sport.sport | titlecase }}
+				</option>
+			</select>
 
-						<!-- Contact Info -->
-						<fieldset class="form-group">
-							<label for="sport">What Sport Do You Want To Train?</label>
-							<select class="form-control form-control-lg"
-								formControlName="profile.sport"
-								name="sport">
-								<option disabled hidden [value]="undefined">Choose a sport</option>
-								<option *ngFor="let sport of sports"
-									[ngValue]="sport.sport"
-									[disabled]="hasSport(sport.sport)">
-									{{ sport.sport | titlecase }}
-								</option>
-							</select>
+			<span>Don't see the sport you'd like to train here? <a href>Learn why</a>.</span>
+		</fieldset>
 
-							<span>Don't see the sport you'd like to train here? <a href>Learn why</a>.</span>
-						</fieldset>
+		<fieldset class="form-group">
+			<label for="phone">Phone number</label>
+			<input class="form-control form-control-lg"
+				formControlName="phone"
+				name="phone"
+				placeholder="Phone"
+				type="tel"
+				pattern="^\d{3}-?\d{3}-?\d{4}$"
+				title="Phone number (e.g. 123-456-7890)" />
+		</fieldset>
 
-						<fieldset class="form-group">
-							<label for="phone">Phone number</label>
-							<input class="form-control form-control-lg"
-								formControlName="contact.phone"
-								name="phone"
-								placeholder="Phone"
-								type="tel"
-								pattern="^\d{3}-?\d{3}-?\d{4}$"
-								title="Phone number (e.g. 123-456-7890)" />
-						</fieldset>
+		<!-- DOB -->
+		<fieldset class="form-group">
+			<label for="dob">Date of Birth</label>
+			<select class="form-control form-control-lg"
+				formControlName="dob_year"
+				name="dob[year]">
+				<option disabled="true" [selected]="true" value="">Year</option>
+				<option *ngFor="let year of dates.years"
+					[ngValue]="year">
+					{{ year }}
+				</option>
+			</select>
 
-						<!-- DOB -->
-						<fieldset class="form-group">
-							<label for="dob">Date of Birth</label>
-							<select class="form-control form-control-lg"
-								formControlName="contact.dob.year"
-								name="dob[year]">
-								<option disabled hidden [value]="undefined">Year</option>
-								<option *ngFor="let year of dates.years"
-									[ngValue]="year">
-									{{ year }}
-								</option>
-							</select>
+			<select class="form-control form-control-lg"
+				formControlName="dob_month"
+				name="dob[month]">
+				<option disabled="true" [selected]="true" value="">Month</option>
+				<option *ngFor="let month of dates.months"
+					[ngValue]="month.value">
+					{{ month.month }}
+				</option>
+			</select>
 
-							<select class="form-control form-control-lg"
-								formControlName="contact.dob.month"
-								name="dob[month]">
-								<option disabled hidden [value]="undefined">Year</option>
-								<option *ngFor="let month of dates.months"
-									[ngValue]="month.value">
-									{{ month.month }}
-								</option>
-							</select>
+			<select class="form-control form-control-lg"
+				formControlName="dob_day"
+				name="dob[day]">
+				<option disabled="true" [selected]="true" value="">Day</option>
+				<option *ngFor="let day of dates.days"
+					[ngValue]="day">
+					{{ day }}
+				</option>
+			</select>
+		</fieldset>
+		<!-- /DOB -->
 
-							<select class="form-control form-control-lg"
-								formControlName="contact.dob.day"
-								name="dob[day]">
-								<option disabled hidden [value]="undefined">Year</option>
-								<option *ngFor="let day of dates.days"
-									[ngValue]="day">
-									{{ day }}
-								</option>
-							</select>
-						</fieldset>
-						<!-- /DOB -->
+		<fieldset class="form-group">
+			<label for="gender">Gender</label>
+			<select class="form-control form-control-lg"
+				formControlName="gender"
+				name="gender">
+				<option disabled="true" [selected]="true" value="">Select</option>
+				<option [value]="male">Male</option>
+				<option [value]="female">Female</option>
+				<option [value]="opt">I prefer not to say</option>
+			</select>
+		</fieldset>
 
-						<fieldset class="form-group">
-							<label for="gender">Gender</label>
-							<select class="form-control form-control-lg"
-								formControlName="contact.gender"
-								name="gender">
-								<option [value]="male">Male</option>
-								<option [value]="female">Female</option>
-							</select>
-						</fieldset>
+		<!-- Address -->
+		<h2>Mailing Address</h2>
+		<p>We use your mailing address from time to time to send you TopTraining swag.</p>
 
-						<!-- Address -->
-						<h2>Mailing Address</h2>
-						<p>We use your mailing address from time to time to send you TopTraining swag.</p>
+		<fieldset class="form-group">
+			<label for="street_one">Street</label>
+			<input class="form-control form-control-lg"
+				formControlName="address_street_one"
+				name="street_one"
+				placeholder="206 Bell St"
+				type="text" />
+		</fieldset>
 
-						<fieldset class="form-group">
-							<label for="street_one">Street</label>
-							<input class="form-control form-control-lg"
-								formControlName="contact.address.street_one"
-								name="street_one"
-								placeholder="206 Bell St"
-								type="text" />
-						</fieldset>
+		<fieldset class="form-group">
+			<label for="street_two">Apt or Unit #</label>
+			<input class="form-control form-control-lg"
+				formControlName="address_street_two"
+				name="street_two"
+				placeholder=""
+				type="text" />
+		</fieldset>
 
-						<fieldset class="form-group">
-							<label for="street_two">Apt or Unit #</label>
-							<input class="form-control form-control-lg"
-								formControlName="contact.address.street_two"
-								name="street_two"
-								placeholder=""
-								type="text" />
-						</fieldset>
+		<fieldset class="form-group">
+			<label for="city">City</label>
+			<input class="form-control form-control-lg"
+				formControlName="address_city"
+				name="city"
+				placeholder="Seattle"
+				type="text" />
+		</fieldset>
 
-						<fieldset class="form-group">
-							<label for="city">City</label>
-							<input class="form-control form-control-lg"
-								formControlName="contact.address.city"
-								name="city"
-								placeholder="Seattle"
-								type="text" />
-						</fieldset>
+		<fieldset class="form-group">
+			<label for="state">State</label>
+			<input class="form-control form-control-lg"
+				formControlName="address_state"
+				name="state"
+				placeholder="Washington"
+				type="text" />
+		</fieldset>
 
-						<fieldset class="form-group">
-							<label for="state">State</label>
-							<input class="form-control form-control-lg"
-								formControlName="contact.address.state"
-								name="state"
-								placeholder="Washington"
-								type="text" />
-						</fieldset>
+		<fieldset class="form-group">
+			<label for="zipcode">Zip Code</label>
+			<input class="form-control form-control-lg"
+				formControlName="address_zipcode"
+				name="zipcode"
+				placeholder="12321"
+				type="number"
+				pattern="^\d{5}$"
+				title="Zip code (e.g. 12321)" />
+		</fieldset>
+		<!-- /Address -->
+		<p>
+			Your privacy is important to us.  We do not share any of the above information for any purpose other than to connect you with new clients.  Learn more
+			<a href>here</a>.
+		</p>
+		<!-- /Contact Info -->
 
-						<fieldset class="form-group">
-							<label for="zipcode">Zip Code</label>
-							<input class="form-control form-control-lg"
-								formControlName="contact.address.zipcode"
-								name="zipcode"
-								placeholder="12321"
-								type="number"
-								pattern="^\d{5}$"
-								title="Zip code (e.g. 12321)" />
-						</fieldset>
-						<!-- /Address -->
-						<p>
-							Your privacy is important to us.  We do not share any of the above information for any purpose other than to connect you with new clients.  Learn more
-							<a href>here</a>.
-						</p>
-						<!-- /Contact Info -->
+		<!-- Trainer Profile -->
+		<h2>Trainer Profile</h2>
+		<p>
+			This information will appear on your TopTraining public profile. If you are approved, this will be how clients find and book your services.
+		</p>
+		<fieldset class="form-group">
+			<label for="summary">Summary</label>
+			<p>
+				This is a one sentence summary of your training experience. This will be displayed in search results and on your profile.
+			</p>
+			<textarea class="form-control form-control-lg"
+				formControlName="summary"
+				name="summary"
+				rows="5"
+				placeholder="A passionate coach with a true love for baseball. Specializing in hitting, fielding, fundamental drills, and mental focus.">
+			</textarea>
+		</fieldset>
 
-						<!-- Trainer Profile -->
-						<h2>Trainer Profile</h2>
-						<p>
-							This information will appear on your TopTraining public profile. If you are approved, this will be how clients find and book your services.
-						</p>
-						<fieldset class="form-group">
-							<label for="summary">Summary</label>
-							<p>
-								This is a one sentence summary of your training experience. This will be displayed in search results and on your profile.
-							</p>
-							<textarea class="form-control form-control-lg"
-								formControlName="profile.summary"
-								name="summary"
-								rows="5"
-								placeholder="A passionate coach with a true love for baseball. Specializing in hitting, fielding, fundamental drills, and mental focus.">
-							</textarea>
-						</fieldset>
+		<fieldset class="form-group">
+			<label for="experience">Experience</label>
+			<p>
+				How long have you been training for?
+			</p>
+			<input class="form-control form-control-lg"
+				formControlName="experience"
+				name="experience"
+				placeholder="3 years"
+				type="text" />
+		</fieldset>
 
-						<fieldset class="form-group">
-							<label for="experience">Experience</label>
-							<p>
-								How long have you been training for?
-							</p>
-							<input class="form-control form-control-lg"
-								formControlName="profile.credentials.experience"
-								name="experience"
-								placeholder="3 years"
-								type="text" />
-						</fieldset>
+		<fieldset class="form-group">
+			<label for="school">School</label>
+			<input class="form-control form-control-lg"
+				formControlName="school"
+				name="school"
+				placeholder="College / University"
+				type="text" />
+		</fieldset>
 
-						<fieldset class="form-group">
-							<label for="school">School</label>
-							<input class="form-control form-control-lg"
-								formControlName="profile.credentials.school"
-								name="school"
-								placeholder="College / University"
-								type="text" />
-						</fieldset>
-
-						<fieldset class="form-group">
-							<label for="ages">Age Groups</label>
-							<p>
-								Which age groups do you train?
-							</p>
-							<div *ngFor="let age of ages">
-								<input [(ngModel)]="age.checked"
-									value="{{ age.name }}"
-									formControlName="profile.services.ages"
-									name="ages"
-									type="checkbox" />
-								{{ age.name }}
-							</div>
-						</fieldset>
-
-						<fieldset class="form-group">
-							<label for="positions">Positions</label>
-							<p>
-								Which positions do you train? If positions aren't applicable to your sport, leave this blank.
-							</p>
-							<input class="form-control form-control-lg"
-								formControlName="profile.services.positions"
-								name="positions"
-								placeholder="Quarterback, Point Guard, Goalie"
-								type="text" />
-						</fieldset>
-
-						<fieldset class="form-group">
-							<label for="specialties">Specialties</label>
-							<p>
-								Which part of the game are you strong at teaching?
-							</p>
-							<input class="form-control form-control-lg"
-								formControlName="profile.services.specialties"
-								name="specialties"
-								placeholder="Serve, Route Running, Pitching"
-								type="text" />
-						</fieldset>
-						<!-- /Trainer Profile -->
-
-						<button class="btn btn-lg btn-primary pull-right"
-							type="submit">
-							Continue
-						</button>
-
-					</fieldset>
-				</form>
+		<fieldset class="form-group">
+			<label for="ages">Age Groups</label>
+			<p>
+				Which age groups do you train?
+			</p>
+			<div *ngFor="let age of getAges.controls; let i = index">
+				<input [formControl="age"
+					type="checkbox" />
+				{{ age.name }}
 			</div>
+		</fieldset>
 
-		</div>
-	</div>
-</div>
+		<fieldset class="form-group">
+			<label for="positions">Positions</label>
+			<p>
+				Which positions do you train? If positions aren't applicable to your sport, leave this blank.
+			</p>
+			<input class="form-control form-control-lg"
+				formControlName="positions"
+				name="positions"
+				placeholder="Quarterback, Point Guard, Goalie"
+				type="text" />
+		</fieldset>
+
+		<fieldset class="form-group">
+			<label for="specialties">Specialties</label>
+			<p>
+				Which part of the game are you strong at teaching?
+			</p>
+			<input class="form-control form-control-lg"
+				formControlName="specialties"
+				name="specialties"
+				placeholder="Serve, Route Running, Pitching"
+				type="text" />
+		</fieldset>
+		<!-- /Trainer Profile -->
+
+		<button class="btn btn-lg btn-primary pull-right"
+			type="submit">
+			Continue
+		</button>
+
+	</fieldset>
+</form>
