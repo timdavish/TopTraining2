@@ -1,0 +1,39 @@
+<p>Now fill out some information about the training packages you'd like to provide.</p>
+<list-errors [errors]="errors"></list-errors>
+
+<form [formGroup]="packagesForm" (ngSubmit)="submitForm()">
+	<fieldset [disabled]="isSubmitting">
+
+		<fieldset class="form-group">
+			<label for="length">Session Length</label>
+			<select class="form-control form-control-lg"
+				name="length">
+				<option disabled="true" [selected]="false" value="">Select</option>
+				<option *ngFor="let length of options.lengths"
+					[ngValue]="length"
+					[selected]="length === 60">
+					{{ length | minutesToTime }}
+				</option>
+			</select>
+		</fieldset>
+
+		<fieldset class="form-group">
+			<label for="rate">Session Price</label>
+			<select class="form-control form-control-lg"
+				name="rate">
+				<option disabled="true" [selected]="false" value="">Select</option>
+				<option *ngFor="let rate of options.rates"
+					[ngValue]="rate"
+					[selected]="rate === 60">
+					${{ rate }}
+				</option>
+			</select>
+		</fieldset>
+
+		<button class="btn btn-lg btn-primary pull-right"
+			type="submit">
+			Continue
+		</button>
+
+	</fieldset>
+</form>

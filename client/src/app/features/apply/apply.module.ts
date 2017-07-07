@@ -7,6 +7,7 @@ import { TrainerGuard } from 'app/core/guards/trainer-guard.service';
 import { SharedModule } from 'app/shared';
 import { ApplyComponent } from './apply.component';
 import { ApplyBackgroundComponent } from './apply-background.component';
+import { ApplyPackagesComponent } from './apply-packages.component';
 
 const applyRouting: ModuleWithProviders = RouterModule.forChild([
 	{
@@ -26,7 +27,7 @@ const applyRouting: ModuleWithProviders = RouterModule.forChild([
 			},
 			{
 				path: 'packages',
-				component: ApplyBackgroundComponent
+				component: ApplyPackagesComponent
 			},
 			{
 				path: 'availability',
@@ -43,7 +44,8 @@ const applyRouting: ModuleWithProviders = RouterModule.forChild([
 	],
 	declarations: [
 		ApplyComponent,
-		ApplyBackgroundComponent
+		ApplyBackgroundComponent,
+		ApplyPackagesComponent
 	]
 })
 export class ApplyModule {}
