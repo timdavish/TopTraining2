@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
 
-import { Errors, Sport, SportService, TrainerProfile, User, UserService } from '../shared';
+import { AgeGroups, Errors, Sport, SportService, TrainerProfile, User, UserService } from '../shared';
 import { Dates } from '../app.config';
 
 @Component({
@@ -13,7 +13,9 @@ import { Dates } from '../app.config';
 	styleUrls: ['./apply-background.component.css']
 })
 export class ApplyBackgroundComponent implements OnDestroy, OnInit {
+	private readonly ages = AgeGroups;
 	private readonly dates = Dates;
+	private readonly next = 'packages';
 
 	appForm: FormGroup;
 	errors: Errors = new Errors();
@@ -62,9 +64,11 @@ export class ApplyBackgroundComponent implements OnDestroy, OnInit {
 			.takeUntil(this.ngUnsubscribe)
 			.subscribe(
 				updatedUser => {
-					this.router.navigateByUrl('/profile/' + updatedUser.id);
+					this.router.navigateByUrl('/trainer_app/apply/' + this.next);
 				},
 				err => {
+					// Remove the profile from the user's profiles but keep the profile data
+					this.user.profiles.filter((p) => { return p.sport === this.profile.sport; });
 					this.errors = err;
 					this.isSubmitting = false;
 				}
@@ -85,16 +89,14 @@ export class ApplyBackgroundComponent implements OnDestroy, OnInit {
 
 	// Prevents the trainer from being able to apply to train a sport twice
 	public hasSport(sport: string): boolean {
-		return this.user.profiles.some(function(profile) {
-			return profile.sport === sport;
-		});
+		return this.user.profiles.some(function(p) { return p.sport === sport; });
 	}
 
 	private createFormGroup(): void {
 		// Use FormBuilder to create our form group
 		this.appForm = this.fb.group({
 			'profile.sport': ['', Validators.required],
-			'contact.phone': ['', Validators.required],
+			'contact.phone': [this.user.contact.phone, Validators.required],
 			'contact.dob.year': ['', Validators.required],
 			'contact.dob.month': ['', Validators.required],
 			'contact.dob.day': ['', Validators.required],
@@ -110,6 +112,10 @@ export class ApplyBackgroundComponent implements OnDestroy, OnInit {
 			'profile.summary': ['', Validators.required],
 			'profile.credentials.experience': ['', Validators.required],
 			'profile.credentials.school': ['', Validators.required],
+
+			'profile.services.ages': [this.ages, Validators.required],
+			'profile.services.positions': ['', Validators.required],
+			'profile.services.specialties': ['', Validators.required],
 		});
 	}
 }

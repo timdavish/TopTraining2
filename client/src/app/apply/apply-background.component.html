@@ -14,7 +14,7 @@
 
 						<!-- Contact Info -->
 						<fieldset class="form-group">
-							<label for="sport">What Sport Do You Want To Train? *</label>
+							<label for="sport">What Sport Do You Want To Train?</label>
 							<select class="form-control form-control-lg"
 								formControlName="profile.sport"
 								name="sport">
@@ -30,7 +30,7 @@
 						</fieldset>
 
 						<fieldset class="form-group">
-							<label for="phone">Phone number *</label>
+							<label for="phone">Phone number</label>
 							<input class="form-control form-control-lg"
 								formControlName="contact.phone"
 								name="phone"
@@ -42,7 +42,7 @@
 
 						<!-- DOB -->
 						<fieldset class="form-group">
-							<label for="dob">Date of Birth *</label>
+							<label for="dob">Date of Birth</label>
 							<select class="form-control form-control-lg"
 								formControlName="contact.dob.year"
 								name="dob[year]">
@@ -76,7 +76,7 @@
 						<!-- /DOB -->
 
 						<fieldset class="form-group">
-							<label for="gender">Gender *</label>
+							<label for="gender">Gender</label>
 							<select class="form-control form-control-lg"
 								formControlName="contact.gender"
 								name="gender">
@@ -121,7 +121,7 @@
 							<input class="form-control form-control-lg"
 								formControlName="contact.address.state"
 								name="state"
-								placeholder="Seattle"
+								placeholder="Washington"
 								type="text" />
 						</fieldset>
 
@@ -136,6 +136,10 @@
 								title="Zip code (e.g. 12321)" />
 						</fieldset>
 						<!-- /Address -->
+						<p>
+							Your privacy is important to us.  We do not share any of the above information for any purpose other than to connect you with new clients.  Learn more
+							<a href>here</a>.
+						</p>
 						<!-- /Contact Info -->
 
 						<!-- Trainer Profile -->
@@ -144,7 +148,10 @@
 							This information will appear on your TopTraining public profile. If you are approved, this will be how clients find and book your services.
 						</p>
 						<fieldset class="form-group">
-							<label for="summary">Summary *</label>
+							<label for="summary">Summary</label>
+							<p>
+								This is a one sentence summary of your training experience. This will be displayed in search results and on your profile.
+							</p>
 							<textarea class="form-control form-control-lg"
 								formControlName="profile.summary"
 								name="summary"
@@ -154,20 +161,62 @@
 						</fieldset>
 
 						<fieldset class="form-group">
-							<label for="experience">Experience *</label>
+							<label for="experience">Experience</label>
+							<p>
+								How long have you been training for?
+							</p>
 							<input class="form-control form-control-lg"
 								formControlName="profile.credentials.experience"
 								name="experience"
-								placeholder="# of years of experience"
-								type="number" />
+								placeholder="3 years"
+								type="text" />
 						</fieldset>
 
 						<fieldset class="form-group">
-							<label for="school">School *</label>
+							<label for="school">School</label>
 							<input class="form-control form-control-lg"
 								formControlName="profile.credentials.school"
 								name="school"
 								placeholder="College / University"
+								type="text" />
+						</fieldset>
+
+						<fieldset class="form-group">
+							<label for="ages">Age Groups</label>
+							<p>
+								Which age groups do you train?
+							</p>
+							<div *ngFor="let age of ages">
+								<input [(ngModel)]="age.checked"
+									value="{{ age.name }}"
+									formControlName="profile.services.ages"
+									name="ages"
+									type="checkbox" />
+								{{ age.name }}
+							</div>
+						</fieldset>
+
+						<fieldset class="form-group">
+							<label for="positions">Positions</label>
+							<p>
+								Which positions do you train? If positions aren't applicable to your sport, leave this blank.
+							</p>
+							<input class="form-control form-control-lg"
+								formControlName="profile.services.positions"
+								name="positions"
+								placeholder="Quarterback, Point Guard, Goalie"
+								type="text" />
+						</fieldset>
+
+						<fieldset class="form-group">
+							<label for="specialties">Specialties</label>
+							<p>
+								Which part of the game are you strong at teaching?
+							</p>
+							<input class="form-control form-control-lg"
+								formControlName="profile.services.specialties"
+								name="specialties"
+								placeholder="Serve, Route Running, Pitching"
 								type="text" />
 						</fieldset>
 						<!-- /Trainer Profile -->
