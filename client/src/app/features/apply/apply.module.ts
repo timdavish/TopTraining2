@@ -1,7 +1,10 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AuthGuard, DeactivateGuard, SharedModule, TrainerGuard } from '../shared';
+import { AuthGuard } from 'app/core/guards/auth-guard.service';
+import { DeactivateGuard } from 'app/core/guards/deactivate-guard.service';
+import { TrainerGuard } from 'app/core/guards/trainer-guard.service';
+import { SharedModule } from 'app/shared';
 import { ApplyComponent } from './apply.component';
 import { ApplyBackgroundComponent } from './apply-background.component';
 

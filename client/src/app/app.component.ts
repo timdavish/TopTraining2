@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SportService, UserService } from './shared';
+import { SportService } from './core/services/sport.service';
+import { UserService } from './core/services/user.service';
 
 @Component({
 	selector: 'app-root',

@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { BannerComponent } from './banner.component';
 import { HomeComponent } from './home.component';
 
-import { SharedModule } from '../shared';
+import { SharedModule } from 'app/shared';
 
 const homeRouting: ModuleWithProviders = RouterModule.forChild([
 	{

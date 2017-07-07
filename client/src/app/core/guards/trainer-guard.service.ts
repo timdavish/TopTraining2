@@ -2,9 +2,8 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/takeUntil';
 
-import { UserService } from './user.service';
+import { UserService } from 'app/core/services/user.service';
 
 @Injectable()
 export class TrainerGuard implements CanActivate, OnDestroy {

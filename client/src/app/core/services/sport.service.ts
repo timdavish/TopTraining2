@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/takeUntil';
 
 import { ApiService } from './api.service';
-import { Sport } from '../models';
+import { Sport } from 'app/shared/models';
 
 @Injectable()
 export class SportService implements OnDestroy {

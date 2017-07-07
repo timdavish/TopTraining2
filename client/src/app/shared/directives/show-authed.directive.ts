@@ -1,8 +1,7 @@
 import { Directive,	Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/takeUntil';
 
-import { UserService } from '../services/user.service';
+import { UserService } from 'app/core/services/user.service';
 
 @Directive({ selector: '[showAuthed]' })
 export class ShowAuthedDirective implements OnDestroy, OnInit {

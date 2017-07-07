@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/takeUntil';
 
-import { Errors, SharedModule, Sport, SportService } from '../shared';
+import { SportService } from 'app/core/services/sport.service';
+import { Errors, SharedModule, Sport } from 'app/shared';
 
 @Component({
 	selector: 'home-banner',

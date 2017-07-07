@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
-import { UserService } from './user.service';
+import { UserService } from 'app/core/services/user.service';
 
 export interface CanDeactivateComponent {
 	canDeactivate: () => Observable<boolean> | boolean;

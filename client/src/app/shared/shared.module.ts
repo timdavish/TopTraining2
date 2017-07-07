@@ -4,8 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
-import { ListErrorsComponent } from './components/list-errors.component';
-import { StarRatingComponent } from './components/star-rating.component';
+import { ListErrorsComponent } from './errors/list-errors.component';
+import { StarRatingComponent } from './star-rating/star-rating.component';
 
 import { LocationAutocompleteDirective } from './directives/location-autocomplete.directive';
 import { ShowAuthedDirective } from './directives/show-authed.directive';

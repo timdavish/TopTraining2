@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/takeUntil';
 
-import { UserService } from '../services';
-import { User } from '../models';
+import { UserService } from 'app/core/services/user.service';
+import { User } from 'app/shared/models';
 
 @Component({
 	selector: 'layout-header',

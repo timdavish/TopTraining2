@@ -1,9 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/takeUntil';
 
-import { UserService } from '../shared';
+import { UserService } from 'app/core/services/user.service';
 
 @Component({
 	selector: 'apply-page',

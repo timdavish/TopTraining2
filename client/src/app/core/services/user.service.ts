@@ -9,7 +9,7 @@ import 'rxjs/add/operator/takeUntil';
 
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
-import { User } from '../models';
+import { User } from 'app/shared/models';
 
 @Injectable()
 export class UserService implements OnDestroy {

@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AuthGuard, SharedModule } from '../shared';
+import { AuthGuard, SharedModule } from 'app/shared';
 
 const editorRouting: ModuleWithProviders = RouterModule.forChild([
 	{

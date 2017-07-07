@@ -2,10 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/takeUntil';
 
-import { AgeGroups, Errors, Sport, SportService, TrainerProfile, User, UserService } from '../shared';
-import { Dates } from '../app.config';
+import { SportService } from 'app/core/services/sport.service';
+import { UserService } from 'app/core/services/user.service';
+import { AgeGroups, Errors, Sport, TrainerProfile, User } from 'app/shared';
+import { Dates } from 'app/shared/';
 
 @Component({
 	selector: 'apply-background',

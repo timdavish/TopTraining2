@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/takeUntil';
 
-import { Errors, UserService } from '../shared';
+import { UserService } from 'app/core/services/user.service';
+import { Errors } from 'app/shared';
 
 @Component({
 	selector: 'auth-page',
