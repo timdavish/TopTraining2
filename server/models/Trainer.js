@@ -15,8 +15,9 @@ const TrainerSchema = new Schema({
 	completed_app: { type: Boolean, required: true, default: false },
 	profiles: [{
 		sport: { type: String, required: [true, "can't be blank"], lowercase: true },
+		completed: { type: Boolean, required: true, default: false },
 		approved: { type: Boolean, required: true, default: false },
-		image: { type: String }
+		image: { type: String },
 		locations: [{
 			priority: { type: Number, required: [true, "can't be blank"], default: 1 },
 			formatted_address: { type: String, required: [true, "can't be blank"] },
@@ -33,13 +34,13 @@ const TrainerSchema = new Schema({
 		}],
 		summary: { type: String },
 		credentials: {
-			experience: { type: Number },
+			experience: { type: String },
 			school: { type: String }
 		},
 		services: {
-			ages: [{ type: String }],
-			positions: [{ type: String }],
-			specialties: [{ type: String }]
+			ages: { name: { type: String }, checked: { type: Boolean } },
+			positions: { type: String },
+			specialties: { type: String }
 		}
 	}],
 	rating: {
@@ -80,9 +81,24 @@ TrainerSchema.methods.toProfileJSONFor = function(user) {
 	};
 };
 
+// Add a new trainer profile
+TrainerSchema.methods.addProfile = function(profile) {
+	if (this.profiles.find(p => { return p.sport === profile.sport; }) === undefined) {
+		this.profiles.push(profile);
+	}
+	return this.save();
+};
+
+// Remove a trainer profile
+TrainerSchema.methods.removeProfile = function(sport) {
+	this.profiles = this.profiles.filter(p => { return p.sport !== sport; });
+	return this.save();
+};
+
 // Switch a trainer's approval
-TrainerSchema.methods.flipApproved = function() {
-	this.approved = !this.approved;
+TrainerSchema.methods.flipApproved = function(sport) {
+	const profile = this.profiles.find(p => { return p.sport === sport; });
+	profile.approved = !profile.approved;
 	return this.save();
 };
 

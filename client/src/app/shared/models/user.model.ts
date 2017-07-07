@@ -1,3 +1,5 @@
+import { AgeGroup } from '..';
+
 export class User {
 	// General properties
 	id: string;
@@ -67,6 +69,7 @@ export class Action {
 
 export class TrainerProfile {
 	sport: string;
+	completed: boolean;
 	approved: boolean;
 	image: string;
 	locations: [Location];
@@ -90,14 +93,14 @@ export class Package {
 };
 
 export class Credentials {
-	experience: number;
+	experience: string;
 	school: string;
 };
 
 export class Services {
-	ages: Array<string>;
-	positions: Array<string>;
-	specialties: Array<string>;
+	ages: [AgeGroup];
+	positions: string;
+	specialties: string;
 };
 
 export class Geometry {
