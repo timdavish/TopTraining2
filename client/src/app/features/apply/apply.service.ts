@@ -21,6 +21,7 @@ export class ApplyService implements OnDestroy {
 	) {
 		this.currentUser = this.userService.getCurrentUser();
 		this.setPrefix(this.currentUser.id);
+		// TODO: retrieveProfile();
 	}
 
 	ngOnDestroy(): void {
@@ -34,6 +35,7 @@ export class ApplyService implements OnDestroy {
 			.takeUntil(this.ngUnsubscribe)
 			.subscribe(
 				data => {
+					this.localStorageService.remove(this.deriveKey());
 					this.userService.purgeAuth();
 					this.router.navigateByUrl('/register');
 				},

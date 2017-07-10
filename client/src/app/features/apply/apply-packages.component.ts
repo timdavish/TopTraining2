@@ -3,7 +3,8 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 
-import { UserService } from 'app/core/services/user.service';
+import { ApplyService } from './apply.service';
+import { UserService } from 'app/core/services';
 import { Errors, Sport, TrainerProfile, User } from 'app/shared';
 
 import { packageOptions } from './packages.options';
@@ -13,20 +14,20 @@ import { packageOptions } from './packages.options';
 	templateUrl: './apply-packages.component.html'
 })
 export class ApplyPackagesComponent implements OnDestroy, OnInit {
-	private readonly next = 'availability';
+	private readonly next = 'background';
+	// private readonly next = 'availability';
 	private readonly options = packageOptions;
-	private readonly profileItemName = 'TTTprofile';
 
 	errors: Errors = new Errors();
 	isSubmitting: boolean = false;
 	packagesForm: FormGroup;
-
-	profile: TrainerProfile;
+	profile: any;
 	user: User = new User();
 
 	private ngUnsubscribe: Subject<void> = new Subject<void>();
 
 	constructor(
+		private applyService: ApplyService,
 		private fb: FormBuilder,
 		private router: Router,
 		private userService: UserService
@@ -36,9 +37,11 @@ export class ApplyPackagesComponent implements OnDestroy, OnInit {
 		// Make a fresh copy of the current user's object to place in form
 		(<any>Object).assign(this.user, this.userService.getCurrentUser());
 		// Get our profile from localStorage or create a new one
-		this.profile = new TrainerProfile();
+		this.profile = this.applyService.retrieveProfile() || {};
 		// Build the form group
 		this.createFormGroup();
+		// Fill the form (if necessary)
+		this.packagesForm.patchValue(this.profile);
 	}
 
 	ngOnDestroy(): void {
@@ -48,46 +51,25 @@ export class ApplyPackagesComponent implements OnDestroy, OnInit {
 	}
 
 	public submitForm(): void {
-		// this.errors = new Errors();
-		// this.isSubmitting = true;
+		this.errors = new Errors();
+		this.isSubmitting = true;
 
-		// Update the model
+		// Update the stored model
 		this.updateProfile(this.packagesForm.value);
+		this.applyService.updateProfile(this.profile);
 
-		// localStorage.setItem(this.profileItemName, JSON.stringify(this.profile));
-		// console.log('StorageAfterSubmit:', JSON.parse(localStorage.getItem(this.profileItemName)));
-		// this.router.navigateByUrl('/trainer_app/apply/' + this.next);
-
-		// this.userService.update(this.user)
-		// 	.takeUntil(this.ngUnsubscribe)
-		// 	.subscribe(
-		// 		updatedUser => {
-		// 			localStorage.setItem(this.profileItemName, JSON.stringify(this.profile));
-		// 			this.router.navigateByUrl('/trainer_app/apply/' + this.next);
-		// 		},
-		// 		err => {
-		// 			// Remove the profile from the user's profiles but keep the profile data
-		// 			// this.user.profiles.filter((p) => { return p.sport === this.profile.sport; });
-		// 			this.errors = err;
-		// 			this.isSubmitting = false;
-		// 		}
-		// 	);
+		this.router.navigateByUrl('/trainer_app/apply/' + this.next);
 	}
 
 	private createFormGroup(): void {
 		// Use FormBuilder to create our form group
 		this.packagesForm = this.fb.group({
-			'sport': [this.profile.sport, Validators.required],
-			'phone': [this.user.contact.phone, Validators.required],
-			'dob_year': ['', Validators.required],
-			'dob_month': ['', Validators.required],
-			'dob_day': ['', Validators.required],
-			'gender': ['', Validators.required],
+			'session_length': ['', Validators.required],
+			'session_rate': ['', Validators.required]
 		});
 	}
 
 	private updateProfile(values: Object): void {
-		console.log('Changing profile values', values);
 		(<any>Object).assign(this.profile, values);
 	}
 }

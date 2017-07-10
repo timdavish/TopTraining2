@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
-import { SportService } from 'app/core/services/sport.service';
-import { UserService } from 'app/core/services/user.service';
+import { SportService, UserService } from 'app/core/services';
 import { Sport, User } from 'app/shared';
 
 @Component({

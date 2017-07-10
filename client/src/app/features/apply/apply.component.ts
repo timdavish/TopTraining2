@@ -1,38 +1,18 @@
-import { Component, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
+import { Component } from '@angular/core';
 
-import { UserService } from 'app/core/services/user.service';
+import { ApplyService } from './apply.service';
 
 @Component({
 	selector: 'apply-page',
 	templateUrl: './apply.component.html',
 	styleUrls: ['./apply.component.css']
 })
-export class ApplyComponent implements OnDestroy {
-	private ngUnsubscribe: Subject<void> = new Subject<void>();
-
+export class ApplyComponent {
 	constructor(
-		private router: Router,
-		private userService: UserService
+		private applyService: ApplyService
 	) {}
 
-	ngOnDestroy(): void {
-		// Clean up subscriptions
-		this.ngUnsubscribe.next();
-		this.ngUnsubscribe.complete();
-	}
-
 	public cancelForm(): void {
-		const user = this.userService.getCurrentUser();
-		this.userService.delete(user)
-			.takeUntil(this.ngUnsubscribe)
-			.subscribe(
-				data => {
-					this.userService.purgeAuth();
-					this.router.navigateByUrl('/register');
-				},
-				err => {}
-			);
+		this.applyService.cancelApplication();
 	}
 }

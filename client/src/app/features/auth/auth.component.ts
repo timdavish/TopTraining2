@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 
-import { UserService } from 'app/core/services/user.service';
+import { UserService } from 'app/core/services';
 import { Errors } from 'app/shared';
 
 @Component({

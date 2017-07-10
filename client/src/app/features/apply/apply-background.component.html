@@ -1,7 +1,7 @@
 <p>First we need some basic information about you.</p>
 <list-errors [errors]="errors"></list-errors>
 
-<form [formGroup]="appForm" (ngSubmit)="submitForm()">
+<form [formGroup]="backgroundForm" (ngSubmit)="submitForm()">
 	<fieldset [disabled]="isSubmitting">
 
 		<!-- Contact Info -->
@@ -10,10 +10,11 @@
 			<select class="form-control form-control-lg"
 				formControlName="sport"
 				name="sport">
-				<option disabled="true" [selected]="true" value="">Select a sport</option>
+				<option disabled="true" [selected]="!profile.sport" value="">Select a sport</option>
 				<option *ngFor="let sport of sports"
 					[ngValue]="sport.sport"
-					[disabled]="hasSport(sport.sport)">
+					[disabled]="hasSport(sport.sport)"
+					[selected]="profile.sport === sport.sport">
 					{{ sport.sport | titlecase }}
 				</option>
 			</select>
@@ -38,9 +39,10 @@
 			<select class="form-control form-control-lg"
 				formControlName="dob_year"
 				name="dob[year]">
-				<option disabled="true" [selected]="true" value="">Year</option>
+				<option disabled="true" [selected]="!profile.dob_year" value="">Year</option>
 				<option *ngFor="let year of dates.years"
-					[ngValue]="year">
+					[ngValue]="year"
+					[selected]="profile.dob_year === year">
 					{{ year }}
 				</option>
 			</select>
@@ -48,9 +50,10 @@
 			<select class="form-control form-control-lg"
 				formControlName="dob_month"
 				name="dob[month]">
-				<option disabled="true" [selected]="true" value="">Month</option>
+				<option disabled="true" [selected]="!profile.dob_month" value="">Month</option>
 				<option *ngFor="let month of dates.months"
-					[ngValue]="month.value">
+					[ngValue]="month.value"
+					[selected]="profile.dob_month === month">
 					{{ month.month }}
 				</option>
 			</select>
@@ -58,9 +61,10 @@
 			<select class="form-control form-control-lg"
 				formControlName="dob_day"
 				name="dob[day]">
-				<option disabled="true" [selected]="true" value="">Day</option>
+				<option disabled="true" [selected]="!profile.dob_day" value="">Day</option>
 				<option *ngFor="let day of dates.days"
-					[ngValue]="day">
+					[ngValue]="day"
+					[selected]="profile.dob_day === day">
 					{{ day }}
 				</option>
 			</select>
@@ -72,10 +76,10 @@
 			<select class="form-control form-control-lg"
 				formControlName="gender"
 				name="gender">
-				<option disabled="true" [selected]="true" value="">Select</option>
-				<option [value]="male">Male</option>
-				<option [value]="female">Female</option>
-				<option [value]="opt">I prefer not to say</option>
+				<option disabled="true" [selected]="!profile.gender" value="">Select</option>
+				<option value="male" [selected]="profile.gender === 'male'">Male</option>
+				<option value="female" [selected]="profile.gender === 'female'">Female</option>
+				<option value="opt" [selected]="profile.gender === 'opt'">I prefer not to say</option>
 			</select>
 		</fieldset>
 
@@ -180,11 +184,18 @@
 			<p>
 				Which age groups do you train?
 			</p>
-			<div *ngFor="let age of getAges.controls; let i = index">
-				<input [formControl="age"
-					type="checkbox" />
-				{{ age.name }}
-			</div>
+			<input class=""
+				formControlName="ages.adults"
+				name="ages[adults]"
+				type="checkbox" /> Adults
+			<input class=""
+				formControlName="ages.kids"
+				name="ages[kids]"
+				type="checkbox" /> Kids
+			<input class=""
+				formControlName="ages.teenagers"
+				name="ages[teenagers]"
+				type="checkbox" /> Teenagers
 		</fieldset>
 
 		<fieldset class="form-group">
