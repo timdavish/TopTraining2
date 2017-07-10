@@ -21,6 +21,7 @@
 						</button>
 
 						<button class="btn btn-lg btn-primary banner-button"
+							*ngIf="currentUser.usertype !== 'Trainer'"
 							routerLink="/trainer_app">
 							Apply To Train
 						</button>

@@ -1,48 +1,30 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs/Subject';
 
-import { SportService } from 'app/core/services/sport.service';
-import { Errors, SharedModule, Sport } from 'app/shared';
+import { Errors, SharedModule, Sport, User } from 'app/shared';
 
 @Component({
 	selector: 'home-banner',
 	templateUrl: './banner.component.html',
 	styleUrls: ['./banner.component.css']
 })
-export class BannerComponent implements OnDestroy, OnInit {
+export class BannerComponent implements OnInit {
+	@Input() currentUser: User;
+	@Input() sports: Sport[];
+
 	address: Object;
 	bannerView: string = '';
 	errors: Errors = new Errors();
 	isSubmitting: boolean = false;
 	searchForm: FormGroup;
-	sports: Array<Sport>;
-
-	private ngUnsubscribe: Subject<void> = new Subject<void>();
 
 	constructor(
-		private fb: FormBuilder,
-		private sportService: SportService
+		private fb: FormBuilder
 	) {}
 
 	ngOnInit(): void {
-		// Populate sports
-		this.sportService.getSports()
-			.takeUntil(this.ngUnsubscribe)
-			.subscribe(
-				sports => {
-					this.sports = sports;
-				},
-				err => {}
-			);
 		// Build the form group
 		this.createFormGroup();
-	}
-
-	ngOnDestroy(): void {
-		// Clean up subscriptions
-		this.ngUnsubscribe.next();
-		this.ngUnsubscribe.complete();
 	}
 
 	public getAddress(place: Object): void {
