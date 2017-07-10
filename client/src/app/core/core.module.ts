@@ -8,6 +8,7 @@ import { ApiService } from './services/api.service';
 import { AuthGuard } from './guards/auth-guard.service';
 import { DeactivateGuard } from './guards/deactivate-guard.service';
 import { JwtService } from './services/jwt.service';
+import { LocalStorageService } from './services/local-storage.service';
 import { LocationService } from './services/location.service';
 import { SportService } from './services/sport.service';
 import { TrainerGuard } from './guards/trainer-guard.service';
@@ -33,6 +34,7 @@ import './rxjs-operators'; // Don't need to import rxjs operators anywhere else
 		AuthGuard,
 		DeactivateGuard,
 		JwtService,
+		LocalStorageService,
 		LocationService,
 		SportService,
 		UserService,

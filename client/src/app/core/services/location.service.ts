@@ -19,7 +19,7 @@ export class LocationService implements OnInit {
 	constructor() {}
 
 	ngOnInit(): void {
-		this.geocoder = new google.maps.Geocoder()
+		this.geocoder = new google.maps.Geocoder();
 	}
 
 	/**
