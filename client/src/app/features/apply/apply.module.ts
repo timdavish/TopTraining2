@@ -1,13 +1,12 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { AuthGuard } from 'app/core/guards/auth-guard.service';
-import { DeactivateGuard } from 'app/core/guards/deactivate-guard.service';
-import { TrainerGuard } from 'app/core/guards/trainer-guard.service';
+import { AuthGuard, DeactivateGuard, TrainerGuard } from 'app/core/guards';
 import { SharedModule } from 'app/shared';
 import { ApplyComponent } from './apply.component';
 import { ApplyBackgroundComponent } from './apply-background.component';
 import { ApplyPackagesComponent } from './apply-packages.component';
+import { ApplyService } from './apply.service';
 
 const applyRouting: ModuleWithProviders = RouterModule.forChild([
 	{
@@ -46,6 +45,9 @@ const applyRouting: ModuleWithProviders = RouterModule.forChild([
 		ApplyComponent,
 		ApplyBackgroundComponent,
 		ApplyPackagesComponent
+	],
+	providers: [
+		ApplyService
 	]
 })
 export class ApplyModule {}
