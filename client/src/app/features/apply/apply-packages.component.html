@@ -5,14 +5,13 @@
 	<fieldset [disabled]="isSubmitting">
 
 		<fieldset class="form-group">
-			<label for="length">Session Length</label>
+			<label for="length">Session Length (Recommended length is 60 minutes)</label>
 			<select class="form-control form-control-lg"
 				formControlName="session_length"
 				name="length">
-				<option disabled="true" [selected]="false" value="">Select</option>
+				<option disabled="true" [selected]="!profile.session_length" value="">Select</option>
 				<option *ngFor="let length of options.lengths"
-					[ngValue]="length"
-					[selected]="length === 60">
+					[ngValue]="length">
 					{{ length | minutesToTime }}
 				</option>
 			</select>
@@ -23,13 +22,31 @@
 			<select class="form-control form-control-lg"
 				formControlName="session_rate"
 				name="rate">
-				<option disabled="true" [selected]="false" value="">Select</option>
+				<option disabled="true" [selected]="!profile.session_rate" value="">Select</option>
 				<option *ngFor="let rate of options.rates"
-					[ngValue]="rate"
-					[selected]="rate === 60">
+					[ngValue]="rate">
 					${{ rate }}
 				</option>
 			</select>
+		</fieldset>
+
+		<fieldset class="form-group">
+			<label for="session_type">Session Types</label>
+			<p>
+				Which types of training sessions would you like to create packages for?
+			</p>
+			<input class=""
+				formControlName="session_type_private"
+				name="session_type[private]"
+				type="checkbox" /> Private trainings
+			<input class=""
+				formControlName="session_type_small"
+				name="session_type[small]"
+				type="checkbox" /> Small group trainings (2-4 clients)
+			<input class=""
+				formControlName="session_type_large"
+				name="session_type[large]"
+				type="checkbox" /> Large group trainings (5+ clients)
 		</fieldset>
 
 		<button class="btn btn-lg btn-primary pull-right"

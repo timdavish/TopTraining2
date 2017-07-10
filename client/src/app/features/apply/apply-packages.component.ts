@@ -65,7 +65,10 @@ export class ApplyPackagesComponent implements OnDestroy, OnInit {
 		// Use FormBuilder to create our form group
 		this.packagesForm = this.fb.group({
 			'session_length': ['', Validators.required],
-			'session_rate': ['', Validators.required]
+			'session_rate': ['', Validators.required],
+			'session_type_private': ['', Validators.required],
+			'session_type_small': ['', Validators.required],
+			'session_type_large': ['', Validators.required]
 		});
 	}
 
