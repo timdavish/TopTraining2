@@ -23,7 +23,7 @@ export class User {
 // General properties
 export class Contact {
 	email: string;
-	phone: number;
+	phone: string;
 	firstname: string;
 	lastname: string;
 	gender: string;

@@ -95,9 +95,9 @@ export class ApplyBackgroundComponent implements OnDestroy, OnInit {
 			'experience': ['', Validators.required],
 			'school': ['', Validators.required],
 
-			'ages.adults': ['', Validators.required],
-			'ages.kids': ['', Validators.required],
-			'ages.teenagers': ['', Validators.required],
+			'ages_adults': ['', Validators.required],
+			'ages_kids': ['', Validators.required],
+			'ages_teenagers': ['', Validators.required],
 			'positions': ['', Validators.required],
 			'specialties': ['', Validators.required],
 		});

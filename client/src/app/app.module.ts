@@ -19,8 +19,8 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([
 ], { useHash: false });
 
 @NgModule({
-	declarations: [AppComponent],
 	imports: [BrowserModule, CoreModule, FeaturesModule, SharedModule, rootRouting],
+	declarations: [AppComponent],
 	bootstrap: [AppComponent]
 })
 export class AppModule {}
