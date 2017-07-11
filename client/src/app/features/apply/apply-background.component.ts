@@ -13,6 +13,9 @@ import { Dates, Errors, Sport, TrainerProfile, User } from 'app/shared';
 	styleUrls: ['./apply-background.component.css']
 })
 export class ApplyBackgroundComponent implements OnDestroy, OnInit {
+	lat: number = 51.678418;
+  lng: number = 7.809007;
+
 	private readonly dates = Dates;
 	private readonly next = 'packages';
 

@@ -1,6 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { AgmCoreModule } from '@agm/core';
 import { AuthGuard, DeactivateGuard, TrainerGuard } from 'app/core/guards';
 import { SharedModule } from 'app/shared';
 import { ApplyComponent } from './apply.component';
@@ -39,7 +40,8 @@ const applyRouting: ModuleWithProviders = RouterModule.forChild([
 @NgModule({
 	imports: [
 		applyRouting,
-		SharedModule
+		SharedModule,
+		AgmCoreModule.forRoot()
 	],
 	declarations: [
 		ApplyComponent,

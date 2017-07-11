@@ -2,10 +2,11 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
+import { AgmCoreModule } from '@agm/core';
+import { SharedModule } from 'app/shared';
+
 import { BannerComponent } from './banner.component';
 import { HomeComponent } from './home.component';
-
-import { SharedModule } from 'app/shared';
 
 const homeRouting: ModuleWithProviders = RouterModule.forChild([
 	{
@@ -18,7 +19,8 @@ const homeRouting: ModuleWithProviders = RouterModule.forChild([
 	imports: [
 		CommonModule,
 		homeRouting,
-		SharedModule
+		SharedModule,
+		AgmCoreModule.forRoot({ apiKey: 'AIzaSyC9Z9C7BKbBVCQutt_kAJ9nlQsqNykCT_M', libraries: ['places', 'visualization'] })
 	],
 	declarations: [
 		BannerComponent,

@@ -1,6 +1,9 @@
 <p>First we need some basic information about you.</p>
 <list-errors [errors]="errors"></list-errors>
 
+<agm-map style="height:300px"[latitude]="lat" [longitude]="lng">
+</agm-map>
+
 <form [formGroup]="backgroundForm" (ngSubmit)="submitForm()">
 	<fieldset [disabled]="isSubmitting">
 

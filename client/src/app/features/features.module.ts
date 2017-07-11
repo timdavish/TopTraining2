@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ApplyModule } from './apply/apply.module';
 import { AuthModule } from './auth/auth.module';
 import { HomeModule } from './home/home.module';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
 	imports: [
