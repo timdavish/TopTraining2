@@ -82,14 +82,14 @@ router.put('/', auth.required, function(req, res, next) {
 		let userData = req.body.user;
 
 		// Only update fields that were actually passed
-		if (typeof userData.password !== 'undefined') {
-			user.setPassword(req.body.password);
-		}
-		if (typeof userData.contact !== 'undefined') {
-			user.contact = req.body.contact;
-		}
+		// if (typeof userData.password !== 'undefined') {
+		// 	user.setPassword(req.body.password);
+		// }
+		// if (typeof userData.contact !== 'undefined') {
+		// 	user.contact = req.body.contact;
+		// }
 		if (typeof userData.profiles !== 'undefined') {
-			user.profiles = req.body.profiles;
+			user.profiles = userData.profiles;
 		}
 
 		return user.save().then(function() {

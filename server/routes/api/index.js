@@ -11,7 +11,6 @@ router.use('/users', require('./users'));
 
 router.use(function(err, req, res, next) {
 	if (err.name === 'ValidationError') {
-		console.log(err);
 		return res.status(422).json({
 			errors: Object.keys(err.errors).reduce(function(errors, key) {
 				// Find the actual name of the error (contact.email => email)

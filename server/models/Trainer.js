@@ -28,9 +28,9 @@ const TrainerSchema = new Schema({
 		}],
 		packages: [{
 			type: { type: String, required: [true, "can't be blank"], lowercase: true, enum: ['private', 'small', 'large'] },
-			sessions: { type: Number, lowercase: true, enum: [1, 2, 5, 10], default: 1 },
-			length: { type: String, required: [true, "can't be blank"], lowercase: true, default: '1 hour' },
-			price: { type: Number, required: [true, "can't be blank"], default: 0 }
+			sessions: { type: Number, enum: [1, 2, 5, 10], default: 1 },
+			length: { type: Number, default: '60' },
+			price: { type: Number, default: 0 }
 		}],
 		summary: { type: String },
 		credentials: {
@@ -38,7 +38,7 @@ const TrainerSchema = new Schema({
 			school: { type: String }
 		},
 		services: {
-			ages: { name: { type: String }, checked: { type: Boolean } },
+			ages: [{ name: { type: String }, checked: { type: Boolean } }],
 			positions: { type: String },
 			specialties: { type: String }
 		}
