@@ -20,7 +20,7 @@ const homeRouting: ModuleWithProviders = RouterModule.forChild([
 		CommonModule,
 		homeRouting,
 		SharedModule,
-		AgmCoreModule.forRoot({ apiKey: 'AIzaSyC9Z9C7BKbBVCQutt_kAJ9nlQsqNykCT_M', libraries: ['places', 'visualization'] })
+		AgmCoreModule
 	],
 	declarations: [
 		BannerComponent,

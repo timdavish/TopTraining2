@@ -41,7 +41,7 @@ const applyRouting: ModuleWithProviders = RouterModule.forChild([
 	imports: [
 		applyRouting,
 		SharedModule,
-		AgmCoreModule.forRoot()
+		AgmCoreModule
 	],
 	declarations: [
 		ApplyComponent,
