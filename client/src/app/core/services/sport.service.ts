@@ -2,7 +2,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/takeUntil';
 
 import { ApiService } from './api.service';
 import { Sport } from 'app/shared/models';

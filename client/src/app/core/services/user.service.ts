@@ -3,9 +3,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/takeUntil';
 
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
@@ -85,7 +82,7 @@ export class UserService implements OnDestroy {
 	}
 
 	public update(user: any): Observable<User> {
-		return this.apiService.put('/user', { user: user })
+		return this.apiService.put('/users', { user: user })
 			.map(data => {
 				this.currentUserSubject.next(data.user);
 				return data.user;
