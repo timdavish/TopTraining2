@@ -12,7 +12,13 @@ export class NoAuthGuard implements CanActivate {
 	) {}
 
 	public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-		return this.userService.isAuthenticated.take(1)
-			.map(bool => !bool);
+		return this.userService.isAuthenticated.take(1).map(isAuthenticated => {
+			if (!isAuthenticated) {
+				return true;
+			} else {
+				this.router.navigateByUrl('');
+				return false;
+			}
+		});
 	}
 }
