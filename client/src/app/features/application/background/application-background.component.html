@@ -1,9 +1,6 @@
 <p>First we need some basic information about you.</p>
 <list-errors [errors]="errors"></list-errors>
 
-<agm-map style="height:300px"[latitude]="lat" [longitude]="lng">
-</agm-map>
-
 <form [formGroup]="backgroundForm" (ngSubmit)="submitForm()">
 	<fieldset [disabled]="isSubmitting">
 
@@ -13,11 +10,11 @@
 			<select class="form-control form-control-lg"
 				formControlName="sport"
 				name="sport">
-				<option disabled="true" [selected]="!profile.sport" value="">Select a sport</option>
+				<option disabled="true" [selected]="!application.sport" value="">Select a sport</option>
 				<option *ngFor="let sport of sports"
 					[ngValue]="sport.sport"
 					[disabled]="hasSport(sport.sport)"
-					[selected]="profile.sport === sport.sport">
+					[selected]="application.sport === sport.sport">
 					{{ sport.sport | titlecase }}
 				</option>
 			</select>
@@ -42,10 +39,10 @@
 			<select class="form-control form-control-lg"
 				formControlName="dob_year"
 				name="dob[year]">
-				<option disabled="true" [selected]="!profile.dob_year" value="">Year</option>
+				<option disabled="true" [selected]="!application.dob_year" value="">Year</option>
 				<option *ngFor="let year of dates.years"
 					[ngValue]="year"
-					[selected]="profile.dob_year === year">
+					[selected]="application.dob_year === year">
 					{{ year }}
 				</option>
 			</select>
@@ -53,10 +50,10 @@
 			<select class="form-control form-control-lg"
 				formControlName="dob_month"
 				name="dob[month]">
-				<option disabled="true" [selected]="!profile.dob_month" value="">Month</option>
+				<option disabled="true" [selected]="!application.dob_month" value="">Month</option>
 				<option *ngFor="let month of dates.months"
 					[ngValue]="month.value"
-					[selected]="profile.dob_month === month">
+					[selected]="application.dob_month === month">
 					{{ month.month }}
 				</option>
 			</select>
@@ -64,10 +61,10 @@
 			<select class="form-control form-control-lg"
 				formControlName="dob_day"
 				name="dob[day]">
-				<option disabled="true" [selected]="!profile.dob_day" value="">Day</option>
+				<option disabled="true" [selected]="!application.dob_day" value="">Day</option>
 				<option *ngFor="let day of dates.days"
 					[ngValue]="day"
-					[selected]="profile.dob_day === day">
+					[selected]="application.dob_day === day">
 					{{ day }}
 				</option>
 			</select>
@@ -79,10 +76,10 @@
 			<select class="form-control form-control-lg"
 				formControlName="gender"
 				name="gender">
-				<option disabled="true" [selected]="!profile.gender" value="">Select</option>
-				<option value="male" [selected]="profile.gender === 'male'">Male</option>
-				<option value="female" [selected]="profile.gender === 'female'">Female</option>
-				<option value="opt" [selected]="profile.gender === 'opt'">I prefer not to say</option>
+				<option disabled="true" [selected]="!application.gender" value="">Select</option>
+				<option value="male" [selected]="application.gender === 'male'">Male</option>
+				<option value="female" [selected]="application.gender === 'female'">Female</option>
+				<option value="opt" [selected]="application.gender === 'opt'">I prefer not to say</option>
 			</select>
 		</fieldset>
 

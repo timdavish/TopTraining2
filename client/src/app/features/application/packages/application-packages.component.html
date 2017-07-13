@@ -9,7 +9,7 @@
 			<select class="form-control form-control-lg"
 				formControlName="session_length"
 				name="length">
-				<option disabled="true" [selected]="!profile.session_length" value="">Select</option>
+				<option disabled="true" [selected]="!application.session_length" value="">Select</option>
 				<option *ngFor="let length of options.lengths"
 					[ngValue]="length">
 					{{ length | minutesToTime }}
@@ -22,7 +22,7 @@
 			<select class="form-control form-control-lg"
 				formControlName="session_rate"
 				name="rate">
-				<option disabled="true" [selected]="!profile.session_rate" value="">Select</option>
+				<option disabled="true" [selected]="!application.session_rate" value="">Select</option>
 				<option *ngFor="let rate of options.rates"
 					[ngValue]="rate">
 					${{ rate }}

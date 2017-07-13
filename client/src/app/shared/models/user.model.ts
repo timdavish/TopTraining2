@@ -88,7 +88,7 @@ export class Location {
 export class Package {
 	type: string;
 	sessions: number;
-	length: string;
+	length: number;
 	price: number;
 };
 

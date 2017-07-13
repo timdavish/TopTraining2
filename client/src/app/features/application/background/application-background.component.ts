@@ -3,33 +3,31 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 
-import { ApplyService } from './apply.service';
+import { Application } from '../shared/application.model';
+import { ApplicationService } from '../shared/application.service';
 import { SportService, UserService } from 'app/core/services';
-import { Dates, Errors, Sport, TrainerProfile, User } from 'app/shared';
+import { Dates, Errors, Sport, User } from 'app/shared';
 
 @Component({
-	selector: 'apply-background',
-	templateUrl: './apply-background.component.html',
-	styleUrls: ['./apply-background.component.css']
+	selector: 'application-background',
+	templateUrl: './application-background.component.html',
+	styleUrls: ['./application-background.component.css']
 })
-export class ApplyBackgroundComponent implements OnDestroy, OnInit {
-	lat: number = 51.678418;
-  lng: number = 7.809007;
-
+export class ApplicationBackgroundComponent implements OnDestroy, OnInit {
 	private readonly dates = Dates;
 	private readonly next = 'packages';
 
+	application: Application;
 	backgroundForm: FormGroup;
 	errors: Errors = new Errors();
 	isSubmitting: boolean = false;
-	profile: any;
 	sports: Array<Sport> = [];
 	user: User = new User();
 
 	private ngUnsubscribe: Subject<void> = new Subject<void>();
 
 	constructor(
-		private applyService: ApplyService,
+		private applicationService: ApplicationService,
 		private fb: FormBuilder,
 		private router: Router,
 		private sportService: SportService,
@@ -48,12 +46,12 @@ export class ApplyBackgroundComponent implements OnDestroy, OnInit {
 				},
 				err => {}
 			);
-		// Get our profile from localStorage or create a new one
-		this.profile = this.applyService.retrieveProfile() || {};
+		// Get our application from localStorage or create a new one
+		this.application = this.applicationService.retrieveApplication() || {};
 		// Build the form group
 		this.createFormGroup();
 		// Fill the form (if necessary)
-		this.backgroundForm.patchValue(this.profile);
+		this.backgroundForm.patchValue(this.application);
 	}
 
 	ngOnDestroy(): void {
@@ -67,8 +65,8 @@ export class ApplyBackgroundComponent implements OnDestroy, OnInit {
 		this.isSubmitting = true;
 
 		// Update the stored model
-		this.updateProfile(this.backgroundForm.value);
-		this.applyService.updateProfile(this.profile);
+		this.updateApplication(this.backgroundForm.value);
+		this.applicationService.updateApplication(this.application);
 
 		this.router.navigateByUrl('/trainer_app/apply/' + this.next);
 	}
@@ -106,7 +104,7 @@ export class ApplyBackgroundComponent implements OnDestroy, OnInit {
 		});
 	}
 
-	private updateProfile(values: Object): void {
-		(<any>Object).assign(this.profile, values);
+	private updateApplication(values: Object): void {
+		(<any>Object).assign(this.application, values);
 	}
 }

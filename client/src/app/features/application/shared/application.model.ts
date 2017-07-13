@@ -27,4 +27,6 @@ export class Application {
 	session_type_private?: boolean;
 	session_type_small?: boolean;
 	session_type_large?: boolean;
+
+	locations?;
 }

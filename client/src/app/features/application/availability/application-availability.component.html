@@ -1,0 +1,62 @@
+<p>Now go ahead and set up your training locations.</p>
+<list-errors [errors]="errors"></list-errors>
+
+<div class="row">
+	<div class="col-sm-5 row">
+		<fieldset class="col-sm-8 form-group">
+			<input class="form-control form-control-lg"
+				locationAutocomplete
+				(setAddress)="setLocation($event)"
+				placeholder="Location"
+				type="text" />
+		</fieldset>
+
+		<button class="col-sm-4 btn btn-primary"
+			(click)="addLocation()">
+			Add Location
+		</button>
+
+		<div class="col-sm-12"
+			*ngFor="let loc of locations; let i = index">
+			<p>
+				<strong>{{ loc.priority }}:</strong> {{ loc.formatted_address }}
+				<a (click)="removeLocation(i)">
+					<i class="glyphicon glyphicon-remove"></i>
+				</a>
+			</p>
+		</div>
+	</div>
+
+	<div class="col-sm-7">
+		<agm-map
+			[latitude]="latitude"
+			[longitude]="longitude"
+			[zoom]="zoom"
+			[clickableIcons]="false"
+			[disableDefaultUI]="true"
+			[streetViewControl]="false"
+			[zoomControl]="true"
+			[usePanning]="true"
+			(triggerResize)="bounds">
+
+			<agm-marker
+				*ngFor="let loc of locations; let i = index"
+				[latitude]="loc.geometry.coordinates[1]"
+				[longitude]="loc.geometry.coordinates[0]"
+				[label]="'' + loc.priority"
+				[markerDraggable]="false">
+
+				<agm-info-window>
+					<strong>{{ loc.formatted_address }}</strong>
+				</agm-info-window>
+
+			</agm-marker>
+
+		</agm-map>
+	</div>
+</div>
+
+<button class="btn btn-lg btn-primary pull-right"
+	(click)="submitForm()">
+	Submit Application
+</button>

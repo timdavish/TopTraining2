@@ -38,7 +38,7 @@ const TrainerSchema = new Schema({
 			school: { type: String }
 		},
 		services: {
-			ages: [{ name: { type: String }, checked: { type: Boolean } }],
+			ages: [{ name: { type: String }, selected: { type: Boolean } }],
 			positions: { type: String },
 			specialties: { type: String }
 		}

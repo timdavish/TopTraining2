@@ -3,31 +3,29 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 
-import { ApplyService } from './apply.service';
+import { Application } from '../shared/application.model';
+import { ApplicationService } from '../shared/application.service';
 import { UserService } from 'app/core/services';
-import { Errors, Sport, TrainerProfile, User } from 'app/shared';
-
-import { packageOptions } from './packages.options';
+import { Errors, packageOptions, Sport, User } from 'app/shared';
 
 @Component({
-	selector: 'apply-packages',
-	templateUrl: './apply-packages.component.html'
+	selector: 'application-packages',
+	templateUrl: './application-packages.component.html'
 })
-export class ApplyPackagesComponent implements OnDestroy, OnInit {
-	private readonly next = 'background';
-	// private readonly next = 'availability';
+export class ApplicationPackagesComponent implements OnDestroy, OnInit {
+	private readonly next = 'availability';
 	private readonly options = packageOptions;
 
+	application: Application;
 	errors: Errors = new Errors();
 	isSubmitting: boolean = false;
 	packagesForm: FormGroup;
-	profile: any;
 	user: User = new User();
 
 	private ngUnsubscribe: Subject<void> = new Subject<void>();
 
 	constructor(
-		private applyService: ApplyService,
+		private applicationService: ApplicationService,
 		private fb: FormBuilder,
 		private router: Router,
 		private userService: UserService
@@ -36,12 +34,13 @@ export class ApplyPackagesComponent implements OnDestroy, OnInit {
 	ngOnInit() {
 		// Make a fresh copy of the current user's object to place in form
 		(<any>Object).assign(this.user, this.userService.getCurrentUser());
-		// Get our profile from localStorage or create a new one
-		this.profile = this.applyService.retrieveProfile() || {};
+		// Get our application from localStorage, otherwise the application is
+		// compromised and we need to restart
+		this.application = this.applicationService.retrieveApplication();
 		// Build the form group
 		this.createFormGroup();
 		// Fill the form (if necessary)
-		this.packagesForm.patchValue(this.profile);
+		this.packagesForm.patchValue(this.application);
 	}
 
 	ngOnDestroy(): void {
@@ -55,8 +54,8 @@ export class ApplyPackagesComponent implements OnDestroy, OnInit {
 		this.isSubmitting = true;
 
 		// Update the stored model
-		this.updateProfile(this.packagesForm.value);
-		this.applyService.updateProfile(this.profile);
+		this.updateapplication(this.packagesForm.value);
+		this.applicationService.updateApplication(this.application);
 
 		this.router.navigateByUrl('/trainer_app/apply/' + this.next);
 	}
@@ -72,7 +71,7 @@ export class ApplyPackagesComponent implements OnDestroy, OnInit {
 		});
 	}
 
-	private updateProfile(values: Object): void {
-		(<any>Object).assign(this.profile, values);
+	private updateapplication(values: Object): void {
+		(<any>Object).assign(this.application, values);
 	}
 }
