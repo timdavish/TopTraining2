@@ -5,19 +5,20 @@ import { Observable } from 'rxjs/Rx';
 import { UserService } from 'app/core/services/user.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class ClientGuard implements CanActivate {
 	constructor(
 		private router: Router,
 		private userService: UserService
 	) {}
 
 	public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-		return this.userService.isAuthenticated.take(1).map(isAuthenticated => {
-			if (isAuthenticated) {
+		return this.userService.currentUsertype.take(1).map(usertype => {
+			if (usertype === 'Client') {
 				return true;
 			} else {
 				this.router.navigateByUrl('');
 				return false;
 			}
-		});	}
+		});
+	}
 }

@@ -11,9 +11,11 @@ import { User } from 'app/shared/models';
 @Injectable()
 export class UserService implements OnDestroy {
 	private readonly currentUserSubject = new BehaviorSubject<User>(new User());
+	private readonly currentUsertypeSubject = new ReplaySubject<string>(1);
 	private readonly isAuthenticatedSubject = new ReplaySubject<boolean>(1);
 
 	public currentUser = this.currentUserSubject.asObservable().distinctUntilChanged();
+	public currentUsertype = this.currentUsertypeSubject.asObservable();
 	public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
 	private ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -55,6 +57,9 @@ export class UserService implements OnDestroy {
 		this.jwtService.saveToken(user.token);
 		// Set current user data into observable
 		this.currentUserSubject.next(user);
+		console.log('currentUserSubject set');
+		// Set current user type
+		this.currentUsertypeSubject.next(user.usertype);
 		// Set isAuthenticated to true
 		this.isAuthenticatedSubject.next(true);
 	}

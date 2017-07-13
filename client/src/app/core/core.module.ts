@@ -4,8 +4,10 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from 'app/shared/shared.module';
 import { FooterComponent } from './layout/footer.component';
 import { HeaderComponent } from './layout/header.component';
+import { AdminGuard } from './guards/admin-guard.service';
 import { ApiService } from './services/api.service';
 import { AuthGuard } from './guards/auth-guard.service';
+import { ClientGuard } from './guards/client-guard.service';
 import { DeactivateGuard } from './guards/deactivate-guard.service';
 import { JwtService } from './services/jwt.service';
 import { LocalStorageService } from './services/local-storage.service';
@@ -30,8 +32,10 @@ import './rxjs-operators'; // Don't need to import rxjs operators anywhere else
 		HeaderComponent
 	],
 	providers: [
+		AdminGuard,
 		ApiService,
 		AuthGuard,
+		ClientGuard,
 		DeactivateGuard,
 		JwtService,
 		LocalStorageService,
