@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { AdminGuard, AuthGuard, DeactivateGuard } from 'app/core/guards';
 import { SharedModule } from 'app/shared';
 import { AdminComponent } from './admin.component';
+import { AdminAuditComponent } from './audit/admin-audit.component';
 import { AdminDashboardComponent } from './dashboard/admin-dashboard.component';
 import { AdminPromosComponent } from './promos/admin-promos.component';
 import { AdminSportsComponent } from './sports/admin-sports.component';
@@ -21,6 +22,10 @@ const adminRouting: ModuleWithProviders = RouterModule.forChild([
 				component: AdminDashboardComponent
 			},
 			{
+				path: 'audit',
+				component: AdminAuditComponent
+			},
+			{
 				path: 'promos',
 				component: AdminPromosComponent
 			},
@@ -31,6 +36,10 @@ const adminRouting: ModuleWithProviders = RouterModule.forChild([
 			{
 				path: 'users',
 				component: AdminUsersComponent
+			},
+			{
+				path: '**',
+				redirectTo: ''
 			}
 		]
 	}
@@ -43,6 +52,7 @@ const adminRouting: ModuleWithProviders = RouterModule.forChild([
 	],
 	declarations: [
 		AdminComponent,
+		AdminAuditComponent,
 		AdminDashboardComponent,
 		AdminPromosComponent,
 		AdminSportsComponent,

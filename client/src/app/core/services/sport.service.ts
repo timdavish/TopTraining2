@@ -8,7 +8,7 @@ import { Sport } from 'app/shared/models';
 
 @Injectable()
 export class SportService implements OnDestroy {
-	private readonly sportsSubject = new BehaviorSubject<Array<Sport>>([new Sport()]);
+	private readonly sportsSubject = new BehaviorSubject<Sport[]>([]);
 
 	public sports = this.sportsSubject.asObservable().distinctUntilChanged();
 

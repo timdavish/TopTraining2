@@ -49,7 +49,7 @@ router.post('/', function(req, res, next) {
 	}).catch(next);
 });
 
-// Retrieve a user
+// Retrieve current user
 router.get('/', auth.required, function(req, res, next) {
 	User.findById(req.payload.id).then(function(user) {
 		if (!user) { return res.sendStatus(401); }
@@ -59,20 +59,20 @@ router.get('/', auth.required, function(req, res, next) {
 });
 
 // Retrieve all users
-// router.get('/', auth.required, function(req, res, next) {
-// 	User.find().then(function(users) {
-// 		if (!users) { return res.sendStatus(401); }
-//
-// 		return res.json({ users: toAuthJSON(users) });
-// 	}).catch(next);
-//
-// 	function toAuthJSON(users) {
-// 		for (let i = 0; i < users.length; i++) {
-// 			users[i] = users[i].toAuthJSON();
-// 		}
-// 		return users;
-// 	}
-// });
+router.get('/all', auth.required, function(req, res, next) {
+	User.find().then(function(users) {
+		if (!users) { return res.sendStatus(401); }
+
+		return res.json({ users: toAuthJSON(users) });
+	}).catch(next);
+
+	function toAuthJSON(users) {
+		for (let i = 0; i < users.length; i++) {
+			users[i] = users[i].toAuthJSON();
+		}
+		return users;
+	}
+});
 
 // Update a user
 router.put('/', auth.required, function(req, res, next) {

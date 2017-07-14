@@ -1,6 +1,8 @@
 import { User } from './user.model';
 
 export class Sport {
-	sport: string;
-	trainers: Array<User>;
+	constructor(
+		public sport?: string,
+		public trainers?: Array<User>
+	) {}
 }
