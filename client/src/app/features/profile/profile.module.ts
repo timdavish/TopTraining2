@@ -3,8 +3,8 @@ import { RouterModule } from '@angular/router';
 
 import { AuthGuard, ClientGuard } from 'app/core/guards';
 import { SharedModule } from 'app/shared';
-import { ProfileClientComponent } from '../profile/client/profile-client.component';
-import { ProfileTrainerComponent } from '../profile/trainer/profile-trainer.component';
+import { ProfileClientComponent } from './client/profile-client.component';
+import { ProfileTrainerComponent } from './trainer/profile-trainer.component';
 import { ProfileService } from './shared/profile.service';
 
 const profileRouting: ModuleWithProviders = RouterModule.forChild([
@@ -32,4 +32,4 @@ const profileRouting: ModuleWithProviders = RouterModule.forChild([
 		ProfileService
 	]
 })
-export class EditorModule {}
+export class ProfileModule {}
