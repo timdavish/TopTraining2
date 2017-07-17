@@ -18,6 +18,19 @@ const AdminSchema = new Schema({
 	}]
 }, options);
 
+// JSONify admin data for admin
+AdminSchema.methods.toAdminJSON = function(user) {
+	return {
+		id: this._id,
+		token: this.generateJWT(),
+		usertype: this.usertype,
+		contact: this.contact,
+		actions: this.actions,
+		updatedAt: this.updatedAt,
+		createdAt: this.createdAt
+	};
+};
+
 // JSONify admin data for auth
 AdminSchema.methods.toAuthJSON = function() {
 	return {

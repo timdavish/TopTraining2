@@ -1,9 +1,9 @@
 
 // Dependencies
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
 
 // Define our passport login authentication strategy
 passport.use(new LocalStrategy({

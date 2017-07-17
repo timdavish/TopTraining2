@@ -1,5 +1,5 @@
 
-// Module dependencies
+// Dependencies
 const express = require('express');
 const router = express.Router();
 const auth = require('../auth');
@@ -20,7 +20,7 @@ router.param('userId', function(req, res, next, id) {
 });
 
 router.get('/trainer/:userId', auth.optional, function(req, res, next) {
-	if (req.profile.usertype === 'trainer') {
+	if (req.profile.usertype === 'Trainer') {
 		if (req.payload) {
 			User.findById(req.payload.id).then(function(user) {
 				if (!user) { return res.json({ profile: req.profile.toProfileJSONFor(false) }); }
@@ -39,7 +39,7 @@ router.post('/trainer/:userId/save', auth.required, function(req, res, next) {
 	const profileId = req.profile._id;
 
 	User.findById(req.payload.id).then(function(user) {
-		if (!user || user.usertype !== 'client') { return res.sendStatus(401); }
+		if (!user || user.usertype !== 'Client') { return res.sendStatus(401); }
 
 		return user.saveTrainer(profileId).then(function() {
 			return res.json({ profile: req.profile.toProfileJSONFor(user) });
@@ -51,7 +51,7 @@ router.delete('/trainer/:userId/unsave', auth.required, function(req, res, next)
 	const profileId = req.profile._id;
 
 	User.findById(req.payload.id).then(function(user) {
-		if (!user || user.usertype !== 'client') { return res.sendStatus(401); }
+		if (!user || user.usertype !== 'Client') { return res.sendStatus(401); }
 
 		return user.unsaveTrainer(profileId).then(function() {
 			return res.json({ profile: req.profile.toProfileJSONFor(user) });
@@ -60,7 +60,7 @@ router.delete('/trainer/:userId/unsave', auth.required, function(req, res, next)
 });
 
 router.get('/client/:userId', auth.required, function(req, res, next) {
-	if (req.profile.usertype === 'client') {
+	if (req.profile.usertype === 'Client') {
 		return res.json({ profile: req.user.toProfileJSON() });
 	} else {
 		return res.sendStatus(401);

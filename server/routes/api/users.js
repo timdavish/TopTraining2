@@ -1,5 +1,5 @@
 
-// Module dependencies
+// Dependencies
 const express = require('express');
 const router = express.Router();
 const passport = require('passport'); // Password authentication
@@ -20,14 +20,14 @@ router.post('/', function(req, res, next) {
 	console.log(req.body);
 
 	// Create the correct type of user
-	if (userData.usertype === 'admin') {
+	if (userData.usertype === 'Admin') {
 		console.log('creating an admin');
 		user = new Admin();
-	} else if (userData.usertype === 'client') {
+	} else if (userData.usertype === 'Client') {
 		console.log('creating a client');
 		user = new Client();
 		user.zipcode = userData.zipcode;
-	} else if (userData.usertype === 'trainer') {
+	} else if (userData.usertype === 'Trainer') {
 		console.log('creating a trainer');
 		user = new Trainer();
 		user.contact.phone = userData.phone;
@@ -63,12 +63,12 @@ router.get('/all', auth.required, function(req, res, next) {
 	User.find().then(function(users) {
 		if (!users) { return res.sendStatus(401); }
 
-		return res.json({ users: toAuthJSON(users) });
+		return res.json({ users: toAdminJSON(users) });
 	}).catch(next);
 
-	function toAuthJSON(users) {
+	function toAdminJSON(users) {
 		for (let i = 0; i < users.length; i++) {
-			users[i] = users[i].toAuthJSON();
+			users[i] = users[i].toAdminJSON();
 		}
 		return users;
 	}
@@ -126,6 +126,21 @@ router.post('/login', function(req, res, next) {
 		user.token = user.generateJWT();
 		return res.json({ user: user.toAuthJSON() });
 	})(req, res, next);
+});
+
+// Flip a trainer profile's approved status
+router.put('/:id/flipApproved/:profileId', auth.required, function(req, res, next) {
+	User.findById(req.params.id).then(function(user) {
+		if (!user) { return res.sendStatus(401); }
+
+		const profile = user.children.id(req.params.profileId);
+		console.log(profile);
+		profile.flipApproved();
+		console.log(profile);
+		return user.save().then(function() {
+			return res.json({ approved: profile.approved });
+		});
+	}).catch(next);
 });
 
 module.exports = router;

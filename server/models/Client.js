@@ -19,6 +19,21 @@ const ClientSchema = new Schema({
 	savedTrainers: [{ type: ObjectId, ref: 'User' }]
 });
 
+// JSONify client data for admin
+ClientSchema.methods.toAdminJSON = function(user) {
+	return {
+		id: this._id,
+		token: this.generateJWT(),
+		usertype: this.usertype,
+		contact: this.contact,
+		zipcode: this.zipcode,
+		activeSessions: this.activeSessions,
+		savedTrainers: this.savedTrainers,
+		updatedAt: this.updatedAt,
+		createdAt: this.createdAt
+	};
+};
+
 // JSONify client data for auth
 ClientSchema.methods.toAuthJSON = function() {
 	return {
