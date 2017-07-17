@@ -15,9 +15,9 @@ export class User {
 	// Client properties
 
 	// Trainer properties
-	completed_app: boolean;
-	profiles: [TrainerProfile];
-	rating: Rating;
+	completed_app?: boolean;
+	profiles?: [TrainerProfile];
+	rating?: Rating;
 };
 
 // General properties
@@ -66,8 +66,8 @@ export class Action {
 
 
 // Trainer properties
-
 export class TrainerProfile {
+	_id: string;
 	sport: string;
 	completed: boolean;
 	approved: boolean;

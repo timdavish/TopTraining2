@@ -10,6 +10,7 @@ import { AdminPromosComponent } from './promos/admin-promos.component';
 import { AdminSportsComponent } from './sports/admin-sports.component';
 import { AdminUsersComponent } from './users/admin-users.component';
 import { AdminService } from './shared/admin.service';
+import { ApproveButtonComponent } from './shared/approve-button.component';
 
 const adminRouting: ModuleWithProviders = RouterModule.forChild([
 	{
@@ -56,7 +57,8 @@ const adminRouting: ModuleWithProviders = RouterModule.forChild([
 		AdminDashboardComponent,
 		AdminPromosComponent,
 		AdminSportsComponent,
-		AdminUsersComponent
+		AdminUsersComponent,
+		ApproveButtonComponent
 	],
 	providers: [
 		AdminService

@@ -67,9 +67,9 @@ export class AuthComponent implements OnDestroy, OnInit {
 
 		// If registering, set usertype
 		if (this.authType === 'register') {
-			credentials.usertype = 'client';
+			credentials.usertype = 'Client';
 		} else if (this.authType === 'trainer_app') {
-			credentials.usertype = 'trainer';
+			credentials.usertype = 'Trainer';
 		}
 
 		this.userService.attemptAuth(this.authType, credentials)

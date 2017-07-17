@@ -129,16 +129,16 @@ router.post('/login', function(req, res, next) {
 });
 
 // Flip a trainer profile's approved status
-router.put('/:id/flipApproved/:profileId', auth.required, function(req, res, next) {
+router.put('/:id/approve/:profileId/:approve', auth.required, function(req, res, next) {
 	User.findById(req.params.id).then(function(user) {
 		if (!user) { return res.sendStatus(401); }
 
-		const profile = user.children.id(req.params.profileId);
-		console.log(profile);
-		profile.flipApproved();
-		console.log(profile);
+		const profile = user.profiles.find(p => p._id == req.params.profileId);
+		profile.approved = req.params.approve;
+		profile.save();
+
 		return user.save().then(function() {
-			return res.json({ approved: profile.approved });
+			return res.json({ user: user.toAdminJSON() });
 		});
 	}).catch(next);
 });

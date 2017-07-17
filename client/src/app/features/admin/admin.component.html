@@ -4,6 +4,7 @@
 
 	<div *ngFor="let sport of sports">
 		{{ sport.sport }}
+		{{ sport.trainers }}
 	</div>
 
 	<!-- Admins -->
@@ -29,7 +30,7 @@
 			<br />
 			<span>{{ admin.contact.email }}</span>
 	 	</div>
-		<!-- End Contact -->
+		<!-- /Contact -->
 
 		<!-- Action Log -->
 		<div class="col-md-5">
@@ -37,7 +38,7 @@
 			<br />
 			<span><a href>View Log</a></span>
 		</div>
-		<!-- End Action Log -->
+		<!-- /Action Log -->
 
 		<!-- Data -->
 		<div class="col-md-4">
@@ -45,11 +46,11 @@
 			<br />
 			<span>Created: {{ admin.createdAt }}</span>
 		</div>
-		<!-- End Data -->
+		<!-- /Data -->
 
 		<hr />
 	</div>
-	<!-- End Admins -->
+	<!-- /Admins -->
 
 	<!-- Trainers -->
 	<h2>Trainers ({{ trainers.length }} users)</h2>
@@ -58,7 +59,7 @@
 			<h4>Contact</h4>
 		</div>
 		<div class="col-md-3">
-			<h4>Approved Status</h4>
+			<h4>Profile Status</h4>
 		</div>
 		<div class="col-md-2">
 			<h4>Rating</h4>
@@ -77,26 +78,29 @@
 			<br />
 			<span>{{ trainer.contact.email }}</span>
 	 	</div>
-		<!-- End Contact -->
+		<!-- /Contact -->
 
+		<!-- Profile Status -->
 		<div class="col-md-3">
-			<span>{{ trainer.profiles }}</span>
+			Applications completed: {{ numApplicationsCompleted(trainer) }}
+			<p *ngFor="let profile of trainer.profiles">
+				{{ profile.sport | titlecase }}: {{ profile.approved ? 'Approved' : 'Not approved' }} |
+				<approve-button
+					[profile]="profile"
+					[trainer]="trainer"
+					(onToggle)="onToggleApproved(profile, $event)">
+				</approve-button>
+			</p>
 		</div>
-		<!-- Approval Status -->
-		<!-- <div class="col-md-3">
-			<span>{{ trainer.approved ? 'Approved' : 'Not approved' }}</span>
-			<br />
-			<span><a href ng-click="vm.flipApproved(trainer)">Change</a></span>
-		</div> -->
-		<!-- End Approval Status -->
+		<!-- /Profile Status -->
 
 		<!-- Rating -->
 		<div class="col-md-2">
-			<!-- <span>Average: {{ trainer.rating.average }}</span>
+			<span>Average: {{ trainer.rating.average }}</span>
 			<br />
-			<span>Review count: {{ trainer.rating.count }}</span> -->
+			<span>Review count: {{ trainer.rating.count }}</span>
 		</div>
-		<!-- End Rating -->
+		<!-- /Rating -->
 
 		<!-- Data -->
 		<div class="col-md-4">
@@ -104,11 +108,11 @@
 			<br />
 			<span>Created: {{ trainer.createdAt }}</span>
 		</div>
-		<!-- End Data -->
+		<!-- /Data -->
 
 		<hr />
 	</div>
-	<!-- End Trainers -->
+	<!-- /Trainers -->
 
 	<!-- Clients -->
 	<h2>Clients ({{ clients.length }} users)</h2>
@@ -133,13 +137,13 @@
 			<br />
 			<span>{{ client.contact.email }}</span>
 	 	</div>
-		<!-- End Contact -->
+		<!-- /Contact -->
 
 		<!-- Data -->
 		<div class="col-md-5">
 
 		</div>
-		<!-- End Data -->
+		<!-- /Data -->
 
 		<!-- Data -->
 		<div class="col-md-4">
@@ -147,10 +151,10 @@
 			<br />
 			<span>Created: {{ client.createdAt }}</span>
 		</div>
-		<!-- End Data -->
+		<!-- /Data -->
 
 		<hr />
 	</div>
-	<!-- End Clients -->
+	<!-- /Clients -->
 
 </div>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AdminService } from './shared/admin.service';
 import { SportService } from 'app/core/services';
-import { Sport, User } from 'app/shared/models';
+import { Sport, TrainerProfile, User } from 'app/shared/models';
 
 @Component({
 	selector: 'admin',
@@ -30,5 +30,13 @@ export class AdminComponent implements OnInit {
 
 	get trainers(): User[] {
 		return this.adminService.getTrainers();
+	}
+
+	numApplicationsCompleted(user: User): number {
+		return user.profiles.filter((p) => p.completed).length;
+	}
+
+	onToggleApproved(profile: TrainerProfile, approved: boolean) {
+		profile.approved = approved;
 	}
 }

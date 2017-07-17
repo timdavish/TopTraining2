@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
 import { ApiService } from 'app/core/services';
-import { Sport, User } from 'app/shared/models';
+import { Sport, TrainerProfile, User } from 'app/shared/models';
 
 @Injectable()
 export class AdminService {
@@ -20,6 +20,14 @@ export class AdminService {
 
 	addSport(sport: string): Observable<Sport> {
 		return this.apiService.post('/sports', { sport: new Sport(sport, []) });
+	}
+
+	approve(userId: string, profileId: string) {
+		return this.apiService.put(`/users/${userId}/approve/${profileId}/true`);
+	}
+
+	unapprove(userId: string, profileId: string) {
+		return this.apiService.put(`/users/${userId}/approve/${profileId}/false`);
 	}
 
 	getSports(): Sport[] {
