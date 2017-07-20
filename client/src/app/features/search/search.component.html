@@ -1,0 +1,41 @@
+<form [formGroup]="searchForm" (ngSubmit)="submitForm()"
+	 class="list-inline fix-form">
+	<fieldset [disabled]="isSubmitting">
+
+		<md-input-container>
+			<input mdInput
+				[mdAutocomplete]="auto"
+				formControlName="sport"
+				placeholder="Sport"
+				type="text" />
+			<md-error *ngIf="searchForm['controls']['sport'].hasError('required')">
+				Please enter a sport
+			</md-error>
+		</md-input-container>
+
+		<md-autocomplete #auto="mdAutocomplete">
+			<md-option *ngFor="let sport of filteredSports | async" [value]="sport.sport | titlecase">
+				{{ sport.sport | titlecase }}
+			</md-option>
+		</md-autocomplete>
+
+		<md-input-container>
+			<input mdInput
+				locationAutocomplete
+				[(ngModel)]="address"
+				(setAddress)="getAddress($event)"
+				formControlName="location"
+				placeholder="Location"
+				type="text" />
+			<md-error *ngIf="searchForm['controls']['location'].hasError('required')">
+				Please enter a location
+			</md-error>
+		</md-input-container>
+
+		<button md-raised-button
+			type="submit">
+			Search
+		</button>
+
+	</fieldset>
+</form>
