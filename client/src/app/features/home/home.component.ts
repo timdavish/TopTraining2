@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
-import { SportService, UserService } from 'app/core/services';
-import { Sport, User } from 'app/shared';
+import { UserService } from 'app/core/services';
+import { User } from 'app/shared';
 
 @Component({
 	selector: 'home-page',
@@ -10,33 +10,20 @@ import { Sport, User } from 'app/shared';
 	styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnDestroy, OnInit {
-	buttonView: string = '';
-	currentUser: User = new User();
-	sports: Sport[] = [];
+	currentUser: User;
 
 	private ngUnsubscribe: Subject<void> = new Subject<void>();
 
 	constructor(
-		private sportService: SportService,
 		private userService: UserService
 	) {}
 
 	ngOnInit(): void {
-		// Populate user
 		this.userService.currentUser
 			.takeUntil(this.ngUnsubscribe)
 			.subscribe(
 				userData => {
 					this.currentUser = userData;
-				},
-				err => {}
-			);
-		// Populate sports
-		this.sportService.getSports()
-			.takeUntil(this.ngUnsubscribe)
-			.subscribe(
-				sports => {
-					this.sports = sports;
 				},
 				err => {}
 			);

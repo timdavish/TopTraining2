@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { SharedModule } from 'app/shared';
+import { SearchModule } from '../search/search.module';
 
 import { BannerComponent } from './banner.component';
 import { HomeComponent } from './home.component';
@@ -18,7 +19,8 @@ const homeRouting: ModuleWithProviders = RouterModule.forChild([
 	imports: [
 		CommonModule,
 		homeRouting,
-		SharedModule
+		SharedModule,
+		SearchModule
 	],
 	declarations: [
 		BannerComponent,

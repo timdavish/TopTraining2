@@ -8,73 +8,25 @@
 				<h3>Reach the top of your game with top training resources for athletes.</h3>
 				<hr class="banner-divider">
 
-				<!-- Switch -->
-				<div [ngSwitch]="bannerView">
+				<!-- Default view -->
+				<form class="list-inline fix-form"
+					*ngIf="!search">
 
-					<!-- Default view -->
-					<form *ngSwitchDefault
-					    class="list-inline fix-form">
+					<button class="btn btn-lg btn-primary banner-button"
+						(click)="goToSearch()">
+						Find a Trainer
+					</button>
 
-						<button class="btn btn-lg btn-primary banner-button"
-							(click)="bannerView = 'search'">
-							Find a Trainer
-						</button>
+					<button class="btn btn-lg btn-primary banner-button"
+						*showAuthed="false"
+						routerLink="/trainer_app">
+						Apply To Train
+					</button>
 
-						<button class="btn btn-lg btn-primary banner-button"
-							*ngIf="currentUser.usertype !== 'Trainer'"
-							routerLink="/trainer_app">
-							Apply To Train
-						</button>
+				</form>
+				<!-- /Default view -->
 
-					</form>
-					<!-- /Default view -->
-
-					<!-- Find a Trainer View -->
-					<form [formGroup]="searchForm" (ngSubmit)="submitForm()"
-						*ngSwitchCase="'search'" class="list-inline fix-form">
-						<fieldset [disabled]="isSubmitting">
-
-						<button class="btn btn-lg btn-primary"
-							(click)="bannerView = ''">
-							Back
-						</button>
-
-					    <!-- Sport -->
-					    <!-- <li><input class="form-control input-lg input-search"
-					            ng-model="vm.searchParams.sport"
-					            uib-typeahead="sport for sport in vm.sports | filter:$viewValue | limitTo:5"
-					            typeahead-min-length="0"
-					            type="text" placeholder="Sport" /></li> -->
-					    <!-- /Sport -->
-
-						<fieldset class="form-group">
-							<input class="form-control form-control-lg"
-								formControlName="sport"
-								placeholder="Sport"
-								type="text" />
-						</fieldset>
-
-						<fieldset class="form-group">
-							<input class="form-control form-control-lg"
-								locationAutocomplete
-								[(ngModel)]="address"
-								(setAddress)="getAddress($event)"
-								formControlName="location"
-								placeholder="Location"
-								type="text" />
-						</fieldset>
-
-						<button class="btn btn-lg btn-primary"
-							type="submit">
-							Search
-						</button>
-
-						</fieldset>
-					</form>
-					<!-- /Find a Trainer View -->
-
-				</div>
-				<!-- /Switch -->
+				<search *ngIf="search"></search>
 			</div>
 
 		</div>
