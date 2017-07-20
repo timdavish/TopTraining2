@@ -1,0 +1,29 @@
+<!-- <search-preview
+	*ngFor="let profile of profiles"
+	[profile]="profile">
+</search-preview>
+
+<div class="trainer-preview"
+	[hidden]="!isLoading">
+	Loading trainers...
+</div>
+
+<div class="trainer-preview"
+	[hidden]="isLoading || profiles.length">
+	No trainers match these search parameters.
+</div> -->
+
+<nav [hidden]="isLoading || totalPages <= 1">
+	<ul class="pagination">
+
+		<li class="page-item"
+			[ngClass]="{'active': pageNumber === currentPage}"
+			*ngFor="let pageNumber of totalPages"
+			(click)="setPageTo(pageNumber)">
+
+			<a class="page-link" href="#">{{ pageNumber }}</a>
+
+		</li>
+
+	</ul>
+</nav>

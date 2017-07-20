@@ -4,13 +4,15 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule, SharedModule } from 'app/shared';
 import { SearchComponent } from './search.component';
 import { SearchFilterComponent } from './filter/search-filter.component';
+import { SearchFormComponent } from './form/search-form.component';
 import { SearchListComponent } from './list/search-list.component';
+import { SearchPreviewComponent } from './preview/search-preview.component';
 import { SearchService } from './shared/search.service';
 
 const searchRouting: ModuleWithProviders = RouterModule.forChild([
 	{
-		path: 'search/list',
-		component: SearchListComponent
+		path: 'search',
+		component: SearchComponent
 	}
 ]);
 
@@ -23,13 +25,15 @@ const searchRouting: ModuleWithProviders = RouterModule.forChild([
 	declarations: [
 		SearchComponent,
 		SearchFilterComponent,
-		SearchListComponent
+		SearchFormComponent,
+		SearchListComponent,
+		SearchPreviewComponent
 	],
 	providers: [
 		SearchService
 	],
 	exports: [
-		SearchComponent
+		SearchFormComponent
 	]
 })
 export class SearchModule {}
