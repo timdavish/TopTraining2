@@ -19,6 +19,7 @@ require('./models/User');
 require('./models/Admin');
 require('./models/Client');
 require('./models/Trainer');
+require('./models/TrainerProfile');
 
 require('./config/passport');
 

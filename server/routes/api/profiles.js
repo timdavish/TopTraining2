@@ -7,6 +7,7 @@ const auth = require('../auth');
 // Database interaction
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const TrainerProfile = mongoose.model('TrainerProfile');
 
 // Preload user profile object
 router.param('userId', function(req, res, next, id) {
@@ -19,7 +20,7 @@ router.param('userId', function(req, res, next, id) {
 	}).catch(next);
 });
 
-// Trainer serach
+// Trainer search
 router.get('/trainers', auth.optional, function(req, res, next) {
     var searchParams = req.body;
 
@@ -93,14 +94,20 @@ router.get('/trainer/:userId', auth.optional, function(req, res, next) {
 	}
 });
 
-router.post('/trainer/:userId/save', auth.required, function(req, res, next) {
-	const profileId = req.profile._id;
-
+router.post('/trainer', auth.required, function(req, res, next) {
 	User.findById(req.payload.id).then(function(user) {
-		if (!user || user.usertype !== 'Client') { return res.sendStatus(401); }
+		if (!user || user.usertype !== 'Trainer') { return res.sendStatus(401); }
 
-		return user.saveTrainer(profileId).then(function() {
-			return res.json({ profile: req.profile.toProfileJSONFor(user) });
+		const profile = new TrainerProfile(req.body.profile);
+
+		profile.trainer = user;
+
+		return profile.save().then(function() {
+			user.completed_app = true;
+
+			return user.addProfile(profile).then(function() {
+				return res.json({ profile: profile });
+			});
 		});
 	}).catch(next);
 });

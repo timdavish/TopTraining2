@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const User = mongoose.model('User');
-const TrainerProfile = require('./TrainerProfile');
 
 // Schema
 const options = {
@@ -14,7 +13,7 @@ const options = {
 
 const TrainerSchema = new Schema({
 	completed_app: { type: Boolean, required: true, default: false },
-	profiles: [TrainerProfile],
+	profiles: [{ type: ObjectId, ref: 'TrainerProfile' }],
 	rating: {
 		average: { type: Number, required: [true, "can't be blank"], default: 0	},
 		count: { type: Number, required: [true, "can't be blank"], default: 0 },

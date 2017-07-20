@@ -3,9 +3,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
-const User = mongoose.model('User');
 
 const TrainerProfileSchema = new Schema({
+	trainer: { type: ObjectId, ref: 'User' },
 	sport: { type: String, required: [true, "can't be blank"], lowercase: true },
 	completed: { type: Boolean, required: true, default: false },
 	approved: { type: Boolean, required: true, default: false },
@@ -42,4 +42,5 @@ TrainerProfileSchema.methods.flipApproved = function() {
 	return this.save();
 };
 
-module.exports = TrainerProfileSchema;
+// Set mongoose model
+mongoose.model('TrainerProfile', TrainerProfileSchema);
