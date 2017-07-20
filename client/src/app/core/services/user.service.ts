@@ -57,7 +57,6 @@ export class UserService implements OnDestroy {
 		this.jwtService.saveToken(user.token);
 		// Set current user data into observable
 		this.currentUserSubject.next(user);
-		console.log('currentUserSubject set');
 		// Set current user type
 		this.currentUsertypeSubject.next(user.usertype);
 		// Set isAuthenticated to true

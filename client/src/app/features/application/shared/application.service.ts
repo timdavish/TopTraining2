@@ -70,7 +70,6 @@ export class ApplicationService implements OnDestroy {
 	}
 
 	private convertApplicationToProfile(app: Application): TrainerProfile {
-		console.log(app);
 		return {
 			sport: app.sport,
 			completed: true,
