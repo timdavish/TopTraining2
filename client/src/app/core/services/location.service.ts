@@ -32,8 +32,8 @@ const errors = {
 export class LocationService {
 	private geocoder: any;
 
-	constructor(private loader: MapsAPILoader) {
-		this.loader.load().then(() => {
+	constructor(private mapsAPILoader: MapsAPILoader) {
+		this.mapsAPILoader.load().then(() => {
 			this.geocoder = new google.maps.Geocoder();
 		});
 	}
@@ -89,21 +89,23 @@ export class LocationService {
 	 */
 	public geocode(address: string, options: GeocodeOptions = defaultGeocodeOptions): Observable<any> {
 		return Observable.create(observer => {
-			this.geocoder.geocode({
-				'address': address,
-				componentRestrictions: options
-			}, function (results, status) {
-				if (status === google.maps.GeocoderStatus.OK && results && results[0]) {
-					const location = results[0]['geometry']['location'];
-					const coordinates = {
-						lat: location.lat(),
-						long: location.lng()
-					};
-					observer.next(coordinates);
-				} else {
-					observer.error(status);
-				}
-			});
+			if (!!this.geocoder && !!google && address) {
+				this.geocoder.geocode({
+					'address': address,
+					componentRestrictions: options
+				}, function (results, status) {
+					if (status === google.maps.GeocoderStatus.OK && results && results[0]) {
+						const location = results[0]['geometry']['location'];
+						const coordinates = {
+							lat: location.lat(),
+							long: location.lng()
+						};
+						observer.next(coordinates);
+					} else {
+						observer.error(status);
+					}
+				});
+			}
 		});
 	}
 
@@ -116,7 +118,7 @@ export class LocationService {
 	 */
 	public reverseGeocode(lat: number, long: number): Observable<any> {
 		return Observable.create(observer => {
-			if (lat && long) {
+			if (!!this.geocoder && !!google && lat && long) {
 				const latlng = new google.maps.LatLng(lat, long);
 
 				this.geocoder.geocode({
