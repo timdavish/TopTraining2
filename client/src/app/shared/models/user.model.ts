@@ -67,7 +67,7 @@ export class Action {
 
 // Trainer properties
 export class TrainerProfile {
-	_id: string;
+	_id?: string;
 	sport: string;
 	completed: boolean;
 	approved: boolean;
