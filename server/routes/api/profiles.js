@@ -7,6 +7,7 @@ const auth = require('../auth');
 // Database interaction
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
+const Trainer = mongoose.model('Trainer');
 const TrainerProfile = mongoose.model('TrainerProfile');
 
 // Preload profile objects on routes with ':profile'
@@ -22,60 +23,71 @@ router.param('profile', function(req, res, next, id) {
 
 // Trainer search
 router.get('/trainers', auth.optional, function(req, res, next) {
-    var searchParams = req.body;
+    const searchParams = req.query;
 
-	// Edit our search params
-	searchParams.sport = searchParams.sport.toLowerCase();
-	searchParams.lat = parseFloat(searchParams.lat);
-	searchParams.long = parseFloat(searchParams.long);
-    searchParams.searchDistance = 100; // miles
-
-    Trainer.aggregate([
+	const base = [
         { $geoNear: { // calculates and sorts by distance
             query: {
-                usertype: 'Trainer', // trainers only
 				approved: true, // Approved only
-                'profiles.sport': searchParams.sport // trainers who train this sport only
-            },
+				sport: searchParams.sport.toLowerCase() // profiles with this sport only
+			},
             near: {
                 type: 'Point', // 2dsphere
-                coordinates: [ searchParams.long, searchParams.lat ] // long, lat coordinates to start search at
+                coordinates: [ Number(searchParams.long), Number(searchParams.lat) ] // long, lat coordinates to start search at
             },
-            maxDistance: searchParams.searchDistance * 1.609 * 1000, // m = miles * 1.609 km/mile * 1000 m/km
+            maxDistance: searchParams.distance * 1.609 * 1000, // m = miles * 1.609 km/mile * 1000 m/km
             distanceMultiplier: 1 * 0.621 * 0.001, // miles = m * 0.621 mile/km * 0.001 km/m
             distanceField: 'dist.calculated', // field to assign distance result
             includeLocs: 'dist.location', // field to assign location result
-            limit: 10, // limit
+            // limit: searchParams.limit, // limit
             spherical: true // 2dsphere calculations
         }}
-		// ,
-        // { $project: { // Choose which data fields make it through
-        //     accounts: 0 // we don't want account (login) info
-        // }},
-        // { $group: { // Group
-        //     _id: null, // Don't group by anything
-        //     count: { $sum: 1 }, // Keep a count
-        //     trainers: { $push: "$$ROOT" } // Keep all trainer data
-        // }},
-    ]).then(function(trainers) {
-		if (req.payload) {
-			User.findById(req.payload.id).then(function(user) {
-				if (!user) { return res.json({ trainers: toProfileJSONFor(false, trainers) }); }
+    ];
+	const profiles = [
+		{ $lookup: {
+			from: 'users',
+			localField: 'trainer',
+			foreignField: '_id',
+			as: 'trainer'
+        }},
+        { $project: {
+			sport: 1,
+			completed: 1,
+			approved: 1,
+			image: 1,
+			locations: 1,
+			packages: 1,
+			summary: 1,
+			credentials: 1,
+			services: 1,
+			trainer: { $arrayElemAt: ['$trainer', 0] },
+			dist: 1
+        }},
+		{ $skip: Number(searchParams.offset) },
+		{ $limit: Number(searchParams.limit) }
+	];
+	const count = [
+		{ $count: 'count' },
+		{ $project: {
+			count: 1
+		}}
+	];
 
-				return res.json({ trainers: toProfileJSONFor(user, trainers) });
-			});
-		} else {
-			return res.json({ trainers: toProfileJSONFor(false, trainers) });
-		}
-		return res.json(trainers);
-	}).catch(next);
+	return Promise.all([
+		TrainerProfile.aggregate(base.concat(profiles)).exec(),
+		TrainerProfile.aggregate(base.concat(count)).exec(),
+		req.payload ? User.findById(req.payload.id) : null
+	]).then(function(results) {
+		const profiles = results[0];
+		// Is there a better way to get count from an aggregation?
+		const count = results[1][0]['count'];
+		const user = results[2];
 
-	function toProfileJSONFor(user, trainers) {
-		for (let i = 0; i < trainers.length; i++) {
-			trainers[i] = trainers[i].toProfileJSONFor(user);
-		}
-		return trainers;
-	}
+		return res.json({
+			profiles: profiles,
+			count: count
+		});
+	}).catch(next);;
 });
 
 router.get('/trainer/:userId', auth.optional, function(req, res, next) {
