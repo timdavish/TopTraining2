@@ -60,18 +60,11 @@ router.get('/', auth.required, function(req, res, next) {
 
 // Retrieve all users
 router.get('/all', auth.required, function(req, res, next) {
-	User.find().then(function(users) {
+	User.find().populate('profiles').then(function(users) {
 		if (!users) { return res.sendStatus(401); }
 
-		return res.json({ users: toAdminJSON(users) });
+		return res.json({ users: users.map(function(user) { return user.toAdminJSON(); }) });
 	}).catch(next);
-
-	function toAdminJSON(users) {
-		for (let i = 0; i < users.length; i++) {
-			users[i] = users[i].toAdminJSON();
-		}
-		return users;
-	}
 });
 
 // Update a user
@@ -126,21 +119,6 @@ router.post('/login', function(req, res, next) {
 		user.token = user.generateJWT();
 		return res.json({ user: user.toAuthJSON() });
 	})(req, res, next);
-});
-
-// Flip a trainer profile's approved status
-router.put('/:id/approve/:profileId/:approve', auth.required, function(req, res, next) {
-	User.findById(req.params.id).then(function(user) {
-		if (!user) { return res.sendStatus(401); }
-
-		const profile = user.profiles.find(p => p._id == req.params.profileId);
-		profile.approved = req.params.approve;
-		profile.save();
-
-		return user.save().then(function() {
-			return res.json({ user: user.toAdminJSON() });
-		});
-	}).catch(next);
 });
 
 module.exports = router;

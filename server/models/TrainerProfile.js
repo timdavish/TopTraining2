@@ -36,6 +36,40 @@ const TrainerProfileSchema = new Schema({
 	}
 });
 
+// JSONify profile data for a user
+TrainerProfileSchema.methods.toJSONFor = function(user) {
+	return {
+		id: this._id,
+		trainer: this.trainer.toProfileJSONFor(user),
+		sport: this.sport,
+		completed: this.completed,
+		approved: this.approved,
+		image: this.image,
+		locations: this.locations,
+		packages: this.packages,
+		summary: this.summary,
+		credentials: this.credentials,
+		services: this.services,
+		saved: user ? user.isSaved(this._id) : false
+	};
+};
+
+// JSONify profile data
+TrainerProfileSchema.methods.toJSON = function() {
+	return {
+		id: this._id,
+		sport: this.sport,
+		completed: this.completed,
+		approved: this.approved,
+		image: this.image,
+		locations: this.locations,
+		packages: this.packages,
+		summary: this.summary,
+		credentials: this.credentials,
+		services: this.services
+	};
+};
+
 // Switch a trainer profile's approval
 TrainerProfileSchema.methods.flipApproved = function() {
 	this.approved = !this.approved;

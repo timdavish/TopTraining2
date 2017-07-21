@@ -9,12 +9,12 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const TrainerProfile = mongoose.model('TrainerProfile');
 
-// Preload user profile object
-router.param('userId', function(req, res, next, id) {
-	User.findById(id).then(function(user) {
-		if (!user) { return res.sendStatus(404); }
+// Preload profile objects on routes with ':profile'
+router.param('profile', function(req, res, next, id) {
+	TrainerProfile.findById(id).populate('trainer').then(function(profile) {
+		if (!profile) { return res.sendStatus(404); }
 
-		req.profile = user;
+		req.profile = profile;
 
 		return next();
 	}).catch(next);
@@ -92,6 +92,16 @@ router.get('/trainer/:userId', auth.optional, function(req, res, next) {
 	} else {
 		return res.sendStatus(401);
 	}
+});
+
+
+
+// Change a TrainerProfile's approved status
+router.put('/approve/:profile/:approve', auth.required, function(req, res, next) {
+	req.profile.approved = req.params.approve;
+	return req.profile.save().then(function() {
+		return res.json({ profile: req.profile.toJSON() });
+	}).catch(next);
 });
 
 router.post('/trainer', auth.required, function(req, res, next) {

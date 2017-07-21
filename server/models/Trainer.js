@@ -38,7 +38,7 @@ TrainerSchema.methods.toAdminJSON = function(user) {
 		usertype: this.usertype,
 		contact: this.contact,
 		completed_app: this.completed_app,
-		profiles: this.profiles,
+		profiles: this.profiles.map(function(profile) { console.log(profile.toJSON()); return profile.toJSON(); }),
 		rating: this.rating,
 		updatedAt: this.updatedAt,
 		createdAt: this.createdAt
@@ -53,16 +53,16 @@ TrainerSchema.methods.toAuthJSON = function() {
 		usertype: this.usertype,
 		contact: this.contact,
 		completed_app: this.completed_app,
-		profiles: this.profiles,
+		profiles: this.profiles.map(function(profile) { return profile.toJSON(); }),
 		rating: this.rating
 	};
 };
 
-// JSONify trainer data for profile viewed by user
-TrainerSchema.methods.toProfileJSONFor = function(user) {
+// JSONify trainer data for profile
+TrainerSchema.methods.toProfileJSON = function() {
 	return {
 		contact: this.contact,
-		profiles: this.profiles,
+		profiles: this.profiles.map(function(profile) { return profile.toJSON(); }),
 		rating: this.rating
 	};
 };
