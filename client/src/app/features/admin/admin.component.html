@@ -87,7 +87,6 @@
 				{{ profile.sport | titlecase }}: {{ profile.approved ? 'Approved' : 'Not approved' }} |
 				<approve-button
 					[profile]="profile"
-					[trainer]="trainer"
 					(onToggle)="onToggleApproved(profile, $event)">
 				</approve-button>
 			</p>

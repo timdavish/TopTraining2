@@ -18,7 +18,6 @@ export class ApproveButtonComponent {
 	) {}
 
 	@Input() profile: TrainerProfile;
-	@Input() trainer: User;
 	@Output() onToggle = new EventEmitter<boolean>();
 
 	toggleFollowing() {
@@ -28,7 +27,7 @@ export class ApproveButtonComponent {
 			if (authenticated) {
 				// Approve this profile if it isn't already
 				if (!this.profile.approved) {
-					this.adminService.approve(this.trainer.id, this.profile._id)
+					this.adminService.approve(this.profile.id)
 						.subscribe(
 							data => {
 								this.isSubmitting = false;
@@ -39,7 +38,7 @@ export class ApproveButtonComponent {
 
 				// Otherwise, unapprove this profile
 				} else {
-					this.adminService.unapprove(this.trainer.id, this.profile._id)
+					this.adminService.unapprove(this.profile.id)
 						.subscribe(
 							data => {
 								this.isSubmitting = false;

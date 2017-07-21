@@ -22,12 +22,12 @@ export class AdminService {
 		return this.apiService.post('/sports', { sport: new Sport(sport, []) });
 	}
 
-	approve(userId: string, profileId: string) {
-		return this.apiService.put(`/users/${userId}/approve/${profileId}/true`);
+	approve(profileId: string) {
+		return this.apiService.put(`/profiles/approve/${profileId}/true`);
 	}
 
-	unapprove(userId: string, profileId: string) {
-		return this.apiService.put(`/users/${userId}/approve/${profileId}/false`);
+	unapprove(profileId: string) {
+		return this.apiService.put(`/profiles/approve/${profileId}/false`);
 	}
 
 	getSports(): Sport[] {

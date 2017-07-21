@@ -3,7 +3,7 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Rx';
 
 import { Application } from './application.model';
-import { LocalStorageService, UserService } from 'app/core/services';
+import { ApiService, LocalStorageService, UserService } from 'app/core/services';
 import { TrainerProfile, User } from 'app/shared';
 
 @Injectable()
@@ -16,6 +16,7 @@ export class ApplicationService implements OnDestroy {
 	private key: string = 'application';
 
 	constructor(
+		private apiService: ApiService,
 		private localStorageService: LocalStorageService,
 		private userService: UserService
 	) {
@@ -46,16 +47,14 @@ export class ApplicationService implements OnDestroy {
 		const user = this.currentUser;
 		const profile = this.convertApplicationToProfile(application);
 
-		user.profiles.push(profile);
-
-		return this.userService.update(user)
+		this.apiService.post('/profiles/trainer', { profile: profile })
 			.takeUntil(this.ngUnsubscribe)
-			.subscribe(
-				updatedUser => {
-					this.localStorageService.remove(this.deriveKey());
-				},
-				err => { console.log(err); }
-			);
+				.subscribe(
+					updatedUser => {
+						this.localStorageService.remove(this.deriveKey());
+					},
+					err => { console.log(err); }
+				);
 	}
 
 	public updateApplication(applicationSegment: Application): boolean {

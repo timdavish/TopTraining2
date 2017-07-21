@@ -27,14 +27,14 @@ export class AuthComponent implements OnDestroy, OnInit {
 	private ngUnsubscribe: Subject<void> = new Subject<void>();
 
 	constructor(
+		private activatedRoute: ActivatedRoute,
 		private fb: FormBuilder,
-		private route: ActivatedRoute,
 		private router: Router,
 		private userService: UserService
 	) {}
 
 	ngOnInit(): void {
-		this.route.url
+		this.activatedRoute.url
 			.takeUntil(this.ngUnsubscribe)
 			.subscribe(
 				data => {
@@ -94,7 +94,7 @@ export class AuthComponent implements OnDestroy, OnInit {
 		});
 
 		if (this.authType === 'register' || this.authType === 'trainer_app') {
-			// Add firstname, lastname, confirm password, controls
+			// Add firstname, lastname, password_verify controls
 			this.authForm.addControl('firstname', new FormControl('', Validators.required));
 			this.authForm.addControl('lastname', new FormControl('', Validators.required));
 			this.authForm.addControl('password_verify', new FormControl('', Validators.required));
