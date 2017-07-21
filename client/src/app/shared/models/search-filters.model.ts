@@ -5,7 +5,7 @@ export class SearchFilters {
 	long?: number;
 	distance?: number;
 	price?: number;
-	gender?: string;
+	gender?: 'any' | 'male' | 'female';
 	limit?: number;
 	offset?: number;
 }
