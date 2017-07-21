@@ -27,9 +27,6 @@ const TrainerSchema = new Schema({
 	}
 }, options);
 
-// Index our searchable locations
-TrainerSchema.index({"profiles.locations.geometry": "2dsphere"});
-
 // JSONify trainer data for admin
 TrainerSchema.methods.toAdminJSON = function(user) {
 	return {
@@ -38,7 +35,7 @@ TrainerSchema.methods.toAdminJSON = function(user) {
 		usertype: this.usertype,
 		contact: this.contact,
 		completed_app: this.completed_app,
-		profiles: this.profiles.map(function(profile) { console.log(profile.toJSON()); return profile.toJSON(); }),
+		profiles: this.profiles.map(function(profile) { return profile.toJSON(); }),
 		rating: this.rating,
 		updatedAt: this.updatedAt,
 		createdAt: this.createdAt
@@ -59,10 +56,9 @@ TrainerSchema.methods.toAuthJSON = function() {
 };
 
 // JSONify trainer data for profile
-TrainerSchema.methods.toProfileJSON = function() {
+TrainerSchema.methods.toProfileJSONFor = function(user) {
 	return {
 		contact: this.contact,
-		profiles: this.profiles.map(function(profile) { return profile.toJSON(); }),
 		rating: this.rating
 	};
 };

@@ -36,6 +36,9 @@ const TrainerProfileSchema = new Schema({
 	}
 });
 
+// Index our searchable locations
+TrainerProfileSchema.index({"locations.geometry": "2dsphere"});
+
 // JSONify profile data for a user
 TrainerProfileSchema.methods.toJSONFor = function(user) {
 	return {
@@ -50,7 +53,7 @@ TrainerProfileSchema.methods.toJSONFor = function(user) {
 		summary: this.summary,
 		credentials: this.credentials,
 		services: this.services,
-		saved: user ? user.isSaved(this._id) : false
+		// saved: user ? user.isSaved(this._id) : false
 	};
 };
 
