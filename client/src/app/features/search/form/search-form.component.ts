@@ -12,7 +12,8 @@ import { Errors, SearchFilters, Sport } from 'app/shared/models';
 	templateUrl: './search-form.component.html'
 })
 export class SearchFormComponent implements OnDestroy, OnInit {
-	address: string = '';
+	@Input() setLocation: boolean;
+	@Input() address: string = '';
 	errors: Errors = new Errors();
 	isSubmitting: boolean = false;
 	place: Object;
@@ -40,21 +41,23 @@ export class SearchFormComponent implements OnDestroy, OnInit {
 				},
 				err => {}
 			);
-		// Attempt to get user's current location
-		this.locationService.getLocation()
-			.flatMap(position => {
-				const lat = position.coords.latitude;
-				const long = position.coords.longitude;
-				return this.locationService.reverseGeocode(lat, long);
-			})
-			.flatMap(locations => {
-				return this.locationService.parseAddressComponents(locations[0]);
-			})
-			.takeUntil(this.ngUnsubscribe)
-			.subscribe(components => {
-				const formatted = `${components.locality}, ${components.administrative_area_level_1} ${components.postal_code}`;
-				this.address = formatted;
-			});
+		if (this.setLocation) {
+			// Attempt to get user's current location
+			this.locationService.getLocation()
+				.flatMap(position => {
+					const lat = position.coords.latitude;
+					const long = position.coords.longitude;
+					return this.locationService.reverseGeocode(lat, long);
+				})
+				.flatMap(locations => {
+					return this.locationService.parseAddressComponents(locations[0]);
+				})
+				.takeUntil(this.ngUnsubscribe)
+				.subscribe(components => {
+					const formatted = `${components.locality}, ${components.administrative_area_level_1} ${components.postal_code}`;
+					this.address = formatted;
+				});
+		}
 		// Build the form group
 		this.createFormGroup();
 		// Set filteredSports

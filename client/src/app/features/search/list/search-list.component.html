@@ -1,5 +1,9 @@
-<!-- <search-preview
+<div [hidden]="isLoading">
+	{{ profileCount }} {{ searchFilters.sport | titlecase }} trainers were found.
+</div>
+<search-preview
 	*ngFor="let profile of profiles"
+	[location]="searchFilters.location"
 	[profile]="profile">
 </search-preview>
 
@@ -11,7 +15,7 @@
 <div class="trainer-preview"
 	[hidden]="isLoading || profiles.length">
 	No trainers match these search parameters.
-</div> -->
+</div>
 
 <nav [hidden]="isLoading || totalPages <= 1">
 	<ul class="pagination">
@@ -21,7 +25,7 @@
 			*ngFor="let pageNumber of totalPages"
 			(click)="setPageTo(pageNumber)">
 
-			<a class="page-link" href="#">{{ pageNumber }}</a>
+			<a class="page-link">{{ pageNumber }}</a>
 
 		</li>
 

@@ -26,7 +26,10 @@
 				</form>
 				<!-- /Default view -->
 
-				<search-form *ngIf="search"></search-form>
+				<search-form
+					*ngIf="search"
+					[setLocation]="true">
+				</search-form>
 			</div>
 
 		</div>

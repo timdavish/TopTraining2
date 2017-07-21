@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 
 import { SearchFilters } from 'app/shared/models';
@@ -9,7 +9,7 @@ import { SearchFilters } from 'app/shared/models';
 	templateUrl: './search.component.html'
 })
 export class SearchComponent implements OnDestroy, OnInit {
-	limit: number = 10;
+	limit: number = 3;
 	filters: SearchFilters = new SearchFilters();
 
 	private ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -23,13 +23,13 @@ export class SearchComponent implements OnDestroy, OnInit {
 		this.activatedRoute.queryParams
 			.takeUntil(this.ngUnsubscribe)
 			.subscribe(params => {
-				this.filters.sport = params['sport'];
-				this.filters.location = params['location'];
-				this.filters.lat = params['lat'];
-				this.filters.long = params['long'];
-				console.log(this.filters);
-				this.filters = params;
-				console.log(this.filters);
+				if (this.isSufficient(params)) {
+					for (const key in params) {
+						this.filters[key] = params[key];
+					}
+				} else {
+					this.router.navigateByUrl('');
+				}
 			});
 	}
 
@@ -37,5 +37,9 @@ export class SearchComponent implements OnDestroy, OnInit {
 		// Clean up subscriptions
 		this.ngUnsubscribe.next();
 		this.ngUnsubscribe.complete();
+	}
+
+	private isSufficient(params: Params): boolean {
+		return !!params.sport && !!params.location && !!params.lat && !!params.long;
 	}
 }

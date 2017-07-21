@@ -3,7 +3,7 @@ import { URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
 import { ApiService } from 'app/core/services';
-import { TrainerProfile } from 'app/shared/models';
+import { SearchFilters, TrainerProfile } from 'app/shared/models';
 
 @Injectable()
 export class SearchService {
@@ -11,12 +11,12 @@ export class SearchService {
 		private apiService: ApiService
 	) {}
 
-	search(config: any): Observable<{trainerProfiles: TrainerProfile[], count: number}> {
+	search(config: SearchFilters): Observable<{profiles: TrainerProfile[], count: number}> {
 		const params = new URLSearchParams();
 
-		Object.keys(config.filters).forEach((key) => {
-			params.set(key, config.filters[key]);
-		});
+		for (const key in config) {
+			params.set(key, config[key]);
+		}
 
 		return this.apiService.get('/profiles/trainers', params)
 			.map(data => data);
