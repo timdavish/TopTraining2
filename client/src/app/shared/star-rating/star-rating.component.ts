@@ -2,26 +2,30 @@ import { Component, Input } from '@angular/core';
 
 @Component({
 	selector: 'star-rating',
-	templateUrl: './star-rating.component.html'
+	templateUrl: './star-rating.component.html',
+	styleUrls: ['./star-rating.component.css']
 })
 export class StarRatingComponent {
 	private readonly star = {
-		full: 'fa fa-star',
-		half: 'fa fa-star-half-o',
-		empty: 'fa fa-star-o'
+		full: 'fa-star',
+		half: 'fa-star-half-o',
+		empty: 'fa-star-o'
 	};
 
-	private stars: Array<string> = [];
+	stars: Array<string> = [];
 
 	@Input() rating: number;
+	@Input() readonly: boolean = true;
 
 	ngOnInit(): void {
 		this.createStars();
 	}
 
 	onClick(rating: number): void {
-		this.rating = rating;
-		this.createStars();
+		if (this.readonly) {
+			this.rating = rating;
+			this.createStars();
+		}
 	}
 
 	private createStars(): void {

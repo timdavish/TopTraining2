@@ -1,5 +1,5 @@
 <ul class="star-rating">
-	<li ng-repeat="star in stars" class="star" ng-click="">
-		<i class="fa {{star.class}}" aria-hidden="true"></i>
+	<li *ngFor="let star of stars" class="star" ng-click="">
+		<i class="fa" [ngClass]="star" aria-hidden="true"></i>
 	</li>
 </ul>

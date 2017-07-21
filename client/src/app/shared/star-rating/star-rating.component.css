@@ -1,0 +1,12 @@
+.star-rating {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+.star {
+    padding: 1px;
+    color: #ffce49;
+    text-shadow: .05em .05em #7f7867;
+    list-style-type: none;
+    display: inline-block;
+}
