@@ -2,6 +2,7 @@ import { EllipsisPipe } from './ellipsis.pipe';
 
 describe('Pipe: Ellipsis', () => {
 	let pipe: EllipsisPipe;
+	const defaultStr = '';
 	const longStr = `Lorem ipsum dolor sit amet, consectetur
 	adipisicing elit. Quibusdam ab similique, odio sit harum
 	laborum rem, nesciunt atque iure a pariatur nam nihil dolore
@@ -37,6 +38,22 @@ describe('Pipe: Ellipsis', () => {
 
 	beforeEach(() => {
 		pipe = new EllipsisPipe();
+	});
+
+	it('should transform undefined to ""', () => {
+		expect(pipe.transform(undefined)).toEqual(defaultStr);
+	});
+
+	it('should transform undefined to "Nothing here"', () => {
+		expect(pipe.transform(undefined, undefined, 'Nothing here')).toEqual('Nothing here');
+	});
+
+	it('should transform "" to ""', () => {
+		expect(pipe.transform('')).toEqual('');
+	});
+
+	it('should transform "" to "Nothing here"', () => {
+		expect(pipe.transform('', undefined, 'Nothing here')).toEqual('Nothing here');
 	});
 
 	it('should return the string if it\'s length is less than 250', () => {

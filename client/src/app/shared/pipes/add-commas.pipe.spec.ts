@@ -8,20 +8,20 @@ describe('Pipe: Add Commas', () => {
 		pipe = new AddCommasPipe();
 	});
 
-	it('transforms undefined to ""', () => {
+	it('should transform undefined to ""', () => {
 		expect(pipe.transform(undefined)).toEqual(defaultStr);
 	});
 
-	it('transforms undefined to "None added yet"', () => {
-		expect(pipe.transform(undefined, 'None added yet')).toEqual('None added yet');
+	it('should transform undefined to "Nothing here"', () => {
+		expect(pipe.transform(undefined, 'Nothing here')).toEqual('Nothing here');
 	});
 
-	it('transforms [] to ""', () => {
+	it('should transform [] to ""', () => {
 		expect(pipe.transform([])).toEqual(defaultStr);
 	});
 
-	it('transforms [] to "None added yet"', () => {
-		expect(pipe.transform([], 'None added yet')).toEqual('None added yet');
+	it('should transform [] to "Nothing here"', () => {
+		expect(pipe.transform([], 'Nothing here')).toEqual('Nothing here');
 	});
 
 	it('should transform ["Rick"] to "Rick"', () => {

@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'addCommas' })
 export class AddCommasPipe implements PipeTransform {
-	transform(input: null | string[], defaultStr: string = '') {
+	transform(input: null | string[], defaultStr: string = ''): string {
 		if (!input) {
 			return defaultStr;
 		}

@@ -10,6 +10,8 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
 import { LocationAutocompleteDirective } from './directives/location-autocomplete.directive';
 import { ShowAuthedDirective } from './directives/show-authed.directive';
 
+import { AddCommasPipe } from './pipes/add-commas.pipe';
+import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { MinutesToTimePipe } from './pipes/minutes-to-time.pipe';
 import { UppercaseFirstPipe } from './pipes/uppercase-first.pipe';
 
@@ -28,6 +30,8 @@ import { UppercaseFirstPipe } from './pipes/uppercase-first.pipe';
 		LocationAutocompleteDirective,
 		ShowAuthedDirective,
 
+		AddCommasPipe,
+		EllipsisPipe,
 		MinutesToTimePipe,
 		UppercaseFirstPipe
 	],
@@ -44,6 +48,8 @@ import { UppercaseFirstPipe } from './pipes/uppercase-first.pipe';
 		LocationAutocompleteDirective,
 		ShowAuthedDirective,
 
+		AddCommasPipe,
+		EllipsisPipe,
 		MinutesToTimePipe,
 		UppercaseFirstPipe
 	]
