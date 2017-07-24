@@ -12,7 +12,9 @@ import { ShowAuthedDirective } from './directives/show-authed.directive';
 
 import { AddCommasPipe } from './pipes/add-commas.pipe';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
 import { MinutesToTimePipe } from './pipes/minutes-to-time.pipe';
+import { SortPipe } from './pipes/sort.pipe';
 import { UppercaseFirstPipe } from './pipes/uppercase-first.pipe';
 
 @NgModule({
@@ -32,7 +34,9 @@ import { UppercaseFirstPipe } from './pipes/uppercase-first.pipe';
 
 		AddCommasPipe,
 		EllipsisPipe,
+		FilterPipe,
 		MinutesToTimePipe,
+		SortPipe,
 		UppercaseFirstPipe
 	],
 	exports: [
@@ -50,7 +54,9 @@ import { UppercaseFirstPipe } from './pipes/uppercase-first.pipe';
 
 		AddCommasPipe,
 		EllipsisPipe,
+		FilterPipe,
 		MinutesToTimePipe,
+		SortPipe,
 		UppercaseFirstPipe
 	]
 })
