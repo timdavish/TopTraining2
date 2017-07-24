@@ -1,6 +1,6 @@
 import { UppercaseFirstPipe } from './uppercase-first.pipe';
 
-describe('Pipe: Add Commas', () => {
+describe('Pipe: Uppercase First', () => {
 	let pipe: UppercaseFirstPipe;
 	const defaultStr = '';
 

@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'uppercaseFirst' })
 export class UppercaseFirstPipe implements PipeTransform {
-	transform(input: null | string, defaultStr: string = ''): string {
+	transform(input: string, defaultStr: string = ''): string {
 		if (!input) {
 			return defaultStr;
 		}

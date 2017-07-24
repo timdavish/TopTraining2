@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'minutesToTime' })
 export class MinutesToTimePipe implements PipeTransform {
-	transform(input: null | number, defaultStr: string = ''): string {
+	transform(input: number, defaultStr: string = ''): string {
 		if (!input) {
 			return defaultStr;
 		}

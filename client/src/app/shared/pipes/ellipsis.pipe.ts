@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'ellipsis' })
 export class EllipsisPipe implements PipeTransform {
-	transform(input: null | string, length: number = 200, defaultStr: string = ''): string {
+	transform(input: string, length: number = 250, defaultStr: string = ''): string {
 		if (!input) {
 			return defaultStr;
 		}

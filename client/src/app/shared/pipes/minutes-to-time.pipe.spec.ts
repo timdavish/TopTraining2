@@ -1,6 +1,6 @@
 import { MinutesToTimePipe } from './minutes-to-time.pipe';
 
-describe('Pipe: Add Commas', () => {
+describe('Pipe: Minutes To Time', () => {
 	let pipe: MinutesToTimePipe;
 	const defaultStr = '';
 
