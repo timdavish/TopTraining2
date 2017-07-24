@@ -1,6 +1,6 @@
 import { Date } from './date.model';
 
-export const DateState: Date = {
+export const dateState: Date = {
 	years: getYears(),
 	months: getMonths(),
 	days: getDays()

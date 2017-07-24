@@ -1,6 +1,6 @@
 import { PackageOptions } from './package-options.model';
 
-export const PackageOptionsState: PackageOptions = {
+export const packageOptionsState: PackageOptions = {
 	lengths: getLengths(),
 	rates: getRates()
 };

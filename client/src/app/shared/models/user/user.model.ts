@@ -3,11 +3,11 @@ import { AgeGroup } from '../age-group/age-group.model';
 export class User {
 	// General properties
 	id: string;
-	usertype: string;
+	usertype: 'Admin' | 'Client' | 'Trainer' | 'User';
 	token: string;
 	contact: Contact;
-	accounts: Accounts;
-	data: Data;
+	createdAt: Date;
+	updatedAt: Date;
 
 	// Admin properties
 	actions?: [Action];
@@ -48,11 +48,6 @@ export class Address {
 export class Accounts {
 	local: {[key: string]: string};
 	facebook: {};
-};
-
-export class Data {
-	createdAt: string;
-	activeAt: string;
 };
 
 // Admin properties

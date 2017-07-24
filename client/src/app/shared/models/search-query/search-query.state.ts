@@ -1,6 +1,6 @@
 import { SearchQuery } from './search-query.model';
 
-export const SearchQueryState: SearchQuery = {
+export const searchQueryState: SearchQuery = {
 	sport: 'Sport',
 	location: 'Location',
 	lat: 0,

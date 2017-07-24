@@ -1,6 +1,6 @@
 import { Sport } from './sport.model';
 
-export const SportState: Sport = {
+export const sportState: Sport = {
 	sport: 'Sport',
 	trainers: []
 };
