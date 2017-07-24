@@ -1,8 +1,8 @@
 import { SearchFilters } from './search-filters.model';
 
 export const searchFiltersState: SearchFilters = {
-	price: 100,
-	distance: 30,
-	gender: 'any',
+	price: null,
+	distance: null,
+	gender: null,
 	sort: 'rating'
 };

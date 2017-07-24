@@ -1,6 +1,6 @@
 export class SearchFilters {
 	price: number;
 	distance: number;
-	gender: 'any' | 'male' | 'female';
+	gender: 'male' | 'female';
 	sort: 'rating' | 'price' | 'distance';
 }
