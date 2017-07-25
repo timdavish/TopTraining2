@@ -25,7 +25,7 @@ router.param('profile', function(req, res, next, id) {
 router.get('/trainers', auth.optional, function(req, res, next) {
     const searchParams = req.query;
 
-	const base = [
+	const aggregation = [
         { $geoNear: { // calculates and sorts by distance
             query: {
 				approved: true, // Approved only
@@ -35,15 +35,12 @@ router.get('/trainers', auth.optional, function(req, res, next) {
                 type: 'Point', // 2dsphere
                 coordinates: [ Number(searchParams.long), Number(searchParams.lat) ] // long, lat coordinates to start search at
             },
-            maxDistance: searchParams.distance * 1.609 * 1000, // m = miles * 1.609 km/mile * 1000 m/km
+            maxDistance: 30 * 1.609 * 1000, // m = miles * 1.609 km/mile * 1000 m/km
             distanceMultiplier: 1 * 0.621 * 0.001, // miles = m * 0.621 mile/km * 0.001 km/m
             distanceField: 'dist.calculated', // field to assign distance result
             includeLocs: 'dist.location', // field to assign location result
-            // limit: searchParams.limit, // limit
             spherical: true // 2dsphere calculations
-        }}
-    ];
-	const profiles = [
+        }},
 		{ $lookup: {
 			from: 'users',
 			localField: 'trainer',
@@ -62,31 +59,17 @@ router.get('/trainers', auth.optional, function(req, res, next) {
 			services: 1,
 			trainer: { $arrayElemAt: ['$trainer', 0] },
 			dist: 1
-        }},
-		{ $skip: Number(searchParams.offset) },
-		{ $limit: Number(searchParams.limit) }
-	];
-	const count = [
-		{ $count: 'count' },
-		{ $project: {
-			count: 1
-		}}
-	];
+        }}
+    ];
 
 	return Promise.all([
-		TrainerProfile.aggregate(base.concat(profiles)).exec(),
-		TrainerProfile.aggregate(base.concat(count)).exec(),
+		TrainerProfile.aggregate(aggregation).exec(),
 		req.payload ? User.findById(req.payload.id) : null
 	]).then(function(results) {
 		const profiles = results[0];
-		// Is there a better way to get count from an aggregation?
-		const count = results[1][0]['count'];
-		const user = results[2];
+		const user = results[1];
 
-		return res.json({
-			profiles: profiles,
-			count: count
-		});
+		return res.json({ profiles: profiles });
 	}).catch(next);;
 });
 

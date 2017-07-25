@@ -1,34 +1,36 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
+import { Pager, PagerService } from 'app/core/services'
 import { SearchService } from '../shared/search.service';
-import { Errors, SearchFilters, TrainerProfile } from 'app/shared/models';
+import { Errors, SearchFilters, SearchQuery, TrainerProfile } from 'app/shared/models';
 
 @Component({
 	selector: 'search-list',
-	templateUrl: './search-list.component.html'
+	templateUrl: './search-list.component.html',
+	styleUrls: ['./search-list.component.css']
 })
 export class SearchListComponent implements OnDestroy {
-	@Input() limit: number;
-	@Input() set filters(filters: SearchFilters) {
-		if (filters) {
-			this.searchFilters = filters;
-			this.currentPage = 1;
-			this.runSearch();
+	@Input() filters: SearchFilters;
+	@Input() query: SearchQuery;
+	@Input() set profiles(profiles: TrainerProfile[]) {
+		if (profiles && profiles.length) {
+			this.profileList = profiles;
+			this.setPage(1);
 		}
-	}
+	};
 
-	currentPage: number = 1;
-	totalPages: Array<number> = [1];
 	errors: Errors = new Errors();
-	isLoading: boolean = true;
-	searchFilters: SearchFilters;
-	profiles: TrainerProfile[];
-	profileCount: number = 0;
+	limit: number = 5;
+	profileList: TrainerProfile[];
+	pageSize: number = 0;
+	pager: Pager = new Pager();
+	pagedProfiles: TrainerProfile[];
 
 	private ngUnsubscribe: Subject<void> = new Subject<void>();
 
 	constructor(
+		private pagerService: PagerService,
 		private searchService: SearchService
 	) {}
 
@@ -38,34 +40,12 @@ export class SearchListComponent implements OnDestroy {
 		this.ngUnsubscribe.complete();
 	}
 
-	setPageTo(pageNumber: number): void {
-		this.currentPage = pageNumber;
-		this.runSearch();
-	}
-
-	private runSearch(): void {
-		this.errors = new Errors();
-		this.isLoading = true;
-		this.profiles = [];
-
-		// Set limit and offset filters
-		if (this.limit) {
-			this.searchFilters.limit = this.limit;
-			this.searchFilters.offset = (this.limit * (this.currentPage - 1));
+	setPage(page: number): void {
+		if (page < 1 || page > this.pager.totalPages) {
+			return;
 		}
 
-		this.searchFilters.distance = 50;
-		this.searchFilters.price = 100;
-		this.searchFilters.gender = 'any';
-
-		this.searchService.search(this.searchFilters)
-			.takeUntil(this.ngUnsubscribe)
-			.subscribe(data => {
-				this.isLoading = false;
-				this.profiles = data.profiles;
-				this.profileCount = data.count;
-				// Used from http://www.jstips.co/en/create-range-0...n-easily-using-one-line/
-				this.totalPages = Array.from(new Array(Math.ceil(data.count / this.limit)), (val, index) => index + 1);
-			});
+		this.pager = this.pagerService.getPager(this.profileList.length, page, this.limit);
+		this.pagedProfiles = this.profileList.slice(this.pager.startIndex, this.pager.endIndex);
 	}
 }

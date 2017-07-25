@@ -1,33 +1,23 @@
-<div [hidden]="isLoading">
-	{{ profileCount }} {{ searchFilters.sport | titlecase }} trainers were found.
-</div>
 <search-preview
-	*ngFor="let profile of profiles"
-	[location]="searchFilters.location"
+	*ngFor="let profile of pagedProfiles"
 	[profile]="profile">
+	<p>{{ profile.dist.calculated | number:'1.2-2' }} miles from {{ query.location }}</p>
 </search-preview>
 
-<div class="trainer-preview"
-	[hidden]="!isLoading">
-	Loading trainers...
-</div>
-
-<div class="trainer-preview"
-	[hidden]="isLoading || profiles.length">
-	No trainers match these search parameters.
-</div>
-
-<nav [hidden]="isLoading || totalPages <= 1">
-	<ul class="pagination">
-
-		<li class="page-item"
-			[ngClass]="{'active': pageNumber === currentPage}"
-			*ngFor="let pageNumber of totalPages"
-			(click)="setPageTo(pageNumber)">
-
-			<a class="page-link">{{ pageNumber }}</a>
-
+<!-- Pager -->
+<div class="pagination ">
+	<ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+		<li [ngClass]="{ disabled:pager.currentPage === 1 }">
+			<a (click)="setPage(pager.currentPage - 1)">Prev</a>
 		</li>
 
+		<li *ngFor="let page of pager.pages"
+			[ngClass]="{ active:pager.currentPage === page }">
+		    <a (click)="setPage(page)">{{ page }}</a>
+		</li>
+
+		<li [ngClass]="{ disabled:pager.currentPage === pager.totalPages }">
+			<a (click)="setPage(pager.currentPage + 1)">Next</a>
+		</li>
 	</ul>
-</nav>
+</div>
