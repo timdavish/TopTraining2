@@ -1,11 +1,40 @@
-<!-- <search-form
-	[setLocation]="false"
-	[address]="filters.location">
-</search-form> -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div *ngIf="!showForm">
+				<p>Showing results for {{ query.sport | titlecase }} trainers in {{ query.location }}.</p>
+				<p><a (click)="switchFormStatus(true)">Change your search?</a></p>
+			</div>
+			<search-form
+				*ngIf="showForm"
+				[query]="query">
+			</search-form>
 
-<search-filter></search-filter>
+			<div [hidden]="isLoading">
+				{{ profileCount }} {{ query.sport | titlecase }} trainer{{ profileCount != 1 ? 's' : '' }} {{ profileCount != 1 ? 'were' : 'was' }} found.
+			</div>
 
-<search-list
-	[limit]="limit"
-	[filters]="filters">
-</search-list>
+			<div class="trainer-preview"
+				[hidden]="!isLoading">
+				Loading trainers...
+			</div>
+
+			<div class="trainer-preview"
+				[hidden]="isLoading || profiles.length">
+				No trainers match these search parameters.
+			</div>
+		</div>
+
+		<div class="col-md-4">
+			<search-filter></search-filter>
+		</div>
+
+		<div class="col-md-8">
+			<search-list
+				[filters]="filters"
+				[query]="query"
+				[profiles]="profiles">
+			</search-list>
+		</div>
+	</div>
+</div>

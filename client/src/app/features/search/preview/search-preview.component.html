@@ -13,7 +13,7 @@
 	<md-card-content>
 		<p>{{ profile.sport | titlecase }} Trainer</p>
 		<p>{{ profile.summary }}</p>
-		<p>{{ profile.dist.calculated | number:'1.2-2' }} miles from {{ location }}</p>
+		<ng-content></ng-content>
 	</md-card-content>
 	<md-card-actions>
 		<button md-button routerLink="/">View profile</button>

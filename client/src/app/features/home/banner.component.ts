@@ -8,13 +8,13 @@ import { Sport, User } from 'app/shared';
 	styleUrls: ['./banner.component.css']
 })
 export class BannerComponent implements OnInit {
-	search: boolean = false;
+	showForm: boolean = false;
 
 	constructor() {}
 
 	ngOnInit(): void {}
 
 	goToSearch(): void {
-		this.search = true;
+		this.showForm = true;
 	}
 }

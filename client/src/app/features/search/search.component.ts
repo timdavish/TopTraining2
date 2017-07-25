@@ -2,34 +2,46 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 
-import { SearchFilters } from 'app/shared/models';
+import { SearchService } from './shared/search.service';
+import { SearchFilters, searchFiltersState, SearchQuery, searchQueryState, TrainerProfile } from 'app/shared/models';
 
 @Component({
 	selector: 'search',
 	templateUrl: './search.component.html'
 })
 export class SearchComponent implements OnDestroy, OnInit {
-	limit: number = 3;
-	filters: SearchFilters = new SearchFilters();
+	isLoading: boolean = false;
+	filters: SearchFilters = searchFiltersState;
+	query: SearchQuery = new SearchQuery();
+	profiles: TrainerProfile[] = [];
+	profileCount: number = 0;
+	showForm: boolean = false;
 
 	private ngUnsubscribe: Subject<void> = new Subject<void>();
 
 	constructor(
 		private activatedRoute: ActivatedRoute,
-		private router: Router
+		private router: Router,
+		private searchService: SearchService
 	) {}
 
 	ngOnInit(): void {
+		// Subscribe to query params
 		this.activatedRoute.queryParams
+			.flatMap(params => {
+				this.isLoading = true;
+				if (this.isSufficient(params as SearchQuery)) {
+					this.query = params as SearchQuery;
+					return this.searchService.search(this.query);
+				} else {}
+			})
 			.takeUntil(this.ngUnsubscribe)
-			.subscribe(params => {
-				if (this.isSufficient(params)) {
-					for (const key in params) {
-						this.filters[key] = params[key];
-					}
-				} else {
-					this.router.navigateByUrl('');
-				}
+			.subscribe(data => {
+				this.profiles = data.profiles;
+				this.profileCount = data.profiles.length;
+				this.isLoading = false;
+			}, err => {
+				this.isLoading = false;
 			});
 	}
 
@@ -39,7 +51,10 @@ export class SearchComponent implements OnDestroy, OnInit {
 		this.ngUnsubscribe.complete();
 	}
 
-	private isSufficient(params: Params): boolean {
-		return !!params.sport && !!params.location && !!params.lat && !!params.long;
+	switchFormStatus(status: boolean) {
+		this.showForm = status;
+	}
+	private isSufficient(query: SearchQuery): boolean {
+		return !!query.sport && !!query.location && !!query.lat && !!query.long;
 	}
 }

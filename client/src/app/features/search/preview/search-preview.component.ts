@@ -7,7 +7,6 @@ import { TrainerProfile } from 'app/shared/models';
 	templateUrl: './search-preview.component.html'
 })
 export class SearchPreviewComponent {
-	@Input() location: string;
 	@Input() profile: TrainerProfile;
 
 	constructor() {}

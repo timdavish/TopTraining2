@@ -4,8 +4,8 @@
 
 		<md-input-container>
 			<input mdInput
-				[mdAutocomplete]="auto"
 				formControlName="sport"
+				[mdAutocomplete]="auto"
 				placeholder="Sport"
 				type="text" />
 			<md-error *ngIf="searchForm['controls']['sport'].hasError('required')">
@@ -14,17 +14,18 @@
 		</md-input-container>
 
 		<md-autocomplete #auto="mdAutocomplete">
-			<md-option *ngFor="let sport of filteredSports | async" [value]="sport.sport | titlecase">
+			<md-option *ngFor="let sport of filteredSports | async"
+				[value]="sport.sport | titlecase">
 				{{ sport.sport | titlecase }}
 			</md-option>
 		</md-autocomplete>
 
 		<md-input-container>
 			<input mdInput
-				locationAutocomplete
-				[(ngModel)]="address"
-				(setAddress)="getAddress($event)"
 				formControlName="location"
+				[(ngModel)]="query.location"
+				locationAutocomplete
+				(setAddress)="getAddress($event)"
 				placeholder="Location"
 				type="text" />
 			<md-error *ngIf="searchForm['controls']['location'].hasError('required')">

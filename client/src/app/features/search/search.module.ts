@@ -12,7 +12,6 @@ import { SearchService } from './shared/search.service';
 const searchRouting: ModuleWithProviders = RouterModule.forChild([
 	{
 		path: 'search',
-		runGuardsAndResolvers: 'paramsOrQueryParamsChange',
 		component: SearchComponent
 	}
 ]);
