@@ -40,9 +40,9 @@ const applicationRouting: ModuleWithProviders = RouterModule.forChild([
 
 @NgModule({
 	imports: [
+		AgmCoreModule,
 		applicationRouting,
-		SharedModule,
-		AgmCoreModule
+		SharedModule
 	],
 	declarations: [
 		ApplicationComponent,

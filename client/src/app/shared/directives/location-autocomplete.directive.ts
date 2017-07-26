@@ -1,7 +1,5 @@
 import { Directive, ElementRef, EventEmitter, OnInit, Output } from '@angular/core';
 
-import { MapsAPILoader } from '@agm/core';
-
 declare const google: any;
 
 @Directive({
@@ -14,20 +12,17 @@ export class LocationAutocompleteDirective implements OnInit {
 	private input: any;
 
 	constructor(
-		private elementRef: ElementRef,
-		private loader: MapsAPILoader,
+		private elementRef: ElementRef
 	) {}
 
 	ngOnInit(): void {
-		this.loader.load().then(() => {
-			this.input = this.elementRef.nativeElement;
+		this.input = this.elementRef.nativeElement;
 
-			this.autocomplete = new google.maps.places.Autocomplete(this.input, this.options);
+		this.autocomplete = new google.maps.places.Autocomplete(this.input, this.options);
 
-			google.maps.event.addListener(this.autocomplete, 'place_changed', () => {
-				const place = this.autocomplete.getPlace();
-				this.invokeEvent(place);
-			});
+		google.maps.event.addListener(this.autocomplete, 'place_changed', () => {
+			const place = this.autocomplete.getPlace();
+			this.invokeEvent(place);
 		});
 	}
 

@@ -1,8 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { MapsAPILoader } from '@agm/core';
-
 declare const google: any;
 
 interface GeolocationOptions {
@@ -32,10 +30,8 @@ const errors = {
 export class LocationService {
 	private geocoder: any;
 
-	constructor(private mapsAPILoader: MapsAPILoader) {
-		this.mapsAPILoader.load().then(() => {
-			this.geocoder = new google.maps.Geocoder();
-		});
+	constructor() {
+		this.geocoder = new google.maps.Geocoder();
 	}
 
 	/**

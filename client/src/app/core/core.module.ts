@@ -2,7 +2,7 @@ import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule, MapsAPILoader, NoOpMapsAPILoader } from '@agm/core';
 
 import { SharedModule } from 'app/shared/shared.module';
 import { FooterComponent } from './layout/footer.component';
@@ -25,7 +25,7 @@ import 'hammerjs';
 
 @NgModule({
 	imports: [
-		AgmCoreModule.forRoot({ apiKey: 'AIzaSyC9Z9C7BKbBVCQutt_kAJ9nlQsqNykCT_M', libraries: ['places', 'visualization'] }),
+		AgmCoreModule.forRoot(),
 		BrowserAnimationsModule,
 		CommonModule,
 		SharedModule
@@ -39,6 +39,7 @@ import 'hammerjs';
 		HeaderComponent
 	],
 	providers: [
+		{ provide: MapsAPILoader, useClass: NoOpMapsAPILoader },
 		AdminGuard,
 		ApiService,
 		AuthGuard,
