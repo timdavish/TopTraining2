@@ -7,11 +7,7 @@ export class FilterPipe implements PipeTransform {
 			return defaultArr;
 		}
 
-		if (!Array.isArray(input)) {
-			return input;
-		}
-
-		if (paths.length !== config.length) {
+		if (!Array.isArray(input) || paths.length !== config.length) {
 			return input;
 		}
 
