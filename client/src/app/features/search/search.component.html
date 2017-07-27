@@ -2,16 +2,15 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div *ngIf="!showForm">
-				<p>Showing results for {{ query.sport | titlecase }} trainers in {{ query.location }}.</p>
+				<p>Showing results for {{ sport | titlecase }} trainers in {{ location }}.</p>
 				<p><a (click)="switchFormStatus(true)">Change your search?</a></p>
 			</div>
 			<search-form
-				*ngIf="showForm"
-				[query]="query">
+				*ngIf="showForm">
 			</search-form>
 
 			<div [hidden]="isLoading">
-				{{ profileCount }} {{ query.sport | titlecase }} trainer{{ profileCount != 1 ? 's' : '' }} {{ profileCount != 1 ? 'were' : 'was' }} found.
+				{{ count }} {{ sport | titlecase }} trainer{{ count != 1 ? 's' : '' }} {{ count != 1 ? 'were' : 'was' }} found.
 			</div>
 
 			<div class="trainer-preview"
@@ -31,9 +30,9 @@
 
 		<div class="col-md-8">
 			<search-list
-				[filters]="filters"
-				[query]="query"
-				[profiles]="profiles">
+				[profiles]="profiles"
+				[count]="count"
+				[location]="location">
 			</search-list>
 		</div>
 	</div>
