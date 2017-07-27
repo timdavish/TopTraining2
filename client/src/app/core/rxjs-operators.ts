@@ -11,6 +11,7 @@ import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/ignoreElements';
 import 'rxjs/add/operator/let';
 import 'rxjs/add/operator/map';

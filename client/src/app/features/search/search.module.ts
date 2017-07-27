@@ -7,12 +7,17 @@ import { SearchFilterComponent } from './filter/search-filter.component';
 import { SearchFormComponent } from './form/search-form.component';
 import { SearchListComponent } from './list/search-list.component';
 import { SearchPreviewComponent } from './preview/search-preview.component';
+import { SearchResolver } from './shared/search-resolver.service';
 import { SearchService } from './shared/search.service';
 
 const searchRouting: ModuleWithProviders = RouterModule.forChild([
 	{
-		path: 'search',
-		component: SearchComponent
+		path: 'search/:sport/:location',
+		runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+		component: SearchComponent,
+		resolve: {
+			data: SearchResolver
+		}
 	}
 ]);
 
@@ -30,6 +35,7 @@ const searchRouting: ModuleWithProviders = RouterModule.forChild([
 		SearchPreviewComponent
 	],
 	providers: [
+		SearchResolver,
 		SearchService
 	],
 	exports: [
