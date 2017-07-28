@@ -5,6 +5,7 @@
 		<md-input-container>
 			<input mdInput
 				formControlName="sport"
+				[(ngModel)]="query.sport"
 				[mdAutocomplete]="auto"
 				placeholder="Sport"
 				type="text" />
