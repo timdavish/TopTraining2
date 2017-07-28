@@ -20,9 +20,11 @@ export class SearchComponent implements OnInit {
 	) {}
 
 	ngOnInit(): void {
-		// Get route params
-		this.sport = this.route.snapshot['sport'];
-		this.location = this.route.snapshot['location'];
+		// Subscribe to route params
+		this.route.params.subscribe(params => {
+			this.sport = params['sport'];
+			this.location = params['location'];
+		});
 
 		// Subscribe to route data
 		this.route.data.map(data => data.data).subscribe(

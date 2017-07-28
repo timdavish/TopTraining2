@@ -13,7 +13,7 @@ import { SearchService } from './shared/search.service';
 const searchRouting: ModuleWithProviders = RouterModule.forChild([
 	{
 		path: 'search/:sport/:location',
-		runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+		runGuardsAndResolvers: 'paramsChange',
 		component: SearchComponent,
 		resolve: {
 			data: SearchResolver
