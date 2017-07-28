@@ -1,7 +1,19 @@
+<fieldset class="form-group search-sort">
+	<span class="search-sort-text">Sort by</span>
+	<select class="form-control search-sort-select"
+		[(ngModel)]="filters.sort"
+		(change)="onSortChange()"
+		name="sort">
+		<option value="rating">Rating</option>
+		<option value="distance">Distance</option>
+		<option value="price">Price</option>
+	</select>
+</fieldset>
+
 <search-preview
-	*ngFor="let profile of pagedProfiles"
+	*ngFor="let profile of pagedProfiles | sort:sort"
 	[profile]="profile">
-	<p>{{ profile.dist.calculated | number:'1.2-2' }} miles from {{ query.location }}</p>
+	<p>{{ profile.dist.calculated | number:'1.2-2' }} miles from {{ location }}</p>
 </search-preview>
 
 <!-- Pager -->
